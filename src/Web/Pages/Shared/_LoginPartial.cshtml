@@ -13,6 +13,7 @@
 }
 
 <ul class="navbar-nav">
+    @* ReSharper disable Mvc.AreaNotResolved *@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
@@ -33,4 +34,5 @@
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@returnUrl">Login</a>
         </li>
     }
+    @* ReSharper restore Mvc.AreaNotResolved *@
 </ul>
