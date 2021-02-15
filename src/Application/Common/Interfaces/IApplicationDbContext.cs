@@ -1,17 +1,15 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using SkillsBooster.Domain.Entities;
 
-namespace Application.Common.Interfaces
+namespace SkillsBooster.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<User> Users { get; set; }
-
-        DbSet<Alliance> Alliances { get; set; }
-        
-        DbSet<Challenge> Challenges { get; set; }
+        // DbSet<Alliance> Alliances { get; set; }
+        //
+        // DbSet<Challenge> Challenges { get; set; }
         
         DbSet<Exercise> Exercises { get; set; }
 

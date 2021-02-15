@@ -1,8 +1,8 @@
-﻿using Application.Common.Mappings;
-using AutoMapper;
-using Domain.Entities;
+﻿using AutoMapper;
+using SkillsBooster.Application.Common.Mappings;
+using SkillsBooster.Domain.Entities;
 
-namespace Application.Exercises.Dtos
+namespace SkillsBooster.Application.Exercises.Dtos
 {
     public class ExerciseDto : IMapFrom<Exercise>
     {

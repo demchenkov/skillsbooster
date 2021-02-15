@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Domain.Entities;
 using MediatR;
+using SkillsBooster.Application.Common.Exceptions;
+using SkillsBooster.Application.Common.Interfaces;
+using SkillsBooster.Domain.Entities;
 
-namespace Application.Exercises.Commands.DeleteExercise
+namespace SkillsBooster.Application.Exercises.Commands.DeleteExercise
 {
     public class DeleteExerciseCommand : IRequest
     {

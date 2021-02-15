@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Exceptions;
 using FluentValidation;
 using MediatR;
+using SkillsBooster.Application.Common.Exceptions;
 
-namespace Application.Common.Behaviours
+namespace SkillsBooster.Application.Common.Behaviours
 {
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>

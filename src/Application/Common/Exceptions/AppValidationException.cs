@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 
-namespace Application.Common.Exceptions
+namespace SkillsBooster.Application.Common.Exceptions
 {
     public class AppValidationException : Exception
     {

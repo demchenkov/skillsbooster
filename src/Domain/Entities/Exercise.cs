@@ -1,6 +1,6 @@
-﻿using Domain.Enums;
+﻿using SkillsBooster.Domain.Enums;
 
-namespace Domain.Entities
+namespace SkillsBooster.Domain.Entities
 {
     public class Exercise
     {

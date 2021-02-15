@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace Application.Common.Mappings
+namespace SkillsBooster.Application.Common.Mappings
 {
     public interface IMapFrom<T>
     {   

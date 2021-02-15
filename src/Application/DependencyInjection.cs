@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
-using Application.Common.Behaviours;
-using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using SkillsBooster.Application.Common.Behaviours;
 
-namespace Application
+namespace SkillsBooster.Application
 {
     public static class DependencyInjection
     {

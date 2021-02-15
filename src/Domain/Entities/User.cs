@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+﻿namespace SkillsBooster.Domain.Entities
 {
     public class User
     {

@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Interfaces;
-using Application.Common.Mappings;
-using Application.Common.Models;
-using Application.Exercises.Dtos;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using SkillsBooster.Application.Common.Interfaces;
+using SkillsBooster.Application.Common.Mappings;
+using SkillsBooster.Application.Common.Models;
+using SkillsBooster.Application.Exercises.Dtos;
 
-namespace Application.Exercises.Queries
+namespace SkillsBooster.Application.Exercises.Queries
 {
     public class GetExercisesWithPaginationQuery: IRequest<PaginatedList<ExerciseDto>>
     {

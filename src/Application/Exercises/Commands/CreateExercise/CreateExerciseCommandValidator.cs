@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using SkillsBooster.Application.Common.Interfaces;
 
-namespace Application.Exercises.Commands.CreateExercise
+namespace SkillsBooster.Application.Exercises.Commands.CreateExercise
 {
     public class CreateExerciseCommandValidator : AbstractValidator<CreateExerciseCommand>
     {

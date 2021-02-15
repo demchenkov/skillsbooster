@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Common.Models
+namespace SkillsBooster.Application.Common.Models
 {
     public class PaginatedList<T> 
     {

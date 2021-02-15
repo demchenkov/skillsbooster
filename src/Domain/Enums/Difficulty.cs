@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums
+﻿namespace SkillsBooster.Domain.Enums
 {
     public enum Difficulty
     {

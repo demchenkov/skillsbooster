@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Interfaces;
-using Application.Exercises.Commands.CreateExercise;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using SkillsBooster.Application.Common.Interfaces;
+using SkillsBooster.Application.Exercises.Commands.CreateExercise;
 
-namespace Application.Exercises.Commands.UpdateExercise
+namespace SkillsBooster.Application.Exercises.Commands.UpdateExercise
 {
     public class UpdateExerciseCommandValidator : AbstractValidator<CreateExerciseCommand>
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Domain.Entities
+namespace SkillsBooster.Domain.Entities
 {
     public class Alliance
     {

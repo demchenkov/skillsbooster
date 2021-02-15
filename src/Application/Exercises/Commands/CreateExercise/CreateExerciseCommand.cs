@@ -1,13 +1,13 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Application.Common.Interfaces;
-using Application.Exercises.Dtos;
 using AutoMapper;
-using Domain.Entities;
-using Domain.Enums;
 using MediatR;
+using SkillsBooster.Application.Common.Interfaces;
+using SkillsBooster.Application.Exercises.Dtos;
+using SkillsBooster.Domain.Entities;
+using SkillsBooster.Domain.Enums;
 
-namespace Application.Exercises.Commands.CreateExercise
+namespace SkillsBooster.Application.Exercises.Commands.CreateExercise
 {
     public class CreateExerciseCommand : IRequest<ExerciseDto>
     {

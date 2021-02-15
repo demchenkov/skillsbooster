@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Application.Common.Models
+namespace SkillsBooster.Application.Common.Models
 {
     public class Result
     {

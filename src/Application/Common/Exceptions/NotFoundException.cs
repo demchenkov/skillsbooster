@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.Common.Exceptions
+namespace SkillsBooster.Application.Common.Exceptions
 {
     public class NotFoundException : Exception
     {
