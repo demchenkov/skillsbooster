@@ -1,0 +1,98 @@
+<div [class]="'theme-wrapper ' + (theme$ | async)">
+
+  <mat-sidenav-container>
+
+    <mat-sidenav #sidenav mode="push">
+      <div class="branding"><img [src]="logo" [alt]="logo">
+        <span></span>
+      </div>
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let item of navigationSideMenu" (click)="sidenav.close()" [routerLink]="[item.link]"
+          routerLinkActive="active">
+          {{item.label }}
+        </a>
+        <a mat-list-item href="https://github.com/tomastrajan/angular-ngrx-material-starter" target="_blank" rel="noopener noreferrer">
+          Github
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <div class="wrapper">
+
+      <div class="toolbar">
+        <mat-toolbar color="primary">
+          <button mat-icon-button class="d-md-none" (click)="sidenav.open()">
+            Open
+          </button>
+
+          <span routerLink="" class="branding spacer center d-inline d-sm-none">
+            <img [src]="logo" [alt]="logo"/>
+          </span>
+          <span routerLink="" class="branding spacer center d-none d-sm-inline d-md-none">
+            <img [src]="logo" [alt]="logo"/>
+            Skills Booster
+          </span>
+          <span routerLink="" class="branding spacer d-none d-md-inline">
+            <img [src]="logo"[alt]="logo" />
+            Skills Booster
+          </span>
+
+          <span class="d-none d-md-inline">
+            <button mat-button class="nav-button" *ngFor="let item of navigation" [routerLink]="[item.link]"
+              routerLinkActive="active">
+              {{item.label }}
+            </button>
+          </span>
+
+          <span *ngIf="!(isAuthenticated$ | async)" class="d-none d-md-inline">
+            <button mat-button class="nav-button" [routerLink]="['/authentication/register']" routerLinkActive="active">
+              Register
+            </button>
+            <button mat-button class="nav-button" [routerLink]="['/authentication/login']" routerLinkActive="active">
+              Login
+            </button>
+          </span>
+
+          <button *ngIf="isAuthenticated$ | async"
+                  mat-icon-button
+                  [matMenuTriggerFor]="toolbarUserMenu">
+            Profile
+          </button>
+          <mat-menu #toolbarUserMenu="matMenu">
+            <button mat-menu-item (click)="onLogoutClick()">
+              {{username$ | async}}
+            </button>
+          </mat-menu>
+
+          <span *ngIf="language$ | async as language">
+            <mat-select [ngModel]="language" (selectionChange)="onLanguageSelect($event)">
+              <mat-option *ngFor="let l of []" [value]="l">
+                {{ l.toUpperCase() }}
+              </mat-option>
+            </mat-select>
+          </span>
+        </mat-toolbar>
+      </div>
+
+      <div class="content" [@routeAnimations]="o.isActivated && o.activatedRoute.routeConfig.data && o.activatedRoute.routeConfig.data.title">
+        <router-outlet #o="outlet"></router-outlet>
+      </div>
+
+      <div class="footer">
+        <div class="row">
+          <div class="col-sm-12 links">
+<!--            TODO: Add Footer link here-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 signature">
+            &#169; <span class="year">{{year}}</span> - Vladyslav Demchenko
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </mat-sidenav-container>
+
+</div>

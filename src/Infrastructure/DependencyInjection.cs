@@ -27,11 +27,12 @@ namespace SkillsBooster.Infrastructure
             }
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IUserStore<ApplicationUser>, ApplicationUserStore>();
             
 
             services
                 .AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<IdentityRole<int>>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()

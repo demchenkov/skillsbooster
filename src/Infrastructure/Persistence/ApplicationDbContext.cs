@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SkillsBooster.Application.Common.Interfaces;
@@ -8,7 +9,7 @@ using SkillsBooster.Infrastructure.Identity;
 
 namespace SkillsBooster.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser, int>, IApplicationDbContext
+    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
         public ApplicationDbContext(
             DbContextOptions options, 
@@ -19,6 +20,7 @@ namespace SkillsBooster.Infrastructure.Persistence
         // public DbSet<Alliance> Alliances { get; set; }
         // public DbSet<Challenge> Challenges { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<User> AppUsers { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {

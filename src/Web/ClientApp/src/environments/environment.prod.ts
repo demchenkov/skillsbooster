@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  appName: 'SkillsBooster',
+  envName: 'PROD',
+  production: true,
+  test: false,
 };

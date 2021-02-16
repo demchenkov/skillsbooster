@@ -24,14 +24,14 @@ namespace SkillsBooster.Infrastructure.Identity
             _authorizationService = authorizationService;
         }
 
-        public async Task<string> GetUserNameAsync(int userId)
+        public async Task<string> GetUserNameAsync(string userId)
         {
             var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
             return user.UserName;
         }
 
-        public async Task<(Result Result, int UserId)> CreateUserAsync(string userName, string password)
+        public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
         {
             var user = new ApplicationUser
             {
@@ -44,14 +44,14 @@ namespace SkillsBooster.Infrastructure.Identity
             return (result.ToApplicationResult(), user.Id);
         }
 
-        public async Task<bool> IsInRoleAsync(int userId, string role)
+        public async Task<bool> IsInRoleAsync(string userId, string role)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
             return await _userManager.IsInRoleAsync(user, role);
         }
 
-        public async Task<bool> AuthorizeAsync(int userId, string policyName)
+        public async Task<bool> AuthorizeAsync(string userId, string policyName)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 
@@ -62,7 +62,7 @@ namespace SkillsBooster.Infrastructure.Identity
             return result.Succeeded;
         }
 
-        public async Task<Result> DeleteUserAsync(int userId)
+        public async Task<Result> DeleteUserAsync(string userId)
         {
             var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
 

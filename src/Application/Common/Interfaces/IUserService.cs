@@ -6,7 +6,6 @@ namespace SkillsBooster.Application.Common.Interfaces
 {
     public interface IUserService
     {
-        
         Task<User> GetUserAsync(int userId);
         Task<User> FindUserAsync(Func<User, bool> predicate);
     }

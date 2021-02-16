@@ -1,28 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
+import { CoreModule } from './core/core.module';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app/app.component';
+import {ApiAuthorizationModule} from "./core/api-authorization/api-authorization.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-  ],
   imports: [
+    // angular
+    BrowserAnimationsModule,
     BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-    { path: '', component: HomeComponent, pathMatch: 'full' },
-], { relativeLinkResolution: 'legacy' })
+
+    // core
+    CoreModule,
+
+    // app
+    AppRoutingModule,
+    ApiAuthorizationModule
   ],
-  providers: [],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

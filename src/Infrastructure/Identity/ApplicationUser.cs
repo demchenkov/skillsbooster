@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SkillsBooster.Domain.Entities;
 
 namespace SkillsBooster.Infrastructure.Identity
 {
-    public class ApplicationUser : IdentityUser<int>
+    public class ApplicationUser : IdentityUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public User User { get; set; }
     }
 }

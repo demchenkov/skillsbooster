@@ -1,0 +1,33 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import {ApiAuthorizationModule} from "./core/api-authorization/api-authorization.module";
+
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'about',
+    pathMatch: 'full'
+  },
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('./features/about/about.module').then((m) => m.AboutModule)
+  },
+  {
+    path: '**',
+    redirectTo: 'about'
+  }
+];
+
+@NgModule({
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      preloadingStrategy: PreloadAllModules,
+      relativeLinkResolution: 'legacy'
+    }),
+    ApiAuthorizationModule
+  ],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {}
