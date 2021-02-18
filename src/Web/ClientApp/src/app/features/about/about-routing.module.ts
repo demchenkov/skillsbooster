@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: AboutComponent,
-    data: { title: 'sb.menu.about' }
+    data: { title: 'About' }
   }
 ];
 

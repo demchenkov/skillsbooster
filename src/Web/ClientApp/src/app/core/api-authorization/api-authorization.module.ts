@@ -25,7 +25,8 @@ import { AuthorizeInterceptor } from "./authorize.interceptor";
     )
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }],
+    /* { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true } */
+  ],
   declarations: [LoginComponent, LogoutComponent],
   exports: [LoginComponent, LogoutComponent]
 })

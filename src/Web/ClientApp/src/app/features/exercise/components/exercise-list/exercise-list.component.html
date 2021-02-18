@@ -1,0 +1,43 @@
+<div class="container mat-elevation-z8">
+  <div class="loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
+  <div class="table-container">
+
+    <mat-table [dataSource]="data" class="example-table"
+           matSort matSortDisableClear matSortDirection="desc">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell  *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      </ng-container>
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+        <mat-cell  *matCellDef="let row">{{row.title}}</mat-cell>
+      </ng-container>
+
+      <!-- Difficulty Column -->
+      <ng-container matColumnDef="difficulty">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>State</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.difficulty}}</mat-cell>
+      </ng-container>
+
+      <!-- Max Score -->
+      <ng-container matColumnDef="score">
+        <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          Created
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.score | date}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row  *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/authentication/register']"></mat-row>
+    </mat-table>
+  </div>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="100"></mat-paginator>
+</div>

@@ -14,6 +14,11 @@ const routes: Routes = [
       import('./features/about/about.module').then((m) => m.AboutModule)
   },
   {
+    path: 'problems',
+    loadChildren: () =>
+      import('./features/exercise/exercise.module').then((m) => m.ExerciseModule)
+  },
+  {
     path: '**',
     redirectTo: 'about'
   }

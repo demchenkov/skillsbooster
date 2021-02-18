@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AboutComponent } from './about/about.component';
 import { AboutRoutingModule } from './about-routing.module';
-import {MatButtonModule} from "@angular/material/button";
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
   declarations: [AboutComponent],
