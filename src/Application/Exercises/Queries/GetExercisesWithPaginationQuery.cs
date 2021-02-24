@@ -1,13 +1,17 @@
 ﻿using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Newtonsoft.Json.Converters;
+using SkillsBooster.Application.Common.Extensions;
 using SkillsBooster.Application.Common.Interfaces;
 using SkillsBooster.Application.Common.Mappings;
 using SkillsBooster.Application.Common.Models;
 using SkillsBooster.Application.Exercises.Dtos;
+using SkillsBooster.Domain.Entities;
 
 namespace SkillsBooster.Application.Exercises.Queries
 {
@@ -15,6 +19,11 @@ namespace SkillsBooster.Application.Exercises.Queries
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
+        
+        public string FieldName { get; set; }
+        
+        [JsonConverter(typeof(StringEnumConverter))]
+        public OrderingDirection Order { get; set; }
     }
 
     public class GetExercisesWithPaginationQueryHandler: IRequestHandler<GetExercisesWithPaginationQuery, PaginatedList<ExerciseDto>>
@@ -30,8 +39,13 @@ namespace SkillsBooster.Application.Exercises.Queries
         
         public Task<PaginatedList<ExerciseDto>> Handle(GetExercisesWithPaginationQuery request, CancellationToken cancellationToken)
         {
-            return _context.Exercises
-                .OrderBy(x => x.Difficulty)
+            IQueryable<Exercise> query = _context.Exercises;
+            if (!string.IsNullOrWhiteSpace(request.FieldName))
+            {
+                query = query.OrderByWithDirection(_ => request.FieldName.FirstCharToUpper(), request.Order);
+            }
+            
+            return query
                 .ProjectTo<ExerciseDto>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);
         }

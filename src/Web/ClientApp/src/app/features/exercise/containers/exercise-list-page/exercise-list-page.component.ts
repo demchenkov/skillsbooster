@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Sort } from 'src/app/core';
+import { ExercisesService } from '../../services/exercises.service';
 
 @Component({
   selector: 'sb-exercise-list-page',
@@ -6,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExerciseListPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(public service: ExercisesService) { }
 
   ngOnInit(): void {
   }
 
+  onDataRequested(sort: Sort) {
+    this.service.loadPaginatedExercises(sort);
+  }
 }

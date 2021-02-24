@@ -1,0 +1,6 @@
+<div class="container">
+  <sb-exercise-list [data]="service.exercises$ | async"
+                    [isLoadingResults]="service.loading$ | async"
+                    (dataRequested)="onDataRequested($event)"
+  ></sb-exercise-list>
+</div>

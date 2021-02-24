@@ -11,6 +11,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {merge} from "rxjs";
 import {startWith} from "rxjs/operators";
+import { PaginatedList, Sort } from 'src/app/core';
+import { Exercise } from '../../entities';
 
 @Component({
   selector: 'sb-exercise-list',
@@ -20,14 +22,10 @@ import {startWith} from "rxjs/operators";
 })
 export class ExerciseListComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'title', 'difficulty', 'score'];
-  // TODO: data type model
-  @Input() data: any[] = [];
 
-  @Input() resultsLength = 0;
+  @Input() data: PaginatedList<Exercise>;
   @Input() isLoadingResults = true;
-
-  // TODO: create type for event
-  @Output() dataRequested = new EventEmitter<{sort: string, order: string, page: number}>()
+  @Output() dataRequested = new EventEmitter<Sort>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,12 +37,17 @@ export class ExerciseListComponent implements AfterViewInit {
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(startWith({}))
       .subscribe(() => {
-        const a = {
-          sort: this.sort.active,
+        const sort = Sort.fromObject({
+          fieldName: this.sort.active || null,
           order: this.sort.direction,
-          page: this.paginator.pageIndex
-        }
-        this.dataRequested.emit(a);
+          pageNumber: this.paginator.pageIndex + 1
+        });
+
+        this.dataRequested.emit(sort);
       });
+  }
+
+  getLink(row: Exercise): string {
+    return `./${row.id}`;
   }
 }
