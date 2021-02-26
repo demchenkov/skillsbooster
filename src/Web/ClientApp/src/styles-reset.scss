@@ -11,8 +11,18 @@ code {
   padding: 0 8px 1px 8px;
 }
 
+blockquote {
+  word-break: break-all;
+  padding-left: 12px;
+}
+
 p {
   a {
     border-bottom: 3px solid;
   }
+}
+
+router-outlet ~ * {
+  height: 100%;
+  display: block;
 }

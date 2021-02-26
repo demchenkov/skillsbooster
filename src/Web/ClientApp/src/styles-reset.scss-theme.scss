@@ -13,9 +13,12 @@
     }
   }
 
-  code {
-    color: mat-color($accent, lighter-contrast);
-    background-color: mat-color($accent, lighter);
+  blockquote {
+    border-left: 3px solid mat-color($accent, lighter);
+  }
+
+  hr {
+    border-top: 1px solid mat-color($accent, lighter);
   }
 
   p {

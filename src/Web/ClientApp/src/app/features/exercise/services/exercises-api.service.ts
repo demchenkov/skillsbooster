@@ -12,9 +12,6 @@ export class ExercisesApiService {
   constructor(private http: HttpClient) { }
 
   loadPaginatedExercises(sort?: Sort): Observable<PaginatedList<Exercise>> {
-    // const query = Object.entries(sort).map(([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`).join('&');
-    // const params = new HttpParams({fromString: query});
-
     const params = this.getParams(sort);
 
     return this.http.get(ExercisesApiService.URL, { params }).pipe(
@@ -22,11 +19,11 @@ export class ExercisesApiService {
     );
   }
 
-  private getParams(data: Object) {
+  private getParams(data: object) {
     if (data == null) {
       return new HttpParams();
     }
 
-    return Object.entries(data).reduce((query, [key, val]) => query.append(key, val), new HttpParams());
+    return Object.entries(data).reduce((query, [key, val]) => query.append(key, val.toString()), new HttpParams());
   }
 }

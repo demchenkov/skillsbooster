@@ -1,1 +1,17 @@
-<p>exercise-details works!</p>
+<mat-button-toggle-group [(ngModel)]="mode">
+  <mat-button-toggle value="raw" aria-label="Raw markdown">
+    <mat-icon>view_headline</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="both" aria-label="Raw and Visualized markdown">
+    <mat-icon>vertical_split</mat-icon>
+  </mat-button-toggle>
+  <mat-button-toggle value="result" aria-label="Visualized markdown">
+    <mat-icon>view_sidebar</mat-icon>
+  </mat-button-toggle>
+</mat-button-toggle-group>
+
+
+<div class="d-flex flex-grow-1 h-100">
+  <sb-editor *ngIf="isTextareaVisible()" class="flex-grow-1 mw-50 p-3" language="markdown" [code]="code" (codeChange)="onMarkdownChange($event)"></sb-editor>
+  <markdown *ngIf="isMarkdownVisible()" class="flex-grow-1 mw-50 p-3" [data]="code"></markdown>
+</div>

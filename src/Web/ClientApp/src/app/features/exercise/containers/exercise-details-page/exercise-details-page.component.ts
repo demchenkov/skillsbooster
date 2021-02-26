@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class ExerciseDetailsPageComponent implements OnInit {
   pageId: Observable<string>;
+  data = '';
 
   constructor(private route: ActivatedRoute) { }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'sb-exercise-details',
@@ -6,11 +6,22 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./exercise-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ExerciseDetailsComponent implements OnInit {
+export class ExerciseDetailsComponent {
+  mode: 'raw' | 'result' | 'both' = 'both';
 
-  constructor() { }
+  @Input() public code: string;
+  @Output() public codeChange = new EventEmitter<string>();
 
-  ngOnInit(): void {
+
+  onMarkdownChange(markdown: string) {
+    this.codeChange.emit(markdown);
   }
 
+  isMarkdownVisible() {
+    return this.mode === 'result' || this.mode === 'both';
+  }
+
+  isTextareaVisible() {
+    return this.mode === 'raw' || this.mode === 'both';
+  }
 }

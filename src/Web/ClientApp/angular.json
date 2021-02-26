@@ -25,13 +25,18 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
+              { "glob": "**/*", "input": "node_modules/ngx-monaco-editor/assets/monaco", "output": "./assets/monaco/" },
               "src/assets"
             ],
             "styles": [
+              "node_modules/prismjs/themes/prism-okaidia.css",
               "src/styles-app-loading.scss",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/marked/lib/marked.js",
+              "node_modules/prismjs/prism.js"
+            ]
           },
           "configurations": {
             "production": {

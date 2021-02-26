@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExerciseRoutingModule } from "./exercise-routing.module";
 import { ExerciseListPageComponent } from './containers/exercise-list-page/exercise-list-page.component';
@@ -12,20 +12,40 @@ import { ExercisesApiService, ExercisesService } from './services';
 import { HttpClientModule } from '@angular/common/http';
 import { ExerciseDetailsComponent } from './components/exercise-details/exercise-details.component';
 import { ExerciseDetailsPageComponent } from './containers/exercise-details-page/exercise-details-page.component';
-
+import { MarkdownModule } from 'ngx-markdown';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { EditorModule } from 'src/app/core/modules/editor/editor.module';
+import { ExerciseEditorPageComponent } from './containers/exercise-editor-page/exercise-editor-page.component';
 
 
 @NgModule({
-  declarations: [ExerciseListPageComponent, ExerciseDetailsPageComponent, ExerciseListComponent, ExerciseDetailsComponent],
+  declarations: [
+    ExerciseListPageComponent,
+    ExerciseDetailsPageComponent,
+    ExerciseListComponent,
+    ExerciseDetailsComponent,
+    ExerciseEditorPageComponent,
+  ],
   imports: [
     CommonModule,
+    FormsModule,
     ExerciseRoutingModule,
     HttpClientModule,
     MatTableModule,
     MatListModule,
     MatSortModule,
+    MatIconModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    EditorModule,
+    MarkdownModule.forRoot({
+      sanitize: SecurityContext.NONE
+    })
   ],
   providers: [ExercisesService, ExercisesApiService]
 })

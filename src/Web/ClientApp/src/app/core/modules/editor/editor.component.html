@@ -1,0 +1,6 @@
+<ngx-monaco-editor  [options]="editorOptions" 
+                    [contentEditable]="editable" 
+                    [ngModel]="code"
+                    (ngModelChange)="onCodeChange($event)"
+                    style="height: 100%;"
+></ngx-monaco-editor>
