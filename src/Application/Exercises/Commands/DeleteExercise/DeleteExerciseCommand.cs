@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SkillsBooster.Application.Common.Exceptions;
 using SkillsBooster.Application.Common.Interfaces;
 using SkillsBooster.Domain.Entities;
@@ -23,7 +24,7 @@ namespace SkillsBooster.Application.Exercises.Commands.DeleteExercise
 
         public async Task<Unit> Handle(DeleteExerciseCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Exercises.FindAsync(request.Id);
+            var entity = await _context.Exercises.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (entity == null)
             {

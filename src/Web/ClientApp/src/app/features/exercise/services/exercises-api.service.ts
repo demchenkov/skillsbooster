@@ -19,6 +19,31 @@ export class ExercisesApiService {
     );
   }
 
+  getExerciseById(id: number): Observable<Exercise> {
+    return this.http.get(`${ExercisesApiService.URL}/${id}`).pipe(
+      map(x => Exercise.fromJS(x))
+    );
+  }
+
+  createExercise(exercise: Partial<Exercise>): Observable<Exercise> {
+    return this.http.post(ExercisesApiService.URL, exercise).pipe(
+      map(x => Exercise.fromJS(x))
+    );
+  }
+
+  updateExercise(exercise: Partial<Exercise>): Observable<Exercise> {
+    return this.http.put(`${ExercisesApiService.URL}/${exercise.id}`, exercise).pipe(
+      map(x => Exercise.fromJS(x))
+    );
+  }
+
+  deleteExercise(id: number): Observable<void> {
+    return this.http.delete(`${ExercisesApiService.URL}/${id}`).pipe(
+      map(() => {})
+    );
+  }
+
+
   private getParams(data: object) {
     if (data == null) {
       return new HttpParams();

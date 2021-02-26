@@ -7,6 +7,7 @@
         public static class Exercises
         {
             public const string GetAll = BaseUrl + "/exercises";
+            public const string GetById = BaseUrl + "/exercises/{id}";
             public const string Create = BaseUrl + "/exercises";
             public const string Update = BaseUrl + "/exercises/{id}";
             public const string Delete = BaseUrl + "/exercises/{id}";
