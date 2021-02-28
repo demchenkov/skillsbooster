@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-
-import { environment as env } from '../../environments/environment';
-
 import {
   routeAnimations,
   LocalStorageService,
 } from '../core/core.module';
 import {map} from "rxjs/operators";
 import {AuthorizeService} from "../core/api-authorization/authorize.service";
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'sb-root',
@@ -17,14 +15,12 @@ import {AuthorizeService} from "../core/api-authorization/authorize.service";
   animations: [routeAnimations]
 })
 export class AppComponent implements OnInit {
-  isProd = env.production;
-  envName = env.envName;
-  version = '';
   year = new Date().getFullYear();
   logo = '';
 
   navigation = [
-    { link: 'about', label: 'sb.menu.about' },
+    { link: 'about', label: 'About' },
+    { link: 'problems', label: 'Problems'}
   ];
 
   navigationSideMenu = [
@@ -41,13 +37,16 @@ export class AppComponent implements OnInit {
   constructor(
     private storageService: LocalStorageService,
     private authorizeService: AuthorizeService,
+    private overlayContainer: OverlayContainer
   ) {
     this.isAuthenticated$ = this.authorizeService.isAuthenticated();
     this.username$ = this.authorizeService.getUser().pipe(map(u => u && u.name));
   }
 
   ngOnInit(): void {
-
+    this.theme$.subscribe(x => {
+      this.overlayContainer.getContainerElement().classList.add(x);
+    });
   }
 
   onLoginClick() {

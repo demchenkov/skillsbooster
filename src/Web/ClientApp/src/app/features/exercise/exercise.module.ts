@@ -19,6 +19,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EditorModule } from 'src/app/core/modules/editor/editor.module';
 import { ExerciseEditorPageComponent } from './containers/exercise-editor-page/exercise-editor-page.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
+
 
 
 @NgModule({
@@ -38,6 +44,10 @@ import { ExerciseEditorPageComponent } from './containers/exercise-editor-page/e
     MatListModule,
     MatSortModule,
     MatIconModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatButtonToggleModule,

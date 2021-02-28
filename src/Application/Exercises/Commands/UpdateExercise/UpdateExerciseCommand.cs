@@ -44,7 +44,7 @@ namespace SkillsBooster.Application.Exercises.Commands.UpdateExercise
             entity.MaxScore = request.MaxScore;
             entity.Difficulty = (Difficulty) request.Difficulty;
 
-            await _context.Exercises.AddAsync(entity, cancellationToken);
+            _context.Exercises.Update(entity);
             await _context.SaveChangesAsync(cancellationToken);
 
             return _mapper.Map<ExerciseDto>(entity);

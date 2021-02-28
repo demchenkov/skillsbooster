@@ -1,1 +1,48 @@
-<p>exercise-editor-page works!</p>
+<mat-spinner *ngIf="loading$ | async" style="position: absolute; top: calc(50% - 50px); left: calc(50% - 50px);"></mat-spinner>
+
+<div *ngIf="!(loading$ | async) && (exercise$ | async) as exercise" class="mt-3">
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <mat-form-field appearance="fill" class="w-75">
+          <mat-label>Title</mat-label>
+          <input matInput type="text" placeholder="Title" [(ngModel)]="exercise.title" required>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col text-center">
+        <mat-form-field appearance="fill" class="w-75">
+          <mat-label>Max Score</mat-label>
+          <input matInput type="number" placeholder="Title" [(ngModel)]="exercise.maxScore" required>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col text-center">
+        <mat-form-field appearance="fill" class="w-75">
+          <mat-label>Difficulty</mat-label>
+          <mat-select [(value)]="exercise.difficulty">
+            <mat-option [value]="option.key" *ngFor="let option of difficulties">{{ option.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <sb-exercise-details [(code)]="exercise.markdownBody" class="container-fluid"> </sb-exercise-details>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col text-center">
+        <mat-slide-toggle class="mx-3" disabled checked>
+          Published
+        </mat-slide-toggle>
+        <button mat-raised-button color="primary" (click)="saveExercise(exercise)" class="w-25">Save</button>
+      </div>
+    </div>
+  </div>
+
+</div>

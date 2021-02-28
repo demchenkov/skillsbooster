@@ -124,11 +124,11 @@ namespace SkillsBooster.Web
 
                 spa.Options.SourcePath = "ClientApp";
 
-                // if (env.IsDevelopment())
-                // {
-                //     spa.UseAngularCliServer(npmScript: "start");
-                //     spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://localhost:4200");
-                // }
+                if (env.IsDevelopment())
+                {
+                    // spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://localhost:4200");
+                }
             });
         }
     }

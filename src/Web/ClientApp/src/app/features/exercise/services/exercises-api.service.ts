@@ -49,6 +49,6 @@ export class ExercisesApiService {
       return new HttpParams();
     }
 
-    return Object.entries(data).reduce((query, [key, val]) => query.append(key, val.toString()), new HttpParams());
+    return Object.entries(data).reduce((query, [key, val]) => query.append(key, val?.toString()), new HttpParams());
   }
 }
