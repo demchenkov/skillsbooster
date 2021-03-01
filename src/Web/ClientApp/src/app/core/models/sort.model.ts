@@ -6,7 +6,7 @@ export class Sort {
   public pageNumber: number;
 
   constructor(fieldName: string, order: SortDirection, pageNumber: number) {
-    this.fieldName = fieldName || null;
+    this.fieldName = fieldName ?? null;
     this.order = order || '';
     this.pageNumber = pageNumber || 1;
   }

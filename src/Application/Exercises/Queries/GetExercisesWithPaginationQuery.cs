@@ -42,7 +42,7 @@ namespace SkillsBooster.Application.Exercises.Queries
             IQueryable<Exercise> query = _context.Exercises;
             if (!string.IsNullOrWhiteSpace(request.FieldName))
             {
-                query = query.OrderByWithDirection(_ => request.FieldName.FirstCharToUpper(), request.Order);
+                query = query.OrderByWithDirection(request.FieldName.FirstCharToUpper(), request.Order);
             }
             
             return query

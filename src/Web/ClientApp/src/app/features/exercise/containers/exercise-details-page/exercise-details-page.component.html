@@ -1,0 +1,33 @@
+<mat-spinner *ngIf="loading$ | async" style="position: absolute; top: calc(50% - 50px); left: calc(50% - 50px);"></mat-spinner>
+
+<div *ngIf="!(loading$ | async) && (exercise$ | async) as exercise" class="container-fluid d-flex flex-column h-100">
+  <div class="row">
+    <div class="col-7"></div>
+    <div class="col-2">
+      <mat-form-field appearance="fill">
+        <mat-label>Language</mat-label>
+        <mat-select [(value)]="language">
+          <mat-option [value]="lang.id" *ngFor="let lang of languages">{{ lang.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-2 d-flex justify-content-end align-items-center">
+      <button mat-raised-button color="accent">Submit</button>
+      <button mat-raised-button [routerLink]="['edit']" color="warn">Edit</button>
+    </div>
+  </div>
+  <div class="row flex-grow-1">
+    <div class="col-6">
+      <div class="d-block">
+        <markdown [data]="exercise.markdownBody" style="overflow-y: auto;"></markdown>
+      </div>
+    </div>
+    <div class="col-6">
+      <span *ngIf="loading$ | async">Editor is loading... Please wait!</span>
+      <sb-editor  [language]="language" 
+                  [(code)]="code" 
+                  (editorInit)="onEditorInit()"
+      ></sb-editor>
+    </div>
+  </div>
+</div>

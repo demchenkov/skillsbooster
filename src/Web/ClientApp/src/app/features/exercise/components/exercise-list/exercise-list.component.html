@@ -21,15 +21,15 @@
       <!-- Difficulty Column -->
       <ng-container matColumnDef="difficulty">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Difficulty</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.difficulty}}</mat-cell>
+        <mat-cell *matCellDef="let row">{{ getDifficultyName(row.difficulty) }}</mat-cell>
       </ng-container>
 
       <!-- Max Score -->
-      <ng-container matColumnDef="score">
+      <ng-container matColumnDef="maxScore">
         <mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
           Score
         </mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.score}}</mat-cell>
+        <mat-cell *matCellDef="let row">{{row.maxScore}}</mat-cell>
       </ng-container>
 
       <mat-header-row  *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>

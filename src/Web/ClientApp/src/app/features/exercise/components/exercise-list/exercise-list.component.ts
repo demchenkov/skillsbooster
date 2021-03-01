@@ -12,7 +12,7 @@ import {MatSort} from "@angular/material/sort";
 import {merge} from "rxjs";
 import {startWith} from "rxjs/operators";
 import { PaginatedList, Sort } from 'src/app/core';
-import { Exercise } from '../../entities';
+import { Difficulty, Exercise } from '../../entities';
 
 @Component({
   selector: 'sb-exercise-list',
@@ -21,7 +21,7 @@ import { Exercise } from '../../entities';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExerciseListComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'title', 'difficulty', 'score'];
+  displayedColumns: string[] = ['id', 'title', 'difficulty', 'maxScore'];
 
   @Input() data: PaginatedList<Exercise>;
   @Input() isLoadingResults = true;
@@ -49,5 +49,9 @@ export class ExerciseListComponent implements AfterViewInit {
 
   getLink(row: Exercise): string {
     return `./${row.id}`;
+  }
+
+  getDifficultyName(difficulty: Difficulty) {
+    return Difficulty[difficulty];
   }
 }

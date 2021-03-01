@@ -37,7 +37,9 @@ export class ExercisesService {
 
 
   updateExercise(exercise: Partial<Exercise>) {
-    this.apiService.updateExercise(exercise).subscribe();
+    const result = this.apiService.updateExercise(exercise);
+    result.subscribe();
+    return result;
   }
 
 }

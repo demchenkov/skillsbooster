@@ -1,4 +1,4 @@
-<ngx-monaco-editor  [options]="editorOptions" 
+<ngx-monaco-editor  [options]="editorOptions$ | async" 
                     [contentEditable]="editable" 
                     [ngModel]="code"
                     (ngModelChange)="onCodeChange($event)"

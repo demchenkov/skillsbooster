@@ -1,6 +1,6 @@
 import { KeyValue } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Exercise, DifficultyDictionary } from '../../entities';
@@ -17,7 +17,7 @@ export class ExerciseEditorPageComponent implements OnInit {
 
   difficulties: KeyValue<number, string>[] = DifficultyDictionary;
 
-  constructor(private route: ActivatedRoute, private service: ExercisesService) { }
+  constructor(private route: ActivatedRoute, private service: ExercisesService, private router: Router) { }
 
   ngOnInit(): void {
     this.pageId$ = this.route.paramMap.pipe(map(x => {
@@ -36,6 +36,7 @@ export class ExerciseEditorPageComponent implements OnInit {
 
 
   saveExercise(exercise: Exercise) {
-    this.service.updateExercise(exercise);
+    this.service.updateExercise(exercise)
+      .subscribe(x => this.router.navigate(['problems', x.id]));
   }
 }
