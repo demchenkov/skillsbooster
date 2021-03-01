@@ -19,6 +19,11 @@ const routes: Routes = [
       import('./features/exercise/exercise.module').then((m) => m.ExerciseModule)
   },
   {
+    path: 'alliances',
+    loadChildren: () =>
+      import('./features/alliance/alliance.module').then((m) => m.AllianceModule)
+  },
+  {
     path: '**',
     redirectTo: 'about'
   }
