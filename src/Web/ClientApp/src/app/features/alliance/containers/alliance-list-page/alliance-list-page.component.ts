@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
 
 @Component({
   selector: 'sb-alliance-list-page',
@@ -8,9 +10,17 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class AllianceListPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(EditAllianceModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

@@ -1,0 +1,23 @@
+<mat-form-field class="w-100">
+  <mat-select #matSelectInfiniteScroll
+              msInfiniteScroll
+              (infiniteScroll)="getNextBatch()"
+              [multiple]="multiple"
+              [formControl]="selectCtrl"
+              [placeholder]="selectPlaceholder">
+    <mat-option>
+      <!--disableScrollToActiveOnOptionsChanged should be set to true-->
+      <ngx-mat-select-search
+        [searching]="loading"
+        [formControl]="searchCtrl"
+        [placeholderLabel]="searchPlaceholder"
+        [disableScrollToActiveOnOptionsChanged]="true"
+        [noEntriesFoundLabel]="noEntriesFoundLabel">
+      </ngx-mat-select-search>
+    </mat-option>
+    <mat-option *ngFor="let entity of filteredBatchedData$ | async"
+                [value]="valueGetter(entity)">
+      {{textGetter(entity)}}
+    </mat-option>
+  </mat-select>  
+</mat-form-field>

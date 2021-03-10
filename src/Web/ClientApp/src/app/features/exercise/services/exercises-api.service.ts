@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedList, Sort } from 'src/app/core';
+import { HttpParamsUtils } from 'src/app/core/http-utils';
 import { Exercise } from '../entities';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class ExercisesApiService {
   constructor(private http: HttpClient) { }
 
   loadPaginatedExercises(sort?: Sort): Observable<PaginatedList<Exercise>> {
-    const params = this.getParams(sort);
+    const params = HttpParamsUtils.getParams(sort);
 
     return this.http.get(ExercisesApiService.URL, { params }).pipe(
       map(x => PaginatedList.fromObject<Exercise>(x))
@@ -41,16 +42,5 @@ export class ExercisesApiService {
     return this.http.delete(`${ExercisesApiService.URL}/${id}`).pipe(
       map(() => {})
     );
-  }
-
-
-  private getParams(data: object) {
-    if (data == null) {
-      return new HttpParams();
-    }
-
-    return Object.entries(data)
-      .filter(([key, val]) => key != null && val != null)
-      .reduce((query, [key, val]) => query.append(key, val?.toString()), new HttpParams());
   }
 }

@@ -1,0 +1,23 @@
+<div class="d-flex align-items-center">
+  <h4>{{title}}</h4>
+  <button class="ml-auto" mat-icon-button mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+  <div mat-dialog-content>
+   <ng-content></ng-content>
+  </div>
+
+<div class="d-flex justify-content-end mt-2" mat-dialog-actions>
+  <button class="base-button"
+          mat-button
+          mat-dialog-close
+          mat-stroked-button>Cancel
+  </button>
+  <button (click)="onConfirm()"
+          class="base-button ml-3 submit-btn"
+          color="primary"
+          [disabled]="isDisabled"
+          mat-flat-button>{{action}}</button>
+</div>

@@ -1,0 +1,45 @@
+<div class="container mat-elevation-z8">
+  <div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="table-container">
+
+    <mat-table [dataSource]="data.items" matSort matSortDisableClear matSortDirection="desc">
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell  *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      </ng-container>
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+        <mat-cell  *matCellDef="let row">{{row.title}}</mat-cell>
+      </ng-container>
+
+      <!-- Is Passed Column -->
+      <ng-container matColumnDef="isPassed">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Is Passed</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.isPassed }}%</mat-cell>
+      </ng-container>
+
+      <!-- Acceptance Column -->
+      <ng-container matColumnDef="acceptance">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Acceptance</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.acceptance}}</mat-cell>
+      </ng-container>
+
+      <!-- Submitted By Column -->
+      <ng-container matColumnDef="submittedBy">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Submitted By</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.submittedBy}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row  *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="getLink(row)"></mat-row>
+    </mat-table>
+  </div>
+
+  <mat-paginator [length]="data.totalCount" [pageSize]="10"></mat-paginator>
+</div>

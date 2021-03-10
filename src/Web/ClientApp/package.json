@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^5.1.0",
     "@angular/animations": "11.2.0",
     "@angular/cdk": "^11.2.0",
     "@angular/common": "11.2.0",
@@ -25,7 +26,9 @@
     "@angular/router": "11.2.0",
     "bootstrap": "^4.5.3",
     "core-js": "^3.8.3",
+    "ng-mat-select-infinite-scroll": "^2.1.1",
     "ngx-markdown": "^11.1.0",
+    "ngx-mat-select-search": "^3.2.0",
     "ngx-monaco-editor": "^9.0.0",
     "oidc-client": "^1.11.4",
     "popper.js": "^1.16.0",
