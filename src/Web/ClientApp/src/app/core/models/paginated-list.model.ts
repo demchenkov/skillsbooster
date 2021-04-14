@@ -5,6 +5,8 @@ export class PaginatedList<T> {
   public totalCount: number;
   public pageIndex: number;
 
+  public hasNextPage: boolean;
+  public hasPrevPage: boolean;
 
   static fromObject<T>(data: any, itemsAdapter: (entity: any) => T = PaginatedList.defaultAdapter): PaginatedList<T> {
     if (data == null) {
@@ -20,6 +22,8 @@ export class PaginatedList<T> {
     list.totalPages = data.totalPages;
     list.totalCount = data.totalCount;
     list.pageIndex = data.pageIndex;
+    list.hasNextPage = data.hasNextPage;
+    list.hasPrevPage = data.hasPrevPage;
     return list;
   }
 

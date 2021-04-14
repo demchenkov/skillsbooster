@@ -4,8 +4,20 @@
   </div>
 
   <div class="table-container">
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Difficulty</mat-label>
+        <mat-select>
+          <mat-option>All</mat-option>
+          <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty">
+            {{getDifficultyName(difficulty)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-table [dataSource]="data.items" matSort matSortDisableClear matSortDirection="desc">
+    </div>
+
+    <mat-table [dataSource]="data.items" matSort matSortDirection="desc">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell  *matHeaderCellDef>#</mat-header-cell>
@@ -21,7 +33,11 @@
       <!-- Difficulty Column -->
       <ng-container matColumnDef="difficulty">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Difficulty</mat-header-cell>
-        <mat-cell *matCellDef="let row">{{ getDifficultyName(row.difficulty) }}</mat-cell>
+        <mat-cell *matCellDef="let row">
+          <span class="badge rounded-pill" [class]="getDifficultyCssClass(row.difficulty)"> 
+            {{ getDifficultyName(row.difficulty) }}
+          </span>
+        </mat-cell>
       </ng-container>
 
       <!-- Max Score -->
@@ -32,7 +48,7 @@
         <mat-cell *matCellDef="let row">{{row.maxScore}}</mat-cell>
       </ng-container>
 
-      <mat-header-row  *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="getLink(row)"></mat-row>
     </mat-table>
   </div>

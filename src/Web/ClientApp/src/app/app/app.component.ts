@@ -19,8 +19,10 @@ export class AppComponent implements OnInit {
   logo = '';
 
   navigation = [
+    { link: 'problems', label: 'Problems'},
+    { link: 'alliances', label: 'Alliances'},
+    { link: 'duels/my', label: 'Duels' },
     { link: 'about', label: 'About' },
-    { link: 'problems', label: 'Problems'}
   ];
 
   navigationSideMenu = [

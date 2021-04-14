@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material/select';
 import { combineLatest, merge, Observable, Subject } from 'rxjs';
-import { debounceTime, mapTo, scan, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, mapTo, scan, switchMap, takeUntil } from 'rxjs/operators';
 
 export interface LoadNextPageEvent {
   search: string;
@@ -26,6 +26,8 @@ export class InfinitySelectComponent implements OnInit {
   @Input() loading: boolean;
   
   @Input() multiple = false;
+  @Input() currentPageIndex = 0;
+  @Input() hasNextPage = true;
   
   @Input() valueGetter: (entity: any) => any = (entity) => entity.id;
   @Input() textGetter: (entity: any) => any = (entity) => entity.title;
@@ -44,13 +46,14 @@ export class InfinitySelectComponent implements OnInit {
 
   private incrementPageNumber$: Subject<void> = new Subject<void>();
   private resetPageNumber$: Subject<void> = new Subject<void>();
+  private accumulatedData$: Observable<any[]>;
 
   /** page number */
   private pageNumber$: Observable<number>;
   /** control for the search input value */
   searchCtrl: FormControl = new FormControl();
   /** list of data, filtered by the search keyword, limited to the length accumulated by infinity scrolling */
-  filteredBatchedData$: Observable<any[]>;
+  displayedData$: Observable<any[]>;
 
   
   private destroy$: Subject<void> = new Subject<void>();
@@ -58,10 +61,19 @@ export class InfinitySelectComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    combineLatest([this.searchCtrl.valueChanges, this.infiniteScrollSelect.openedChange])
+    this.accumulatedData$ = this.filteredData$.pipe(
+      scan((acc, arr) => {
+        arr.forEach(x => acc.set(this.valueGetter(x), x));
+        return acc;
+      }, new Map<any, any>()),
+      map(x => [...x.values()])
+    );
+
+    const a = this.searchCtrl.valueChanges.pipe(debounceTime(this.debounceTime));
+
+    combineLatest([a, this.infiniteScrollSelect.openedChange])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([_, opened]) => {
-        console.log('changes')
         if (opened) {
           this.resetPageNumber$.next();
         }
@@ -71,32 +83,36 @@ export class InfinitySelectComponent implements OnInit {
     const doIncrement$ = merge(
       this.incrementPageNumber$.pipe(mapTo(true)),
       this.resetPageNumber$.pipe(mapTo(false))
-    );
+    ).pipe(takeUntil(this.destroy$));
+  
 
-    this.pageNumber$ = doIncrement$.pipe(
-      scan((pageNumber, doIncrement) => {
-        return doIncrement ? pageNumber + 1 : 0;
-      }, 0),
-    );
-
-    this.pageNumber$
-      .pipe(
-        takeUntil(this.destroy$),
-        debounceTime(this.debounceTime)
-      )
-      .subscribe((page) => {
+    doIncrement$
+      .subscribe(doIncrement => {
         const search = this.searchCtrl.value;
-        this.nextPageRequested.emit({search, page, pageSize: this.batchSize});
-      });
-
-    this.filteredBatchedData$ = combineLatest([this.pageNumber$, this.filteredData$])
-      .pipe(scan((arr, [doIncrement, data]) => {
-        if (doIncrement) {
-          arr.push(...data);
-          return arr;
+        if (this.hasNextPage || !doIncrement) {
+          const page = this.hasNextPage && doIncrement ? this.currentPageIndex + 1 : 0;
+          this.nextPageRequested.emit({search, page, pageSize: this.batchSize});
         }
-        return [...data]
-      }, []));
+      });
+    
+    const filteredData$ = merge(
+      doIncrement$.pipe(map(doIncrement => !doIncrement ? null : [])), // if equals zero reset, else skip
+      this.filteredData$
+    )
+      .pipe(scan((arr, state) => state === null ? [] : arr.concat(state), []));
+
+    const selectedData$ = combineLatest([this.selectCtrl.valueChanges as Observable<any[]>, this.accumulatedData$])
+      .pipe(
+        map(([selectedItems, acc]) => acc.filter(x => selectedItems.includes(this.valueGetter(x)))),
+        takeUntil(this.destroy$));
+    
+    // this.displayedData$ = this.infiniteScrollSelect.openedChange
+    //   .pipe(
+    //     switchMap(opened => opened ? filteredData$ : selectedData$),
+    //     takeUntil(this.destroy$)
+    //   )
+    this.displayedData$ = filteredData$;
+    
   }
 
   ngOnDestroy() {

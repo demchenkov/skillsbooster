@@ -22,6 +22,11 @@ import { AllianceChallengeExercisesPageComponent } from './containers/alliance-c
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ExercisesApiService } from '../exercise/services';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
+
+import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/acceptance-list.module';
 
 
 
@@ -29,7 +34,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   declarations: [
     AllianceListPageComponent,
     AllianceDetailsPageComponent, 
-    AllianceAdminPageComponent, EditAllianceModalComponent, AllianceChallengesPageComponent, AllianceChallengeExercisesPageComponent
+    AllianceAdminPageComponent, 
+    EditAllianceModalComponent,
+    AllianceChallengesPageComponent,
+    AllianceChallengeExercisesPageComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +45,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    MatSortModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
@@ -46,12 +55,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatPaginatorModule,
     InfinitySelectModule,
     MatInputModule,
-    MatDatepickerModule,
     UiModalModule,
+    MatDatepickerModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+    AcceptanceListModule,
+    MatTabsModule
   ],
-  providers: [AlliancesApiService, AlliancesService]
+  providers: [AlliancesApiService, ExercisesApiService]
 })
 export class AllianceModule { }

@@ -5,6 +5,7 @@ import { ExercisesService } from '../../services/exercises.service';
 @Component({
   selector: 'sb-exercise-list-page',
   templateUrl: './exercise-list-page.component.html',
+  providers: [ExercisesService]
 })
 export class ExerciseListPageComponent implements OnInit {
 

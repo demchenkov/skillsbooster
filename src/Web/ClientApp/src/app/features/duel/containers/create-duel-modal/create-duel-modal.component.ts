@@ -4,48 +4,36 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Filter } from 'src/app/core/models/filter.model';
 import { LoadNextPageEvent } from 'src/app/core/modules/infinity-select/infinity-select.component';
-import { Alliance } from 'src/app/domain/entities';
 import { Exercise } from 'src/app/features/exercise/entities';
 import { ExercisesService } from 'src/app/features/exercise/services';
-import { AlliancesService } from '../../services/alliances.service';
 
 @Component({
-  selector: 'sb-edit-alliance-modal',
-  templateUrl: './edit-alliance-modal.component.html',
-  styleUrls: ['./edit-alliance-modal.component.scss'],
+  selector: 'sb-create-duel-modal',
+  templateUrl: './create-duel-modal.component.html',
+  styleUrls: ['./create-duel-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [AlliancesService, ExercisesService]
+  providers: [ExercisesService]
 })
-export class EditAllianceModalComponent implements OnInit {
+export class CreateDuelModalComponent implements OnInit {
   form: FormGroup;
-  alliancePaginatedList$: Observable<Alliance[]> = this.alliancesService.Alliances$.pipe(map(x => x.items)); 
-  allianceSearching$: Observable<boolean> = this.alliancesService.loading$;
   exercisePaginatedList$: Observable<Exercise[]> = this.exercisesService.exercises$.pipe(map(x => x.items)); 
   exercisePageIndex$: Observable<number> = this.exercisesService.exercises$.pipe(map(x => x.pageIndex)); 
   exerciseHasNextPage$ = this.exercisesService.exercises$.pipe(map(x => x.hasNextPage));
   exerciseSearching$: Observable<boolean> = this.exercisesService.loading$;
 
-
   constructor(
     private fb: FormBuilder, 
-    private alliancesService: AlliancesService,
     private exercisesService: ExercisesService
     ) { }
 
-  ngOnInit() {
-    this.form = this.fb.group({
-      title: [, [Validators.required]],
-      alliances: [[], [Validators.required]],
-      exercises: [[], [Validators.required]],
-      startDate: [new Date()],
-      finishDate: [new Date()],
-    });
-  }
-
-  onAlliancesNextPageRequested(event: LoadNextPageEvent) {
-    const filter = new Filter('id', event.search, event.page);
-    this.alliancesService.loadPaginatedAlliances(filter);
-  }
+    ngOnInit() {
+      this.form = this.fb.group({
+        title: [, [Validators.required]],
+        exercises: [[], [Validators.required]],
+        startDate: [new Date()],
+        finishDate: [new Date()],
+      });
+    }
 
   onExercisesNextPageRequested(event: LoadNextPageEvent) {
     const filter = new Filter('id', event.search, event.page);

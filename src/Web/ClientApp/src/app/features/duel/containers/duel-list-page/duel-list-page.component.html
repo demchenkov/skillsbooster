@@ -1,0 +1,32 @@
+<div class="container-lg mat-elevation-z8 py-5">
+  <div class="row justify-content-center mb-3">
+    <h2>My Challenges</h2>
+  </div>
+  <div class="row justify-content-around">
+    <div class="col-5 p-3 border">
+      <h4 class="pb-3 text-center border-bottom">Duels</h4>
+      <div class="row px-3">
+        <sb-acceptance-list [buttons]="listButtons"
+                            [entities]="duels"
+                            [loading]="duelsLoading"
+                            (clicked)="redirectToDuel($event)"
+        ></sb-acceptance-list>
+      </div>
+      <div class="row px-3">
+        <div class="d-flex justify-content-center w-100 my-3">
+          <button class="btn btn-primary w-75" (click)="createDuel()">New Duel</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-5 p-3 border">
+      <h4 class="pb-3 text-center border-bottom">Alliances Challenges</h4>
+      <div class="row px-3">
+        <sb-acceptance-list [buttons]="listButtons"
+                            [entities]="duels"
+                            [loading]="duelsLoading"
+                            (clicked)="redirectToDuel($event)"
+        ></sb-acceptance-list>
+      </div>
+    </div>
+  </div>
+</div>

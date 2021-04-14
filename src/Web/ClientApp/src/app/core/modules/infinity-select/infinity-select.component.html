@@ -15,7 +15,7 @@
         [noEntriesFoundLabel]="noEntriesFoundLabel">
       </ngx-mat-select-search>
     </mat-option>
-    <mat-option *ngFor="let entity of filteredBatchedData$ | async"
+    <mat-option *ngFor="let entity of displayedData$ | async"
                 [value]="valueGetter(entity)">
       {{textGetter(entity)}}
     </mat-option>

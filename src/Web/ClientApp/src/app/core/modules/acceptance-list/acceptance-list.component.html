@@ -1,0 +1,20 @@
+<mat-progress-bar class="mt-4" *ngIf="loading; else list" mode="indeterminate"></mat-progress-bar>
+
+<ng-template #list>
+  <mat-list *ngIf="entities != null && entities.length > 0; else noData" class="w-100 mat-nav-list">
+    <mat-list-item *ngFor="let row of entities">
+      <button *ngFor="let button of buttons" 
+              mat-icon-button 
+              [color]="button.color"
+              (click)="click(button.button, row)"
+      >
+        <mat-icon>{{button.iconName}}</mat-icon>
+      </button>
+      <div mat-line>{{titleGetter(row)}}</div>
+    </mat-list-item>
+  </mat-list>
+</ng-template>
+
+<ng-template #noData>
+  <h6 class="text-center">No data to display</h6>
+</ng-template>

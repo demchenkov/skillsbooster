@@ -8,9 +8,9 @@
   a {
     color: mat-color($foreground, text);
 
-    &:hover {
-      color: mat-color($accent);
-    }
+    // &:hover {
+    //   color: mat-color($accent);
+    // }
   }
 
   blockquote {

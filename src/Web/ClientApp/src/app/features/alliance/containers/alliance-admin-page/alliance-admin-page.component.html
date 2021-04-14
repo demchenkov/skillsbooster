@@ -4,36 +4,24 @@
   </div>
   <div class="row justify-content-around">
     <div class="col-5 p-3 border">
-      <h4 class="mb-3">Users requests</h4>
+      <h4 class="pb-3 text-center border-bottom">Users requests</h4>
       <div class="row px-3">
-        <mat-list class="w-100 mat-nav-list" >
-          <mat-list-item *ngFor="let folder of ['1', '2', '3', '4']">
-            <button mat-icon-button color="accent">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button mat-icon-button color="warn">
-              <mat-icon>close</mat-icon>
-            </button>
-            <div mat-line>{{folder}}</div>
-          </mat-list-item>
-        </mat-list>
+        <sb-acceptance-list [entities]="users"
+                            (clicked)="usersListClicked($event)"
+        ></sb-acceptance-list>
       </div>
     </div>
     <div class="col-5 p-3 border">
-      <h4 class="mb-3">Challenge requests</h4>
+      <h4 class="pb-3 text-center border-bottom">Challenge requests</h4>
       <div class="row px-3">
-        <mat-list class="w-100 mat-nav-list" >
-          <mat-list-item *ngFor="let folder of ['1', '2', '3', '4']">
-            <button mat-icon-button color="accent">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button mat-icon-button color="warn">
-              <mat-icon>close</mat-icon>
-            </button>
-            <div mat-line>{{folder}}</div>
-          </mat-list-item>
-        </mat-list>
+        <sb-acceptance-list [entities]="challenges"
+                            [loading]="true"
+                            (clicked)="challengesListClicked($event)"
+        ></sb-acceptance-list>
       </div>
     </div>
+  </div>
+  <div class="row justify-content-center m-3">
+    <button class="btn btn-primary w-75" (click)="createChallenge()">New Challenge</button>
   </div>
 </div>

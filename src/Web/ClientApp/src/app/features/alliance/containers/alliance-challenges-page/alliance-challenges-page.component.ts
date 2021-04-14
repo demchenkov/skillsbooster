@@ -10,7 +10,7 @@ import { EditAllianceModalComponent } from '../../components/edit-alliance-modal
 })
 export class AllianceChallengesPageComponent implements OnInit {
 
-  @Input() isLoadingResults = true;
+  @Input() isLoadingResults = false;
   @Input() data = { items: [], totalCount: 0 };
   displayedColumns: string[] = ['id', 'title', 'isPassed', 'acceptance', 'submittedBy'];
 

@@ -1,19 +1,9 @@
 <sb-modal (confirm)="onConfirm()" title="Start Challenge">
   <form [formGroup]="form">
     <mat-form-field class="w-100">
-      <mat-label>Alliance Challenge Title</mat-label>
+      <mat-label>Duel Title</mat-label>
       <input matInput placeholder="Title" formControlName="title">
     </mat-form-field>
-
-    <sb-infinity-select
-      class="d-block w-100"
-      [multiple]="true"
-      [selectPlaceholder]="'List of Alliances'"
-      [loading]="allianceSearching$ | async"
-      [selectCtrl]="$any(form.get('alliances'))"
-      [filteredData$]="alliancePaginatedList$"
-      (nextPageRequested)="onAlliancesNextPageRequested($event)"
-    ></sb-infinity-select>
 
     <sb-infinity-select
       class="d-block w-100"

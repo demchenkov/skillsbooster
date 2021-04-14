@@ -9,6 +9,7 @@ import { ExercisesService } from '../../services';
 @Component({
   selector: 'sb-exercise-editor-page',
   templateUrl: './exercise-editor-page.component.html',
+  providers: [ExercisesService]
 })
 export class ExerciseEditorPageComponent implements OnInit {
   pageId$: Observable<number>;

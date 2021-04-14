@@ -24,6 +24,11 @@ const routes: Routes = [
       import('./features/alliance/alliance.module').then((m) => m.AllianceModule)
   },
   {
+    path: 'duels',
+    loadChildren: () =>
+      import('./features/duel/duel.module').then((m) => m.DuelModule)
+  },
+  {
     path: '**',
     redirectTo: 'about'
   }

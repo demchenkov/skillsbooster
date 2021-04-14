@@ -30,6 +30,15 @@ export class ExerciseListComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  private difficultyClassesDict = {
+    [Difficulty.Easy]: 'badge-info',
+    [Difficulty.Normal]: 'badge-success',
+    [Difficulty.Hard]: 'badge-warning',
+    [Difficulty.Extreme]: 'badge-danger',
+  }
+
+  difficulties = Object.values(Difficulty).filter(x => Number.isInteger(x)) as Difficulty[];
+
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -53,5 +62,9 @@ export class ExerciseListComponent implements AfterViewInit {
 
   getDifficultyName(difficulty: Difficulty) {
     return Difficulty[difficulty];
+  }
+
+  getDifficultyCssClass(difficulty: Difficulty) {
+    return this.difficultyClassesDict[difficulty];
   }
 }

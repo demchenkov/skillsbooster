@@ -57,6 +57,6 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
       sanitize: SecurityContext.NONE
     })
   ],
-  providers: [ExercisesService, ExercisesApiService]
+  providers: [ExercisesApiService]
 })
 export class ExerciseModule { }
