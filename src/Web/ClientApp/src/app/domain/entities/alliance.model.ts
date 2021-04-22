@@ -28,5 +28,4 @@ export const Alliances = [
   Alliance.fromObject({id: 8, title: 'Title 8', leader: 'Demchenko', rating: 8}),
   Alliance.fromObject({id: 9, title: 'Title 9', leader: 'Demchenko', rating: 9}),
   Alliance.fromObject({id: 10, title: 'Title 10', leader: 'Demchenko', rating: 10}),
-  Alliance.fromObject({id: 11, title: 'Title 11', leader: 'Demchenko', rating: 11}),
 ]

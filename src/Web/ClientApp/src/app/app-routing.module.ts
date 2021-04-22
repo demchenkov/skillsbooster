@@ -29,6 +29,11 @@ const routes: Routes = [
       import('./features/duel/duel.module').then((m) => m.DuelModule)
   },
   {
+    path: 'challenges',
+    loadChildren: () =>
+      import('./features/challenge/challenge.module').then((m) => m.ChallengeModule)
+  },
+  {
     path: '**',
     redirectTo: 'about'
   }

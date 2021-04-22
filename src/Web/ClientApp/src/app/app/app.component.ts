@@ -16,7 +16,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 })
 export class AppComponent implements OnInit {
   year = new Date().getFullYear();
-  logo = '';
+  logo = '../../assets/logo.svg';
 
   navigation = [
     { link: 'problems', label: 'Problems'},

@@ -14,7 +14,7 @@ import { ExerciseDetailsComponent } from './components/exercise-details/exercise
 import { ExerciseDetailsPageComponent } from './containers/exercise-details-page/exercise-details-page.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EditorModule } from 'src/app/core/modules/editor/editor.module';
@@ -23,6 +23,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 
 
@@ -38,6 +40,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     ExerciseRoutingModule,
     HttpClientModule,
     MatTableModule,
@@ -52,6 +55,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatButtonModule,
+    MatAutocompleteModule,
     EditorModule,
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE

@@ -25,6 +25,7 @@ export class ExerciseListComponent implements AfterViewInit {
 
   @Input() data: PaginatedList<Exercise>;
   @Input() isLoadingResults = true;
+  @Input() filteredOptions: string[];
   @Output() dataRequested = new EventEmitter<Sort>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -36,6 +37,8 @@ export class ExerciseListComponent implements AfterViewInit {
     [Difficulty.Hard]: 'badge-warning',
     [Difficulty.Extreme]: 'badge-danger',
   }
+
+  
 
   difficulties = Object.values(Difficulty).filter(x => Number.isInteger(x)) as Difficulty[];
 

@@ -1,43 +1,17 @@
-<sb-modal (confirm)="onConfirm()" title="Start Challenge">
+<sb-modal (confirm)="onConfirm()" [title]="actionName + ' Alliance'">
   <form [formGroup]="form">
     <mat-form-field class="w-100">
-      <mat-label>Alliance Challenge Title</mat-label>
-      <input matInput placeholder="Title" formControlName="title">
+      <mat-label>Alliance name</mat-label>
+      <input matInput placeholder="Name" formControlName="title">
     </mat-form-field>
 
-    <sb-infinity-select
-      class="d-block w-100"
-      [multiple]="true"
-      [selectPlaceholder]="'List of Alliances'"
-      [loading]="allianceSearching$ | async"
-      [selectCtrl]="$any(form.get('alliances'))"
-      [filteredData$]="alliancePaginatedList$"
-      (nextPageRequested)="onAlliancesNextPageRequested($event)"
-    ></sb-infinity-select>
-
-    <sb-infinity-select
-      class="d-block w-100"
-      [multiple]="true"
-      [selectPlaceholder]="'List of Tasks'"
-      [loading]="exerciseSearching$ | async"
-      [currentPageIndex]="exercisePageIndex$ | async"
-      [hasNextPage]="exerciseHasNextPage$ | async"
-      [selectCtrl]="$any(form.get('exercises'))"
-      [filteredData$]="exercisePaginatedList$"
-      (nextPageRequested)="onExercisesNextPageRequested($event)"
-    ></sb-infinity-select>
-
-    <mat-form-field class="mx-1">
-      <input matInput readonly [ngxMatDatetimePicker]="startDatePicker" placeholder="Choose a start date" formControlName="startDate">
-      <mat-datepicker-toggle matSuffix [for]="$any(startDatePicker)"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #startDatePicker></ngx-mat-datetime-picker>
+    <mat-form-field class="w-100">
+      <mat-label>Alliance Description</mat-label>
+      <textarea matInput 
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="3"
+                cdkAutosizeMaxRows="5"
+                placeholder="Ex. The best alliance ever..." formControlName="description"></textarea>
     </mat-form-field>
-
-    <mat-form-field class="mx-1">
-      <input matInput readonly [ngxMatDatetimePicker]="finishDatePicker" placeholder="Choose a finish date" formControlName="finishDate">
-      <mat-datepicker-toggle matSuffix [for]="$any(finishDatePicker)"></mat-datepicker-toggle>
-      <ngx-mat-datetime-picker #finishDatePicker></ngx-mat-datetime-picker>
-    </mat-form-field>
-    
   </form>
 </sb-modal>

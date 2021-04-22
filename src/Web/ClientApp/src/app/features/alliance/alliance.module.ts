@@ -18,15 +18,15 @@ import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerMod
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { AllianceChallengesPageComponent } from './containers/alliance-challenges-page/alliance-challenges-page.component';
-import { AllianceChallengeExercisesPageComponent } from './containers/alliance-challenge-exercises-page/alliance-challenge-exercises-page.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ExercisesApiService } from '../exercise/services';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
-
+import { MatCardModule } from '@angular/material/card';
 import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/acceptance-list.module';
+import { CreateChallengeModalComponent } from './components/create-challenge-modal/create-challenge-modal.component';
 
 
 
@@ -37,7 +37,7 @@ import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/accep
     AllianceAdminPageComponent, 
     EditAllianceModalComponent,
     AllianceChallengesPageComponent,
-    AllianceChallengeExercisesPageComponent
+    CreateChallengeModalComponent
   ],
   imports: [
     CommonModule,
@@ -61,6 +61,7 @@ import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/accep
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
     AcceptanceListModule,
+    MatCardModule,
     MatTabsModule
   ],
   providers: [AlliancesApiService, ExercisesApiService]

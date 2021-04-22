@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AllianceAdminPageComponent } from './containers/alliance-admin-page/alliance-admin-page.component';
-import { AllianceChallengeExercisesPageComponent } from './containers/alliance-challenge-exercises-page/alliance-challenge-exercises-page.component';
 import { AllianceChallengesPageComponent } from './containers/alliance-challenges-page/alliance-challenges-page.component';
 import { AllianceDetailsPageComponent } from './containers/alliance-details-page/alliance-details-page.component';
 import { AllianceListPageComponent } from './containers/alliance-list-page/alliance-list-page.component';
@@ -26,12 +25,7 @@ const routes: Routes = [
     path: ':id/challenges',
     component: AllianceChallengesPageComponent,
     data: { title: 'Alliance Challenges' }
-  },
-  {
-    path: ':alliance-id/challenges/:id',
-    component: AllianceChallengeExercisesPageComponent,
-    data: { title: 'Alliance Challenges' }
-  },
+  }
 ];
 
 @NgModule({

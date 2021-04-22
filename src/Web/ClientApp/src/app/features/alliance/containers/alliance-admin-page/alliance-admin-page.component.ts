@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AcceptanceListButtonClicked } from 'src/app/core/modules/acceptance-list/acceptance-list.component';
+import { CreateChallengeModalComponent } from '../../components/create-challenge-modal/create-challenge-modal.component';
 import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
 
 @Component({
@@ -51,7 +52,7 @@ export class AllianceAdminPageComponent implements OnInit {
   }
 
   createChallenge() {
-    const dialogRef = this.dialog.open(EditAllianceModalComponent);
+    const dialogRef = this.dialog.open(CreateChallengeModalComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
