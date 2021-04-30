@@ -20,6 +20,7 @@ export class EditorComponent implements OnChanges {
   }
 
   onInit() {
+    console.log('editor inited');
     this.editorInit.emit();
   }
 

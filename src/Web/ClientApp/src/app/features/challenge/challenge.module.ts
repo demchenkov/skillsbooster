@@ -20,7 +20,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   declarations: [
     ChallengeDetailsPageComponent, 
     ChallengeTasksComponent, 
-    ChallengeParticipantsComponent, ChallengeDetailsComponent
+    ChallengeParticipantsComponent, 
+    ChallengeDetailsComponent
   ],
   imports: [
     CommonModule,

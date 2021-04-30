@@ -1,7 +1,7 @@
 
 
-<mat-nav-list  class="w-100">
-  <mat-list-item *ngFor="let item of tasks">
+<mat-nav-list  class="w-100 p-0">
+  <mat-list-item *ngFor="let item of tasks" class="list-row">
     <a matLine [routerLink]="getLink(item)" class="py-2 d-flex align-items-center">
       <ng-container [ngSwitch]="item.status">
         <mat-icon *ngSwitchCase="statuses.Completed" 

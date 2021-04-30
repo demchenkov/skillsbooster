@@ -4,8 +4,8 @@
   </div>
   
   <div class="row mat-elevation-z8 justify-content-center">
-    <mat-nav-list  class="w-100">
-      <mat-list-item *ngFor="let item of items">
+    <mat-nav-list  class="w-100 p-0">
+      <mat-list-item *ngFor="let item of items" class="list-row">
          <a matLine [routerLink]="getLink(item)" class="py-2 d-flex align-items-center">
            <span class="logo"></span>
            <span>{{item.title}}</span>
