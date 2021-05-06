@@ -1,0 +1,36 @@
+
+
+<mat-nav-list  class="w-100 p-0">
+  <mat-list-item *ngFor="let item of tasks" class="list-row">
+    <a matLine [routerLink]="getLink(item)" class="py-2 d-flex align-items-center">
+      <ng-container [ngSwitch]="item.status">
+        <mat-icon *ngSwitchCase="statuses.Completed" 
+                  class="text-success"
+                  matTooltip="The Task is Completed"
+        > check_circle_outline </mat-icon>
+        <mat-icon *ngSwitchCase="statuses.PartialCompleted" 
+                  class="text-warning"
+                  matTooltip="The Task is Partial Completed"
+        > error_outline </mat-icon>
+        <mat-icon *ngSwitchCase="statuses.Failed" 
+                  class="text-danger"
+                  matTooltip="The Task is Failed"
+        > highlight_off </mat-icon>
+        <mat-icon *ngSwitchCase="statuses.NotStarted" 
+                  class="text-info"
+                  matTooltip="The Task is Not Started"
+        > not_started </mat-icon>
+      </ng-container>
+      <span class="pl-2">{{item.title}}</span>
+
+      <span class="ml-auto d-flex" style="width: 35%;">
+        <small *ngIf="item.status !== statuses.NotStarted" class="mr-3">
+          Submitted by: {{item.submittedBy}}
+        </small>
+        <small class="ml-auto">
+          {{item.score}} / 100
+        </small>
+      </span>
+    </a>
+  </mat-list-item>
+</mat-nav-list>

@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col mt-3">      
+      <ul class="list-unstyled">
+        <li class="media">
+          <mat-icon class="mr-3 icons title">rule</mat-icon>
+          <div class="media-body">
+            <h5 class="mt-0 mb-1">{{title}}</h5>
+            <p>Participants' results will be calculated as sum of all passed tests.</p>
+            <mat-divider class="mb-2"></mat-divider>
+          </div>
+        </li>
+        <li class="media">
+          <mat-icon class="mr-3 icons range">date_range</mat-icon>
+          <div class="media-body">
+            <h5 class="mt-0 mb-1">Date range</h5>
+            <p><b>{{startDate | date:'medium'}}</b> - <b>{{finishDate | date:'medium'}}</b></p>
+            <mat-divider class="mb-2"></mat-divider>
+          </div>
+        </li>
+        <li class="media">
+          <mat-icon class="mr-3 icons duration">access_time</mat-icon>
+          <div class="media-body" *ngIf="(timeLeft$ | async) as timeLeft; else noTimeLeft">
+            <h5 class="mt-0 mb-1">Time left</h5>
+            <p>{{timeLeft}}</p>
+            <mat-divider class="mb-2"></mat-divider>
+          </div>
+          <ng-template #noTimeLeft>
+            <div class="media-body">
+              <h5 class="mt-0 mb-1">Challenge ended</h5>
+              <p>Duration: {{durationString}}</p>
+              <mat-divider class="mb-2"></mat-divider>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

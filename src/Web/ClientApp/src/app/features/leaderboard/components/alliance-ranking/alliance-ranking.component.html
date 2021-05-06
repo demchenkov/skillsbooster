@@ -1,0 +1,42 @@
+<div class="table-container h-100">
+  <mat-table [dataSource]="ranking$ | async" style="height: calc(100% - 59px);">
+
+    <!-- Rank Column -->
+    <ng-container matColumnDef="rank">
+      <mat-header-cell *matHeaderCellDef>Rank</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.rank}}</mat-cell>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef><span class="mx-2">Title</span></mat-header-cell>
+      <mat-cell *matCellDef="let row; let i = index">
+        <span class="mx-1">{{row.title}}</span>
+        <ng-container *ngIf="i < 3" [ngSwitch]="i">
+          <mat-icon class="gold" *ngSwitchCase="0">emoji_events</mat-icon>
+          <mat-icon class="silver" *ngSwitchCase="1">emoji_events</mat-icon>
+          <mat-icon class="bronze" *ngSwitchCase="2">emoji_events</mat-icon>
+        </ng-container>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Leader Column -->
+    <ng-container matColumnDef="leader">
+      <mat-header-cell  *matHeaderCellDef mat-sort-header>Leader</mat-header-cell>
+      <mat-cell  *matCellDef="let row">
+        {{row.leader}}
+      </mat-cell>
+    </ng-container>
+    
+    <!-- Challenge Winner Column -->
+    <ng-container matColumnDef="amountOfWonChallenges">
+      <mat-header-cell  *matHeaderCellDef mat-sort-header>Challenge Winner</mat-header-cell>
+      <mat-cell  *matCellDef="let row">
+        {{row.amountOfWonChallenges}}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

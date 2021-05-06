@@ -2,7 +2,7 @@
 
 <ng-template #list>
   <mat-list *ngIf="entities != null && entities.length > 0; else noData" class="w-100 mat-nav-list">
-    <mat-list-item *ngFor="let row of entities" class="list-row">
+    <mat-list-item *ngFor="let row of entities" matRipple class="list-row" (click)="rowClicked.emit(row)">
       <button *ngFor="let button of buttons" 
               mat-icon-button 
               [color]="button.color"

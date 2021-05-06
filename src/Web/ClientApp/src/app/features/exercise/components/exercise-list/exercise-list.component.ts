@@ -5,13 +5,16 @@ import {
   Output,
   EventEmitter,
   Input,
-  AfterViewInit
+  AfterViewInit,
+  OnInit
 } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {merge} from "rxjs";
+import {merge, Subject} from "rxjs";
 import {startWith} from "rxjs/operators";
 import { PaginatedList, Sort } from 'src/app/core';
+import { Filter } from 'src/app/core/models/filter.model';
 import { Difficulty, Exercise } from '../../entities';
 
 @Component({
@@ -20,8 +23,10 @@ import { Difficulty, Exercise } from '../../entities';
   styleUrls: ['./exercise-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ExerciseListComponent implements AfterViewInit {
-  displayedColumns: string[] = ['id', 'title', 'difficulty', 'maxScore'];
+export class ExerciseListComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['id', 'title', 'difficulty', 'theme'];
+  formGroup: FormGroup;
+  private filterRequest$ = new Subject<Filter>()
 
   @Input() data: PaginatedList<Exercise>;
   @Input() isLoadingResults = true;
@@ -41,6 +46,18 @@ export class ExerciseListComponent implements AfterViewInit {
   
 
   difficulties = Object.values(Difficulty).filter(x => Number.isInteger(x)) as Difficulty[];
+
+  constructor(private fb: FormBuilder) {
+    
+  }
+
+  ngOnInit() {
+    this.formGroup = this.fb.group({
+      title: [],
+      theme: [],
+      difficulty: [],
+    });
+  }
 
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.
@@ -69,5 +86,9 @@ export class ExerciseListComponent implements AfterViewInit {
 
   getDifficultyCssClass(difficulty: Difficulty) {
     return this.difficultyClassesDict[difficulty];
+  }
+
+  onFilter() {
+    //this.filterRequest$.next(Filter.fromObject())
   }
 }

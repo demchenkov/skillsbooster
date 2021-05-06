@@ -26,10 +26,12 @@ export class AcceptanceListComponent {
   @Input() entities: any[];
   @Input() titleGetter: (row: any) => any = row => row.name;
   @Input() loading = false;
+  @Input() rippleEnabled = true;
 
   @Input() buttons: AcceptanceListButton[] = this.defaultButtons;
 
   @Output() clicked = new EventEmitter<AcceptanceListButtonClicked<any>>();
+  @Output() rowClicked = new EventEmitter<any>();
 
   click(button: string, row: any) {
     this.clicked.emit({button, row})

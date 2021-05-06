@@ -13,5 +13,13 @@
                 cdkAutosizeMaxRows="5"
                 placeholder="Ex. The best alliance ever..." formControlName="description"></textarea>
     </mat-form-field>
+
+    <div *ngIf="filePath | async as fp">
+      <img [src]="fp" [alt]="form.value.name" width="150" height="150" >
+    </div>
+  
+    <button type="button" mat-raised-button class="my-2" color="primary" (click)="fileInput.click()">Choose File</button>
+    <input hidden #fileInput  type="file" accept="image/*" (change)="imagePreview($event)" />
+    
   </form>
 </sb-modal>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChallengeDetailsPageComponent } from './containers/challenge-details-page/challenge-details-page.component';
 import { ChallengeRoutingModule } from './challenge-routing.module';
@@ -12,6 +12,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ChallengeTaskPageComponent } from './containers/challenge-task-page/challenge-task-page.component';
+import { MarkdownModule } from 'ngx-markdown';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { EditorModule } from 'src/app/core/modules';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -21,18 +28,27 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ChallengeDetailsPageComponent, 
     ChallengeTasksComponent, 
     ChallengeParticipantsComponent, 
-    ChallengeDetailsComponent
+    ChallengeDetailsComponent, 
+    ChallengeTaskPageComponent
   ],
   imports: [
     CommonModule,
     ChallengeRoutingModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatSelectModule,
     MatTabsModule,
     MatIconModule,
     MatListModule,
     MatDividerModule,
     MatTooltipModule,
     MatTableModule,
+    MatButtonModule,
     MatPaginatorModule,
+    EditorModule,
+    MarkdownModule.forRoot({
+      sanitize: SecurityContext.NONE
+    })
   ]
 })
 export class ChallengeModule { }

@@ -4,12 +4,12 @@
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef><span class="mx-2">Alliance</span></mat-header-cell>
       <mat-cell *matCellDef="let row; let i = index">
+        <span class="mx-1">{{row.alliance.title}}</span>
         <ng-container *ngIf="i < 3" [ngSwitch]="i">
           <mat-icon class="gold" *ngSwitchCase="0">emoji_events</mat-icon>
           <mat-icon class="silver" *ngSwitchCase="1">emoji_events</mat-icon>
           <mat-icon class="bronze" *ngSwitchCase="2">emoji_events</mat-icon>
         </ng-container>
-        <span class="mx-1">{{row.alliance.title}}</span>
       </mat-cell>
     </ng-container>
 

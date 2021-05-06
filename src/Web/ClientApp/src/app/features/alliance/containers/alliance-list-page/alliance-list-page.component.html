@@ -18,20 +18,27 @@
 
       <!-- Title Column -->
       <ng-container matColumnDef="title">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
-        <mat-cell  *matCellDef="let row">{{row.title}}</mat-cell>
+        <mat-header-cell  *matHeaderCellDef mat-sort-header><mat-icon class="mr-2">topic</mat-icon>Title</mat-header-cell>
+        <mat-cell  *matCellDef="let row">
+          
+          {{row.title}}
+        </mat-cell>
       </ng-container>
 
       <!-- Leader Column -->
       <ng-container matColumnDef="leader">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Leader</mat-header-cell>
-        <mat-cell  *matCellDef="let row">{{row.leader}}</mat-cell>
+        <mat-header-cell  *matHeaderCellDef mat-sort-header><mat-icon class="mr-2">person</mat-icon>Leader</mat-header-cell>
+        <mat-cell  *matCellDef="let row">
+          {{row.leader}}
+        </mat-cell>
       </ng-container>
 
       <!-- Rating Column -->
       <ng-container matColumnDef="rating">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
-        <mat-cell  *matCellDef="let row">{{row.rating}}</mat-cell>
+        <mat-header-cell  *matHeaderCellDef mat-sort-header><mat-icon class="mr-2">trending_up</mat-icon> Rating</mat-header-cell>
+        <mat-cell  *matCellDef="let row">
+          {{row.rating}}
+        </mat-cell>
       </ng-container>
 
       <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>

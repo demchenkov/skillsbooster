@@ -34,6 +34,17 @@ const routes: Routes = [
       import('./features/challenge/challenge.module').then((m) => m.ChallengeModule)
   },
   {
+    path: 'users',
+    loadChildren: () =>
+      import('./features/user/user.module').then((m) => m.UserModule)
+  },
+  {
+    path: 'leaderboard',
+    loadChildren: () =>
+      import('./features/leaderboard/leaderboard.module').then((m) => m.LeaderboardModule)
+  },
+  
+  {
     path: '**',
     redirectTo: 'about'
   }

@@ -22,7 +22,8 @@ export class AppComponent implements OnInit {
     { link: 'problems', label: 'Problems'},
     { link: 'alliances', label: 'Alliances'},
     { link: 'duels/my', label: 'Duels' },
-    { link: 'about', label: 'About' },
+    { link: 'users/my', label: 'Users' },
+    { link: 'leaderboard', label: 'Ranking' },
   ];
 
   navigationSideMenu = [

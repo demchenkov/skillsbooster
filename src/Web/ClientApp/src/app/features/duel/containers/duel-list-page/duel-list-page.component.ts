@@ -13,8 +13,8 @@ export class DuelListPageComponent implements OnInit {
   duels = [{name: 'Challenge 1'}, {name: 'Challenge 2'}, {name: 'Challenge 3'}, {name: 'Challenge 4'}, {name: 'Challenge 5'}];
   duelsLoading = false;
 
-  challenges = [{name: 'Challenge 1'}, {name: 'Challenge 2'}, {name: 'Challenge 3'}, {name: 'Challenge 4'}, {name: 'Challenge 5'}];
-  challengesLoading = false;
+  requests = [{name: 'Challenge 1'}, {name: 'Challenge 2'}, {name: 'Challenge 3'}, {name: 'Challenge 4'}, {name: 'Challenge 5'}];
+  requestsLoading = false;
 
   listButtons: AcceptanceListButton[] = [{iconName: 'check', color: 'accent', button: 'accept'},]
 

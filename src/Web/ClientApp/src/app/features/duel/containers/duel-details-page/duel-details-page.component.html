@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row mat-elevation-z4">
+    <mat-tab-group class="w-100">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>domain_verification</mat-icon>
+          Details
+        </ng-template>
+        <sb-duel-details></sb-duel-details>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>pending_actions</mat-icon>
+          Tasks
+        </ng-template>
+        <sb-duel-tasks></sb-duel-tasks>
+      </mat-tab>
+    
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>people</mat-icon>
+          Ranking
+        </ng-template>
+        <sb-duel-participants></sb-duel-participants>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

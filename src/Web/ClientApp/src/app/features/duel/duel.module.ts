@@ -20,13 +20,27 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ExercisesApiService } from '../exercise/services';
 import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
+import { DuelTasksComponent } from './components/challenge-tasks/duel-tasks.component';
+import { DuelDetailsComponent } from './components/duel-details/duel-details.component';
+import { DuelParticipantsComponent } from './components/duel-participants/duel-participants.component';
+import { DuelDetailsPageComponent } from './containers/duel-details-page/duel-details-page.component';
+import { DuelTaskPageComponent } from './containers/duel-task-page/duel-task-page.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
 @NgModule({
   declarations: [
     DuelListPageComponent,
-    CreateDuelModalComponent
+    CreateDuelModalComponent,
+    DuelTasksComponent,
+    DuelDetailsComponent,
+    DuelParticipantsComponent,
+    DuelDetailsPageComponent,
+    DuelTaskPageComponent
   ],
   imports: [
     CommonModule,
@@ -44,13 +58,19 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     UiModalModule,
     InfinitySelectModule,
+    MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
     MatDatepickerModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatIconModule,
+    MatDividerModule,
+    MatTableModule,
+    MatTabsModule,
+    MatTooltipModule,
   ],
   providers: [ExercisesApiService]
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 import { Alliance } from 'src/app/domain/entities';
 import { AlliancesService } from '../../services/alliances.service';
 
@@ -13,6 +14,7 @@ import { AlliancesService } from '../../services/alliances.service';
 })
 export class EditAllianceModalComponent implements OnInit {
   form: FormGroup;
+  filePath = new BehaviorSubject<string>('');
   
   constructor(
     private fb: FormBuilder, 
@@ -23,12 +25,29 @@ export class EditAllianceModalComponent implements OnInit {
   ngOnInit() {
     this.form = this.fb.group({
       title: ['', [Validators.required],],
+      img: [null],
       description: ['',],
     });
   }
 
   onConfirm() {
 
+  }
+
+  imagePreview(e) {
+    const file = (e.target as HTMLInputElement).files[0];
+
+    this.form.patchValue({
+      img: file
+    });
+
+    this.form.get('img').updateValueAndValidity()
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.filePath.next(reader.result as string);
+    }
+    reader.readAsDataURL(file)
   }
 
   get actionName() {

@@ -1,42 +1,47 @@
 <div class="container-lg mt-5">
   <div class="row">
     <div class="col-3 d-block m-auto text-center">
-      <img class="d-block mx-auto mb-4" src="/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-      <button class="btn btn-primary w-75 m-3">Apply</button>
-      <a [routerLink]="['admin']" class="btn btn-primary w-75 m-3">Manage</a>
-      <a [routerLink]="['challenges']" class="btn btn-primary w-75 m-3">Challenges</a>
+      <img class="d-block mx-auto mb-4" src="../../../../../assets/logo.png" alt="" width="72" height="72">
+      <button *ngIf="!(isAllianceParticipant$ | async); else participant" class="btn btn-primary w-75 m-3">Apply</button>
+      <ng-template #participant>
+        <button class="btn btn-secondary w-75 m-3">Leave</button>
+        <a [routerLink]="['challenges']" class="btn btn-primary w-75 m-3">Challenges</a>
+      </ng-template>
+     
+      
+      <a *ngIf="isAllianceManager$ | async" [routerLink]="['admin']" class="btn btn-primary w-75 m-3">Manage</a>
     </div>
-    <div class="col-9">
-      <h3 class="mb-3">Alliance title</h3>
+    <div *ngIf="allianceDetails$ | async as alliance" class="col-9">
+      <h3 class="mb-3">{{alliance.title}}</h3>
       <div class="row">
         <div class="col-8">
-          <p class="lead my-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore iste doloribus aspernatur modi consectetur! Velit doloremque molestiae ad rerum itaque? Quo consequatur sint deserunt repellendus ducimus beatae cum ipsum necessitatibus.</p>
+          <p class="lead my-3">{{alliance.description}}</p>
         </div>
         <div class="col-4">
           <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <li class="list-group-item d-flex justify-content-between lh-condensed bg-dark text-white">
               <div>
-                <h6 class="my-0">Product name</h6>
+                <h6 class="my-0">Leader: </h6>
               </div>
-              <span class="text-muted">$12</span>
+              <span>{{alliance.leader}}</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <li class="list-group-item d-flex justify-content-between lh-condensed bg-dark text-white">
               <div>
-                <h6 class="my-0">Second product</h6>
+                <h6 class="my-0">Ranking: </h6>
               </div>
-              <span class="text-muted">$8</span>
+              <span>{{alliance.rating}}</span>
             </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <li class="list-group-item d-flex justify-content-between lh-condensed bg-dark text-white">
               <div>
-                <h6 class="my-0">Third item</h6>
+                <h6 class="my-0">Date of creation:</h6>
               </div>
-              <span class="text-muted">$5</span>
+              <span>{{alliance.creationDate | date:'dd.MM.yyyy'}}</span>
             </li>
           </ul>
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-12">
           <table class="table table-dark">
             <thead>
@@ -69,7 +74,7 @@
             </tbody>
           </table>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
