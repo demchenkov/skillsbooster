@@ -30,10 +30,11 @@ export class AcceptanceListComponent {
 
   @Input() buttons: AcceptanceListButton[] = this.defaultButtons;
 
-  @Output() clicked = new EventEmitter<AcceptanceListButtonClicked<any>>();
+  @Output() btnClicked = new EventEmitter<AcceptanceListButtonClicked<any>>();
   @Output() rowClicked = new EventEmitter<any>();
 
-  click(button: string, row: any) {
-    this.clicked.emit({button, row})
-  } 
+  click(button: string, row: any, event: MouseEvent) {
+    event.stopPropagation();
+    this.btnClicked.emit({button, row})
+  }
 }

@@ -26,4 +26,21 @@ export class AlliancesApiService {
       map(x => Alliance.fromObject(x))
     );
   }
+
+  createAlliance(alliance: Partial<Alliance>): Observable<Alliance> {
+    return this.http.post(AlliancesApiService.URL, alliance).pipe(
+      map(x => Alliance.fromObject(x))
+    );
+  }
+
+  updateAlliance(id: number, alliance: Partial<Alliance>): Observable<Alliance> {
+    alliance.id = id;
+    return this.http.put(`${AlliancesApiService.URL}/${id}`, alliance).pipe(
+      map(x => Alliance.fromObject(x))
+    );
+  }
+
+  deleteAlliance(id: number): Observable<void> {
+    return this.http.delete<void>(`${AlliancesApiService.URL}/${id}`);
+  }
 }

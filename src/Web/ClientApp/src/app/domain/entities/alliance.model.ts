@@ -5,17 +5,18 @@ export class Alliance {
   leader: string;
   rating: number;
   creationDate: Date;
-  // TODO: add model here
+  photoUrl: string;
 
   public static fromObject(data: any): Alliance {
     const entity = new Alliance();
 
     entity.id = data.id;
     entity.title = data.title;
-    entity.description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, iure. Ab, labore, enim praesentium laborum autem debitis ad sunt libero quos nihil hic! Sed provident illo, culpa repellendus ullam optio?';
+    entity.description = data.description;
     entity.leader = data.leader;
     entity.rating = data.rating;
     entity.creationDate = new Date();
+    entity.photoUrl = '';
 
     return entity;
   }

@@ -16,26 +16,37 @@ import { ExercisesService } from 'src/app/features/exercise/services';
 })
 export class CreateDuelModalComponent implements OnInit {
   form: FormGroup;
-  exercisePaginatedList$: Observable<Exercise[]> = this.exercisesService.exercises$.pipe(map(x => x.items)); 
-  exercisePageIndex$: Observable<number> = this.exercisesService.exercises$.pipe(map(x => x.pageIndex)); 
+
+  exercisePaginatedList$: Observable<Exercise[]> = this.exercisesService.exercises$.pipe(map(x => x.items));
+  exercisePageIndex$: Observable<number> = this.exercisesService.exercises$.pipe(map(x => x.pageIndex));
   exerciseHasNextPage$ = this.exercisesService.exercises$.pipe(map(x => x.hasNextPage));
   exerciseSearching$: Observable<boolean> = this.exercisesService.loading$;
 
+  userPaginatedList$: Observable<Exercise[]> = this.exercisesService.exercises$.pipe(map(x => x.items));
+  userPageIndex$: Observable<number> = this.exercisesService.exercises$.pipe(map(x => x.pageIndex));
+  userHasNextPage$ = this.exercisesService.exercises$.pipe(map(x => x.hasNextPage));
+  userSearching$: Observable<boolean> = this.exercisesService.loading$;
+
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private exercisesService: ExercisesService
     ) { }
 
-    ngOnInit() {
-      this.form = this.fb.group({
-        title: [, [Validators.required]],
-        exercises: [[], [Validators.required]],
-        startDate: [new Date()],
-        finishDate: [new Date()],
-      });
-    }
+  ngOnInit() {
+    this.form = this.fb.group({
+      title: [, [Validators.required]],
+      exercises: [[], [Validators.required]],
+      startDate: [new Date()],
+      finishDate: [new Date()],
+    });
+  }
 
   onExercisesNextPageRequested(event: LoadNextPageEvent) {
+    const filter = new Filter('id', event.search, event.page);
+    this.exercisesService.loadPaginatedExercises(filter);
+  }
+
+  onUserNextPageRequested(event: LoadNextPageEvent) {
     const filter = new Filter('id', event.search, event.page);
     this.exercisesService.loadPaginatedExercises(filter);
   }

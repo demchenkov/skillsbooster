@@ -1,4 +1,4 @@
-<div class="table-container h-100">
+<div class="table-container">
   <mat-table [dataSource]="ranking$ | async" style="height: calc(100% - 59px);">
 
     <!-- Rank Column -->
@@ -27,7 +27,7 @@
         {{row.leader}}
       </mat-cell>
     </ng-container>
-    
+
     <!-- Challenge Winner Column -->
     <ng-container matColumnDef="amountOfWonChallenges">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Challenge Winner</mat-header-cell>

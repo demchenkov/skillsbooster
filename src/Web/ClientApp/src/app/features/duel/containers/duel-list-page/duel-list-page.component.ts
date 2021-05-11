@@ -1,7 +1,15 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AcceptanceListButton, AcceptanceListButtonClicked } from 'src/app/core/modules/acceptance-list/acceptance-list.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AcceptanceListButtonClicked } from 'src/app/core/modules/acceptance-list/acceptance-list.component';
 import { CreateDuelModalComponent } from '../create-duel-modal/create-duel-modal.component';
+
+
+interface Duel {
+  id: number;
+  title: string;
+}
 
 @Component({
   selector: 'sb-duel-list-page',
@@ -10,15 +18,21 @@ import { CreateDuelModalComponent } from '../create-duel-modal/create-duel-modal
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DuelListPageComponent implements OnInit {
-  duels = [{name: 'Challenge 1'}, {name: 'Challenge 2'}, {name: 'Challenge 3'}, {name: 'Challenge 4'}, {name: 'Challenge 5'}];
-  duelsLoading = false;
+  duelsMock: Duel[] = [
+    {id: 1, title: 'Challenge 1'},
+    {id: 2, title: 'Challenge 2'},
+    {id: 3, title: 'Challenge 3'},
+    {id: 4, title: 'Challenge 4'},
+    {id: 5, title: 'Challenge 5'}
+  ];
 
-  requests = [{name: 'Challenge 1'}, {name: 'Challenge 2'}, {name: 'Challenge 3'}, {name: 'Challenge 4'}, {name: 'Challenge 5'}];
-  requestsLoading = false;
+  duels$: Observable<Duel[]> = new BehaviorSubject<Duel[]>(this.duelsMock);
+  duelsLoading$ = new BehaviorSubject<boolean>(false);
 
-  listButtons: AcceptanceListButton[] = [{iconName: 'check', color: 'accent', button: 'accept'},]
+  requests$: Observable<Duel[]> = new BehaviorSubject<Duel[]>(this.duelsMock);
+  requestsLoading$ = new BehaviorSubject<boolean>(false);
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private router: Router, private dialog: MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -31,7 +45,21 @@ export class DuelListPageComponent implements OnInit {
     });
   }
 
-  redirectToDuel(event: AcceptanceListButtonClicked<any>) {
-    // todo: redirect;
+  actionBtnClick(e: AcceptanceListButtonClicked<Duel>) {
+    if (e.button === 'accept') {
+
+      return;
+    }
+
+    if (e.button === 'decline') {
+
+      return;
+    }
   }
+
+  redirectToDuel(data: Duel) {
+    this.router.navigate(['..', data.id], {relativeTo: this.route})
+  }
+
+  titleGetter = (row: Duel) => row.title
 }

@@ -1,28 +1,15 @@
-<!-- <mat-button-toggle-group [(ngModel)]="mode" >
-  <mat-button-toggle value="raw" aria-label="Raw markdown">
-    <mat-icon>view_headline</mat-icon>
-  </mat-button-toggle>
-  <mat-button-toggle value="both" aria-label="Raw and Visualized markdown">
-    <mat-icon>vertical_split</mat-icon>
-  </mat-button-toggle>
-  <mat-button-toggle value="result" aria-label="Visualized markdown">
-    <mat-icon>view_sidebar</mat-icon>
-  </mat-button-toggle>
-</mat-button-toggle-group> -->
-
-
 <div class="d-flex flex-grow-1 h-100">
   <span *ngIf="loading$ | async">Editor is loading... Please wait!</span>
-  <sb-editor *ngIf="isTextareaVisible()" 
-              class="flex-grow-1 mw-50 m-1" 
-              language="markdown" 
-              [code]="code" 
+  <sb-editor *ngIf="isTextareaVisible()"
+              class="flex-grow-1 mw-50 m-1"
+              language="markdown"
+              [code]="code"
               (codeChange)="onMarkdownChange($event)"
               (editorInit)="onEditorInit()"
   ></sb-editor>
-  
-  <markdown  *ngIf="isMarkdownVisible()" 
-              class="flex-grow-1 mw-50 m-1 p-3 border overflow-y-auto" 
+
+  <markdown  *ngIf="isMarkdownVisible()"
+              class="flex-grow-1 mw-50 m-1 p-3 border overflow-y-auto"
               [data]="code"
   ></markdown>
 </div>

@@ -47,12 +47,18 @@
   .gold {
     color: #FFD700;
   }
-  
+
   .silver {
     color: #D3D3D3;
   }
-  
+
   .bronze {
     color: #CD7F32;
   }
+
+  mat-row:hover {
+    background: rgba(0,0,0,0.1);
+    cursor: pointer;
+  }
+
 }

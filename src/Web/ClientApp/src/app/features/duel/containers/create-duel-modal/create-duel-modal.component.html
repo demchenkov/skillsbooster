@@ -7,6 +7,16 @@
 
     <sb-infinity-select
       class="d-block w-100"
+      [multiple]="false"
+      [selectPlaceholder]="'List of Users'"
+      [loading]="userSearching$ | async"
+      [selectCtrl]="$any(form.get('users'))"
+      [filteredData$]="userPaginatedList$"
+      (nextPageRequested)="onUserNextPageRequested($event)"
+    ></sb-infinity-select>
+
+    <sb-infinity-select
+      class="d-block w-100"
       [multiple]="true"
       [selectPlaceholder]="'List of Tasks'"
       [loading]="exerciseSearching$ | async"
@@ -28,6 +38,6 @@
       <mat-datepicker-toggle matSuffix [for]="$any(finishDatePicker)"></mat-datepicker-toggle>
       <ngx-mat-datetime-picker #finishDatePicker></ngx-mat-datetime-picker>
     </mat-form-field>
-    
+
   </form>
 </sb-modal>

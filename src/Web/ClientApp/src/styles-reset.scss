@@ -26,3 +26,10 @@ router-outlet ~ * {
   height: 100%;
   display: block;
 }
+
+
+.loading-shade {
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+}

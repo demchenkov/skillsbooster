@@ -1,4 +1,4 @@
-<div class="table-container h-100">
+<div class="table-container">
   <mat-table [dataSource]="ranking$ | async" style="height: calc(100% - 59px);">
     <!-- Title Column -->
     <ng-container matColumnDef="title">
@@ -19,7 +19,7 @@
       <mat-cell *matCellDef="let row">{{row.totalScore}}</mat-cell>
     </ng-container>
 
-    
+
     <ng-container *ngFor="let task of taskList" [matColumnDef]="task.title">
       <mat-header-cell [matTooltip]="task.title"  *matHeaderCellDef>{{task.title | titlecase}}</mat-header-cell>
       <mat-cell  *matCellDef="let row">{{row.scoreDict[task.id] || '—'}}</mat-cell>

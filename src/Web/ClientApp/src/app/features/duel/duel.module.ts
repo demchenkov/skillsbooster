@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DuelRoutingModule } from './duel-routing.module';
 import { MatTableModule } from '@angular/material/table';
@@ -13,7 +13,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/acceptance-list.module';
 import { CreateDuelModalComponent } from './containers/create-duel-modal/create-duel-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InfinitySelectModule, UiModalModule } from 'src/app/core/modules';
+import { EditorModule, InfinitySelectModule, UiModalModule } from 'src/app/core/modules';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -29,6 +29,7 @@ import { DuelTaskPageComponent } from './containers/duel-task-page/duel-task-pag
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 
@@ -71,6 +72,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
+    EditorModule,
+    MarkdownModule.forRoot({
+      sanitize: SecurityContext.NONE
+    })
   ],
   providers: [ExercisesApiService]
 })

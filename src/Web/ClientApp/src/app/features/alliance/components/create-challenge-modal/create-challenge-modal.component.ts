@@ -18,16 +18,16 @@ import { AlliancesService } from '../../services/alliances.service';
 })
 export class CreateChallengeModalComponent implements OnInit {
   form: FormGroup;
-  alliancePaginatedList$: Observable<Alliance[]> = this.alliancesService.Alliances$.pipe(map(x => x.items)); 
+  alliancePaginatedList$: Observable<Alliance[]> = this.alliancesService.alliances$.pipe(map(x => x.items));
   allianceSearching$: Observable<boolean> = this.alliancesService.loading$;
-  exercisePaginatedList$: Observable<Exercise[]> = this.exercisesService.exercises$.pipe(map(x => x.items)); 
-  exercisePageIndex$: Observable<number> = this.exercisesService.exercises$.pipe(map(x => x.pageIndex)); 
+  exercisePaginatedList$: Observable<Exercise[]> = this.exercisesService.exercises$.pipe(map(x => x.items));
+  exercisePageIndex$: Observable<number> = this.exercisesService.exercises$.pipe(map(x => x.pageIndex));
   exerciseHasNextPage$ = this.exercisesService.exercises$.pipe(map(x => x.hasNextPage));
   exerciseSearching$: Observable<boolean> = this.exercisesService.loading$;
 
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private alliancesService: AlliancesService,
     private exercisesService: ExercisesService
     ) { }

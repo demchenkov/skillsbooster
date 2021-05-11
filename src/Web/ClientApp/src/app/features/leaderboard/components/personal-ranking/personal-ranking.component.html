@@ -1,4 +1,4 @@
-<div class="table-container h-100">
+<div class="table-container">
   <mat-table [dataSource]="ranking$ | async" style="height: calc(100% - 59px);">
 
     <!-- Rank Column -->
@@ -19,7 +19,7 @@
         </ng-container>
       </mat-cell>
     </ng-container>
-    
+
     <!-- Problems Column -->
     <ng-container matColumnDef="problems">
       <mat-header-cell  *matHeaderCellDef>Problems</mat-header-cell>
