@@ -17,7 +17,7 @@ namespace SkillsBooster.Infrastructure.Persistence
             ) : base(options, operationalStoreOptions)
         { }
 
-        // public DbSet<Alliance> Alliances { get; set; }
+        public DbSet<Alliance> Alliances { get; set; }
         // public DbSet<Challenge> Challenges { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<User> AppUsers { get; set; }

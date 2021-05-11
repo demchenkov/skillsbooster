@@ -12,6 +12,14 @@
             public const string Update = BaseUrl + "/exercises/{id}";
             public const string Delete = BaseUrl + "/exercises/{id}";
         }
-        
+
+        public static class Alliances
+        {
+            public const string GetAll = BaseUrl + "/alliances";
+            public const string GetById = BaseUrl + "/alliances/{id}";
+            public const string Create = BaseUrl + "/alliances";
+            public const string Update = BaseUrl + "/alliances/{id}";
+            public const string Delete = BaseUrl + "/alliances/{id}";
+        }
     }
 }
