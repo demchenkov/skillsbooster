@@ -28,6 +28,7 @@ namespace SkillsBooster.Web.Controllers
         [HttpPost(Routes.Alliances.Create)]
         public async Task<AllianceDto> Create([FromBody] CreateAllianceCommand command)
         {
+            var user = User;
             return await Mediator.Send(command);
         }
         

@@ -1,34 +1,36 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PaginatedList } from 'src/app/core';
-import { Alliance, Alliances } from 'src/app/domain/entities';
+import { take } from 'rxjs/operators';
+import { Sort } from 'src/app/core';
 import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
+import { AlliancesService } from '../../services/alliances.service';
 
 @Component({
   selector: 'sb-alliance-list-page',
   templateUrl: './alliance-list-page.component.html',
   styleUrls: ['./alliance-list-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AlliancesService]
 })
 export class AllianceListPageComponent implements OnInit {
 
-  data: PaginatedList<Alliance> = {
-    ...PaginatedList.getEmpty(),
-    items: Alliances
-  };
-  displayedColumns = ['id', 'title', 'leader', 'rating'];
-
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, public service: AlliancesService) { }
 
   ngOnInit(): void {
   }
 
-  createAlliance() {
+  onDataRequested(sort: Sort) {
+    this.service.loadPaginatedAlliances(sort);
+  }
+
+  onCreateAlliance() {
     const dialogRef = this.dialog.open(EditAllianceModalComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+      this.service.createAlliance(result);
     });
   }
+
+
 
 }

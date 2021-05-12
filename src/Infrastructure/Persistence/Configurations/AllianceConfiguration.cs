@@ -8,6 +8,9 @@ namespace SkillsBooster.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Alliance> builder)
         {
+            builder.Property(t => t.Id)
+                .UseIdentityColumn();
+
             builder.Property(t => t.Title)
                 .HasMaxLength(200)
                 .IsRequired();

@@ -43,7 +43,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/leaderboard/leaderboard.module').then((m) => m.LeaderboardModule)
   },
-  
+
   {
     path: '**',
     redirectTo: 'about'

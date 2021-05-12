@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { PaginatedList } from 'src/app/core';
+import { finalize, share } from 'rxjs/operators';
+import { PaginatedList, Sort } from 'src/app/core';
 import { Filter } from 'src/app/core/models/filter.model';
 import { Alliance } from 'src/app/domain/entities';
 import { AlliancesApiService } from './alliances-api.service';
@@ -18,9 +18,9 @@ export class AlliancesService {
 
   constructor(private apiService: AlliancesApiService) {}
 
-  loadPaginatedAlliances(filter?: Filter) {
+  loadPaginatedAlliances(sort?: Sort) {
     this.loadingSubj$.next(true);
-    this.apiService.loadFilteredAlliances(filter)
+    this.apiService.loadFilteredAlliances(sort)
       .pipe(
         finalize(() => this.loadingSubj$.next(false))
       )
@@ -37,14 +37,20 @@ export class AlliancesService {
   }
 
   createAlliance(alliance: Partial<Alliance>): Observable<Alliance> {
-    return this.apiService.createAlliance(alliance);
+    const observable = this.apiService.createAlliance(alliance).pipe(share());
+    observable.subscribe();
+    return observable;
   }
 
   updateAlliance(id: number, alliance: Partial<Alliance>): Observable<Alliance> {
-    return this.apiService.updateAlliance(id, alliance);
+    const observable = this.apiService.updateAlliance(id, alliance).pipe(share());
+    observable.subscribe();
+    return observable;
   }
 
   deleteAlliance(id: number): Observable<void> {
-    return this.apiService.deleteAlliance(id);
+    const observable = this.apiService.deleteAlliance(id).pipe(share());
+    observable.subscribe();
+    return observable;
   }
 }

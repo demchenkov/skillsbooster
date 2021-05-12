@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PaginatedList } from 'src/app/core';
+import { PaginatedList, Sort } from 'src/app/core';
 import { HttpParamsUtils } from 'src/app/core/http-utils';
 import { Filter } from 'src/app/core/models/filter.model';
 import { Alliance, Alliances } from 'src/app/domain/entities';
@@ -13,8 +13,8 @@ export class AlliancesApiService {
 
   constructor(private http: HttpClient) { }
 
-  loadFilteredAlliances(filter?: Filter): Observable<PaginatedList<Alliance>> {
-    const params = HttpParamsUtils.getParams(filter);
+  loadFilteredAlliances(sort?: Sort): Observable<PaginatedList<Alliance>> {
+    const params = HttpParamsUtils.getParams(sort);
 
     return this.http.get(AlliancesApiService.URL, { params }).pipe(
       map(x => PaginatedList.fromObject<Alliance>(x))

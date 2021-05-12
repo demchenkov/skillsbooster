@@ -27,6 +27,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/acceptance-list.module';
 import { CreateChallengeModalComponent } from './components/create-challenge-modal/create-challenge-modal.component';
+import { AllianceListComponent } from './components/alliance-list/alliance-list.component';
 
 
 
@@ -37,7 +38,8 @@ import { CreateChallengeModalComponent } from './components/create-challenge-mod
     AllianceAdminPageComponent, 
     EditAllianceModalComponent,
     AllianceChallengesPageComponent,
-    CreateChallengeModalComponent
+    CreateChallengeModalComponent,
+    AllianceListComponent
   ],
   imports: [
     CommonModule,

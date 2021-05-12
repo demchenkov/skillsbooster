@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { Alliance } from 'src/app/domain/entities';
 import { AlliancesService } from '../../services/alliances.service';
@@ -10,16 +10,15 @@ import { AlliancesService } from '../../services/alliances.service';
   templateUrl: './edit-alliance-modal.component.html',
   styleUrls: ['./edit-alliance-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [AlliancesService]
 })
 export class EditAllianceModalComponent implements OnInit {
   form: FormGroup;
   filePath = new BehaviorSubject<string>('');
-  
+
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<EditAllianceModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Partial<Alliance>,
-    private alliancesService: AlliancesService,
     ) { }
 
   ngOnInit() {
@@ -31,7 +30,9 @@ export class EditAllianceModalComponent implements OnInit {
   }
 
   onConfirm() {
-
+    if (this.form.valid) {
+      this.dialogRef.close(this.form.value);
+    }
   }
 
   imagePreview(e) {
@@ -51,6 +52,6 @@ export class EditAllianceModalComponent implements OnInit {
   }
 
   get actionName() {
-    return this.data ? 'Edit' : 'Create' 
+    return this.data ? 'Edit' : 'Create'
   }
 }

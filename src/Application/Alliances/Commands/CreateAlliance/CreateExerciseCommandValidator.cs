@@ -15,8 +15,8 @@ namespace SkillsBooster.Application.Alliances.Commands.CreateAlliance
             
             RuleFor(v => v.Title)
                 .NotEmpty().WithMessage("Title is required.")
-                .MaximumLength(200).WithMessage("Title must not exceed 200 characters.")
-                .MustAsync(BeUniqueTitle).WithMessage("The specified title already exists.");
+                .MaximumLength(200).WithMessage("Title must not exceed 200 characters.");
+                //.MustAsync(BeUniqueTitle).WithMessage("The specified title already exists.");
 
             RuleFor(v => v.Description)
                 .MaximumLength(4000).WithMessage("Title must not exceed 4000 characters.");

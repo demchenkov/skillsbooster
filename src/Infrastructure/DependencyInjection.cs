@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SkillsBooster.Application.Common.Interfaces;
 using SkillsBooster.Infrastructure.Identity;
 using SkillsBooster.Infrastructure.Persistence;
+using SkillsBooster.Infrastructure.Services;
 
 namespace SkillsBooster.Infrastructure
 {
@@ -36,7 +37,8 @@ namespace SkillsBooster.Infrastructure
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+                .AddProfileService<IdentityProfileService>();
 
             services.AddTransient<IIdentityService, IdentityService>();
 

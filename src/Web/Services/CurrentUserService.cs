@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using IdentityModel;
 using Microsoft.AspNetCore.Http;
 using SkillsBooster.Application.Common.Interfaces;
 
@@ -17,7 +18,7 @@ namespace SkillsBooster.Web.Services
         {
             get
             {
-                var userId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.Id);
                 int.TryParse(userId, out int id);
                 return id;
             }   
