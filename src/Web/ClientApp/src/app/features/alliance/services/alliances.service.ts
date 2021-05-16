@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, share } from 'rxjs/operators';
 import { PaginatedList, Sort } from 'src/app/core';
-import { Filter } from 'src/app/core/models/filter.model';
-import { Alliance } from 'src/app/domain/entities';
+import { Alliance, AllianceChallenge } from 'src/app/domain/entities';
 import { AlliancesApiService } from './alliances-api.service';
 
 @Injectable()
@@ -11,10 +10,12 @@ export class AlliancesService {
   private loadingSubj$ = new BehaviorSubject<boolean>(true);
   private allianceSubj$ = new BehaviorSubject<Alliance>(null);
   private alliancesSubj$ = new BehaviorSubject<PaginatedList<Alliance>>(PaginatedList.getEmpty<Alliance>());
+  private allianceChallengesSubj$ = new BehaviorSubject<AllianceChallenge[]>([]);
 
   public loading$: Observable<boolean> = this.loadingSubj$.asObservable();
   public alliance$: Observable<Alliance> = this.allianceSubj$.asObservable();
   public alliances$: Observable<PaginatedList<Alliance>> = this.alliancesSubj$.asObservable();
+  public allianceChallenges$ = this.allianceChallengesSubj$.asObservable();
 
   constructor(private apiService: AlliancesApiService) {}
 
@@ -52,5 +53,14 @@ export class AlliancesService {
     const observable = this.apiService.deleteAlliance(id).pipe(share());
     observable.subscribe();
     return observable;
+  }
+
+  getAllianceChallenges(id: number) {
+    this.loadingSubj$.next(true);
+    this.apiService.getAllianceChallenges(id)
+      .pipe(
+        finalize(() => this.loadingSubj$.next(false))
+      )
+      .subscribe(data => this.allianceChallengesSubj$.next(data));
   }
 }

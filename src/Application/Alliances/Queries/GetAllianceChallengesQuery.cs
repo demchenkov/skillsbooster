@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -8,29 +9,30 @@ using SkillsBooster.Application.Alliances.Dtos;
 
 namespace SkillsBooster.Application.Alliances.Queries
 {
-    public class GetAllianceByIdQuery: IRequest<AllianceDto>
+    public class GetAllianceChallengesQuery : IRequest<IEnumerable<AllianceChallengeDto>>
     {
         public int Id { get; set; }
     }
 
-    public class GetAllianceByIdQueryHandler: IRequestHandler<GetAllianceByIdQuery, AllianceDto>
+    public class GetAllianceChallengesQueryHandler : IRequestHandler<GetAllianceChallengesQuery, IEnumerable<AllianceChallengeDto>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetAllianceByIdQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetAllianceChallengesQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
         
 
-        public async Task<AllianceDto> Handle(GetAllianceByIdQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<AllianceChallengeDto>> Handle(GetAllianceChallengesQuery request, CancellationToken cancellationToken)
         {
             var alliance = await _context.Alliances
-                .Include(x => x.Leader)
+                .Include(x => x.Challenges)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-            return _mapper.Map<AllianceDto>(alliance);
+
+            return _mapper.Map<IEnumerable<AllianceChallengeDto>>(alliance.Challenges);
         }
     }
 

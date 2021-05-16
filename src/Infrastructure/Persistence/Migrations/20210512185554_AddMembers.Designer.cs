@@ -3,51 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillsBooster.Infrastructure.Persistence;
 
 namespace SkillsBooster.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210512185554_AddMembers")]
+    partial class AddMembers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("AllianceChallenge", b =>
-                {
-                    b.Property<int>("ChallengesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompetitorsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ChallengesId", "CompetitorsId");
-
-                    b.HasIndex("CompetitorsId");
-
-                    b.ToTable("AllianceChallenge");
-                });
-
-            modelBuilder.Entity("ChallengeExercise", b =>
-                {
-                    b.Property<int>("ChallengesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ExercisesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ChallengesId", "ExercisesId");
-
-                    b.HasIndex("ExercisesId");
-
-                    b.ToTable("ChallengeExercise");
-                });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
                 {
@@ -322,34 +294,6 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
                     b.ToTable("Alliances");
                 });
 
-            modelBuilder.Entity("SkillsBooster.Domain.Entities.Challenge", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("FinishDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Challenges");
-                });
-
             modelBuilder.Entity("SkillsBooster.Domain.Entities.Exercise", b =>
                 {
                     b.Property<int>("Id")
@@ -476,36 +420,6 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("AllianceChallenge", b =>
-                {
-                    b.HasOne("SkillsBooster.Domain.Entities.Challenge", null)
-                        .WithMany()
-                        .HasForeignKey("ChallengesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SkillsBooster.Domain.Entities.Alliance", null)
-                        .WithMany()
-                        .HasForeignKey("CompetitorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ChallengeExercise", b =>
-                {
-                    b.HasOne("SkillsBooster.Domain.Entities.Challenge", null)
-                        .WithMany()
-                        .HasForeignKey("ChallengesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SkillsBooster.Domain.Entities.Exercise", null)
-                        .WithMany()
-                        .HasForeignKey("ExercisesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

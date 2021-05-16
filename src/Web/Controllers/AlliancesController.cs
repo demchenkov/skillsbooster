@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SkillsBooster.Application.Common.Models;
 using SkillsBooster.Application.Alliances.Commands.CreateAlliance;
@@ -49,5 +50,12 @@ namespace SkillsBooster.Web.Controllers
             await Mediator.Send(new DeleteAllianceCommand { Id = id });
             return NoContent();
         }
+
+        [HttpGet(Routes.Alliances.GetAllianceChallenges)]
+        public async Task<IEnumerable<AllianceChallengeDto>> GetAllianceChallenges([FromRoute] int id)
+        {
+            return await Mediator.Send(new GetAllianceChallengesQuery{ Id = id });
+        }
+
     }
 }

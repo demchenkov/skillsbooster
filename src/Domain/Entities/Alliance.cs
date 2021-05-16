@@ -15,5 +15,6 @@ namespace SkillsBooster.Domain.Entities
         public int LeaderId { get; set; }
 
         public IList<User> Members { get; private set; } = new List<User>();
+        public IList<Challenge> Challenges { get; private set; } = new List<Challenge>();
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillsBooster.Infrastructure.Persistence;
 
 namespace SkillsBooster.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210512192414_AddChallange")]
+    partial class AddChallange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,13 +38,13 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("ChallengeExercise", b =>
                 {
-                    b.Property<int>("ChallengesId")
+                    b.Property<int>("ExerciseToChallengeId")
                         .HasColumnType("int");
 
                     b.Property<int>("ExercisesId")
                         .HasColumnType("int");
 
-                    b.HasKey("ChallengesId", "ExercisesId");
+                    b.HasKey("ExerciseToChallengeId", "ExercisesId");
 
                     b.HasIndex("ExercisesId");
 
@@ -331,15 +333,6 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("FinishDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -347,7 +340,7 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Challenges");
+                    b.ToTable("Challenge");
                 });
 
             modelBuilder.Entity("SkillsBooster.Domain.Entities.Exercise", b =>
@@ -497,7 +490,7 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("SkillsBooster.Domain.Entities.Challenge", null)
                         .WithMany()
-                        .HasForeignKey("ChallengesId")
+                        .HasForeignKey("ExerciseToChallengeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

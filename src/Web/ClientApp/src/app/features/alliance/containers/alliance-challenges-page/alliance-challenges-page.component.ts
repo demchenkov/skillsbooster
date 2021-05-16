@@ -1,47 +1,43 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { NgOnDestroy } from 'src/app/core';
+import { AlliancesService } from '../../services/alliances.service';
 
-enum ChallengeStatus {
-  Scheduled,
-  Active,
-  Passed
-} 
 
 @Component({
   selector: 'sb-alliance-challenges-page',
   templateUrl: './alliance-challenges-page.component.html',
   styleUrls: ['./alliance-challenges-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AlliancesService, NgOnDestroy]
 })
 export class AllianceChallengesPageComponent implements OnInit {
+  pageId$: Observable<number>;
+  isLoadingResults$ = this.service.loading$;
+  items$ = this.service.allianceChallenges$;
 
-  @Input() isLoadingResults = false;
-  @Input() items = [
-    {id: 1, status: 1, title: 'Challenge 1', startDate: new Date(), finishDate: new Date()},
-    {id: 2, status: 2, title: 'Challenge 2', startDate: new Date(), finishDate: new Date()},
-    {id: 3, status: 0, title: 'Challenge 3', startDate: new Date(), finishDate: new Date()},
-    {id: 4, status: 1, title: 'Challenge 4', startDate: new Date(), finishDate: new Date()},
-    {id: 5, status: 2, title: 'Challenge 5', startDate: new Date(), finishDate: new Date()},
-  ];
-
-  constructor(private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private service: AlliancesService, private onDestroy$: NgOnDestroy) { }
 
   ngOnInit(): void {
+    this.pageId$ = this.route.paramMap.pipe(
+      takeUntil(this.onDestroy$),
+      map(x => {
+        const id = Number.parseInt(x.get('id'), 10);
+        if (Number.isNaN(id)) {
+          // todo redirect to not found page
+        }
+        return id;
+      })
+    );
+
+    this.pageId$
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(id => this.service.getAllianceChallenges(id));
   }
 
   getLink(row: any): string {
     return `/challenges/${row.id}`;
   }
-
-
-  openDialog() {
-    const dialogRef = this.dialog.open(EditAllianceModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-
 }

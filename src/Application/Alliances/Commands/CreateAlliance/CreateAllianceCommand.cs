@@ -36,7 +36,6 @@ namespace SkillsBooster.Application.Alliances.Commands.CreateAlliance
                 Description = request.Description,
                 LeaderId = _currentUserService.UserId,
                 CreationDate = DateTime.Now,
-
             };
 
             await _context.Alliances.AddAsync(entity, cancellationToken);

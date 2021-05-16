@@ -22,6 +22,33 @@ export class Alliance {
   }
 }
 
+export enum ChallengeStatus {
+  Scheduled,
+  Active,
+  Passed
+}
+
+
+export class AllianceChallenge {
+  id: number;
+  title: string;
+  status: ChallengeStatus;
+  startDate: Date;
+  finishDate: Date;
+
+  public static fromObject(data: any): AllianceChallenge {
+    const entity = new AllianceChallenge();
+
+    entity.id = data.id;
+    entity.title = data.title;
+    entity.status = data.status;
+    entity.startDate = new Date(data.startDate);
+    entity.finishDate = new Date(data.finishDate);
+
+    return entity;
+  }
+}
+
 export const Alliances = [
   Alliance.fromObject({id: 1, title: 'Title 1', leader: 'Demchenko', rating: 1}),
   Alliance.fromObject({id: 2, title: 'Title 2', leader: 'Demchenko', rating: 2}),

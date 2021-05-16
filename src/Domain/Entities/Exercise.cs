@@ -1,4 +1,6 @@
-﻿using SkillsBooster.Domain.Enums;
+﻿using System.Collections;
+using System.Collections.Generic;
+using SkillsBooster.Domain.Enums;
 
 namespace SkillsBooster.Domain.Entities
 {
@@ -12,5 +14,7 @@ namespace SkillsBooster.Domain.Entities
 
         public User Author { get; set; }
         public int AuthorId { get; set; }
+
+        public ICollection<Challenge> Challenges { get; set; }
     }
 }

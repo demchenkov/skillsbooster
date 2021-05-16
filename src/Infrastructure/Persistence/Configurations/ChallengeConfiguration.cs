@@ -4,9 +4,9 @@ using SkillsBooster.Domain.Entities;
 
 namespace SkillsBooster.Infrastructure.Persistence.Configurations
 {
-    public class AllianceConfiguration : IEntityTypeConfiguration<Alliance>
+    public class ChallengeConfiguration : IEntityTypeConfiguration<Challenge>
     {
-        public void Configure(EntityTypeBuilder<Alliance> builder)
+        public void Configure(EntityTypeBuilder<Challenge> builder)
         {
             builder.Property(t => t.Id)
                 .UseIdentityColumn();
@@ -15,14 +15,11 @@ namespace SkillsBooster.Infrastructure.Persistence.Configurations
                 .HasMaxLength(200)
                 .IsRequired();
 
-            builder.Property(t => t.Description)
-                .HasMaxLength(4000);
+            builder.HasMany(x => x.Competitors)
+                .WithMany(x => x.Challenges);
 
-            builder.HasOne(x => x.Leader)
-                .WithOne();
-
-            builder.HasMany(x => x.Members)
-                .WithOne();
+            builder.HasMany(x => x.Exercises)
+                .WithMany(x => x.Challenges);
         }
     }
 }

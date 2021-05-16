@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { take } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { Sort } from 'src/app/core';
 import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
 import { AlliancesService } from '../../services/alliances.service';
@@ -26,7 +26,7 @@ export class AllianceListPageComponent implements OnInit {
   onCreateAlliance() {
     const dialogRef = this.dialog.open(EditAllianceModalComponent);
 
-    dialogRef.afterClosed().pipe(take(1)).subscribe(result => {
+    dialogRef.afterClosed().pipe(take(1), filter(Boolean)).subscribe(result => {
       this.service.createAlliance(result);
     });
   }
