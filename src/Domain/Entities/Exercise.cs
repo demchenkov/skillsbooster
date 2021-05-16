@@ -16,5 +16,6 @@ namespace SkillsBooster.Domain.Entities
         public int AuthorId { get; set; }
 
         public ICollection<Challenge> Challenges { get; set; }
+        public ICollection<Duel> Duels { get; set; }
     }
 }

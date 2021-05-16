@@ -5,7 +5,7 @@
         Created,
         Accepted,
         Declined,
-        InProgress,
+        Active,
         Finished
     }
 }

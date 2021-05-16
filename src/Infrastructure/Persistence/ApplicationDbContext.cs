@@ -21,7 +21,10 @@ namespace SkillsBooster.Infrastructure.Persistence
         public DbSet<Challenge> Challenges { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<User> AppUsers { get; set; }
-        
+        public DbSet<Duel> Duels { get; set; }
+        public DbSet<Submission> Submissions { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

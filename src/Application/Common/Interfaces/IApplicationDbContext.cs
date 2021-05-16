@@ -10,6 +10,8 @@ namespace SkillsBooster.Application.Common.Interfaces
         DbSet<Alliance> Alliances { get; set; }
         
         DbSet<Challenge> Challenges { get; set; }
+        DbSet<Duel> Duels { get; set; }
+        DbSet<Submission> Submissions { get; set; }
 
         DbSet<Exercise> Exercises { get; set; }
 
