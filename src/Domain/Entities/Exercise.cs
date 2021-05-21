@@ -10,6 +10,7 @@ namespace SkillsBooster.Domain.Entities
         public string Title { get; set; }
         public string MarkdownBody { get; set; }
         public int MaxScore { get; set; }
+        public string Topic { get; set; }
         public Difficulty Difficulty { get; set; }
 
         public User Author { get; set; }

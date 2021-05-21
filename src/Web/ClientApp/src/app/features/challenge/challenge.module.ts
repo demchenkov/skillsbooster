@@ -19,16 +19,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { EditorModule } from 'src/app/core/modules';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { ChallengesApiService } from './services/challenges-api.service';
 
 
 
 
 @NgModule({
   declarations: [
-    ChallengeDetailsPageComponent, 
-    ChallengeTasksComponent, 
-    ChallengeParticipantsComponent, 
-    ChallengeDetailsComponent, 
+    ChallengeDetailsPageComponent,
+    ChallengeTasksComponent,
+    ChallengeParticipantsComponent,
+    ChallengeDetailsComponent,
     ChallengeTaskPageComponent
   ],
   imports: [
@@ -49,6 +50,7 @@ import { MatButtonModule } from '@angular/material/button';
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE
     })
-  ]
+  ],
+  providers: [ChallengesApiService]
 })
 export class ChallengeModule { }

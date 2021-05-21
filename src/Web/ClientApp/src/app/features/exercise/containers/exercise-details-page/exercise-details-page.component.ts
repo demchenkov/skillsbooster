@@ -10,7 +10,6 @@ import { ExercisesService } from '../../services';
   selector: 'sb-exercise-details-page',
   templateUrl: './exercise-details-page.component.html',
   providers: [ExercisesService],
-  changeDetection: ChangeDetectionStrategy.Default
 })
 export class ExerciseDetailsPageComponent implements OnInit{
   pageId$: Observable<number>;
@@ -37,13 +36,13 @@ export class ExerciseDetailsPageComponent implements OnInit{
 
     this.loading$ = combineLatest([this.service.loading$, this.editorLoading$])
       .pipe(map(([a, b]) => a || b));
-      
+
     this.exercise$ = this.service.exercise$;
 
     this.pageId$.subscribe(id => this.service.getExerciseById(id));
   }
 
   onEditorInit() {
-    setTimeout(() => this.editorLoading$.next(false));
+    this.editorLoading$.next(false)
   }
 }

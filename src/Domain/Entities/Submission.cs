@@ -8,7 +8,7 @@ namespace SkillsBooster.Domain.Entities
         public int Id { get; set; }
         public string Body { get; set; }
         public SubmissionStatus Status { get; set; }
-        public float Score { get; set; }
+        public double Score { get; set; }
         public DateTime SubmittedAt { get; set; }
 
         public int ExerciseId { get; set; }
@@ -16,5 +16,8 @@ namespace SkillsBooster.Domain.Entities
 
         public int SubmitterId { get; set; }
         public User Submitter { get; set; }
+
+        public int? ChallengeId { get; set; }
+        public int? DuelId { get; set; }
     }
 }

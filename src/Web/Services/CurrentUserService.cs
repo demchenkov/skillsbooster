@@ -20,7 +20,7 @@ namespace SkillsBooster.Web.Services
             {
                 var userId = _httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.Id);
                 int.TryParse(userId, out int id);
-                return id;
+                return 1;
             }   
         }
     }

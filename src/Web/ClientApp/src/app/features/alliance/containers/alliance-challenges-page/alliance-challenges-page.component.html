@@ -1,26 +1,28 @@
-<div class="container" >
-  <div class="h-100 d-flex align-items-center justify-content-center" *ngIf="isLoadingResults$ | async">
-    <mat-spinner></mat-spinner>
-  </div>
+<div class="loading-shade" *ngIf="isLoadingResults$ | async; else data">
+  <mat-spinner></mat-spinner>
+</div>
 
-  <div class="row mat-elevation-z8 justify-content-center">
-    <div class="w-100 p-0" *ngIf="items$ | async as items; else noData">
-      <mat-nav-list class="w-100 p-0" *ngIf="items.length > 0; else noData">
-        <mat-list-item *ngFor="let item of items" class="list-row">
-           <a matLine [routerLink]="getLink(item)" class="py-2 d-flex align-items-center">
-             <span class="logo"></span>
-             <span>{{item.title}}</span>
-             <small class="ml-auto">
-                {{item.startDate | date:'dd.MM.yyyy h:mm:ss'}}
-                <br/>
-                {{item.finishDate | date:'dd.MM.yyyy h:mm:ss'}}
-             </small>
-           </a>
-        </mat-list-item>
-      </mat-nav-list>
+<ng-template #data>
+  <div class="container">
+    <div class="row mat-elevation-z8 justify-content-center">
+      <div class="w-100 p-0" *ngIf="items$ | async as items; else noData">
+        <mat-nav-list class="w-100 p-0" *ngIf="items.length > 0; else noData">
+          <mat-list-item *ngFor="let item of items" class="list-row">
+             <a matLine [routerLink]="getLink(item)" class="py-2 d-flex align-items-center">
+               <span class="logo"></span>
+               <span>{{item.title}}</span>
+               <small class="ml-auto">
+                  {{item.startDate | date:'dd.MM.yyyy h:mm:ss'}}
+                  <br/>
+                  {{item.finishDate | date:'dd.MM.yyyy h:mm:ss'}}
+               </small>
+             </a>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>
 
 <ng-template #noData>
   <h6 class="text-center">No data to display</h6>

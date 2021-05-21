@@ -1,5 +1,5 @@
 <div class="table-container">
-  <mat-table [dataSource]="ranking$ | async" style="height: calc(100% - 59px);">
+  <mat-table [dataSource]="ranking$ | async">
     <!-- Title Column -->
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef><span class="mx-2">Alliance</span></mat-header-cell>
@@ -20,12 +20,12 @@
     </ng-container>
 
 
-    <ng-container *ngFor="let task of taskList" [matColumnDef]="task.title">
+    <ng-container *ngFor="let task of taskColumns$ | async" [matColumnDef]="task.title">
       <mat-header-cell [matTooltip]="task.title"  *matHeaderCellDef>{{task.title | titlecase}}</mat-header-cell>
-      <mat-cell  *matCellDef="let row">{{row.scoreDict[task.id] || '—'}}</mat-cell>
+      <mat-cell  *matCellDef="let row">{{row.exerciseScore[task.id] || '—'}}</mat-cell>
     </ng-container>
 
-    <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-header-row  *matHeaderRowDef="displayedColumns$ | async"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns$ | async;"></mat-row>
   </mat-table>
 </div>

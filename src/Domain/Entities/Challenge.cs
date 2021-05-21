@@ -12,6 +12,7 @@ namespace SkillsBooster.Domain.Entities
         public DateTime StartDate { get; set; }
         public DateTime FinishDate { get; set; }
         
+
         public IList<Alliance> Competitors { get; private set; } = new List<Alliance>();
         public IList<Exercise> Exercises { get; private set; } = new List<Exercise>();
     }

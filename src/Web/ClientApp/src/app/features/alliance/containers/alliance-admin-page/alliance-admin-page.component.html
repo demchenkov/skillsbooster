@@ -7,7 +7,7 @@
       <h4 class="pb-3 text-center border-bottom">Users requests</h4>
       <div class="row px-3">
         <sb-acceptance-list [entities]="users"
-                            (clicked)="usersListClicked($event)"
+                            (btnClicked)="usersListClicked($event)"
         ></sb-acceptance-list>
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div class="row px-3">
         <sb-acceptance-list [entities]="challenges"
                             [loading]="true"
-                            (clicked)="challengesListClicked($event)"
+                            (btnClicked)="challengesListClicked($event)"
         ></sb-acceptance-list>
       </div>
     </div>

@@ -8,5 +8,6 @@ namespace SkillsBooster.Application.Common.Interfaces
     {
         Task<User> GetUserAsync(int userId);
         Task<User> FindUserAsync(Func<User, bool> predicate);
+        Task<Alliance> GetUserAlliance(int userId);
     }
 }

@@ -15,6 +15,10 @@ namespace SkillsBooster.Infrastructure.Persistence.Configurations
                 .HasMaxLength(200)
                 .IsRequired();
 
+            builder.Property(t => t.Topic)
+                .HasMaxLength(1000)
+                .IsRequired();
+
             builder.HasOne(x => x.Author)
                 .WithMany()
                 .HasForeignKey(x => x.AuthorId);

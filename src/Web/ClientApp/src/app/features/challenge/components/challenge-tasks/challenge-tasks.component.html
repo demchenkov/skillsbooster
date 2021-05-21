@@ -4,19 +4,19 @@
   <mat-list-item *ngFor="let item of tasks" class="list-row">
     <a matLine [routerLink]="getLink(item)" class="py-2 d-flex align-items-center">
       <ng-container [ngSwitch]="item.status">
-        <mat-icon *ngSwitchCase="statuses.Completed" 
+        <mat-icon *ngSwitchCase="statuses.Completed"
                   class="text-success"
                   matTooltip="The Task is Completed"
         > check_circle_outline </mat-icon>
-        <mat-icon *ngSwitchCase="statuses.PartialCompleted" 
+        <mat-icon *ngSwitchCase="statuses.PartialCompleted"
                   class="text-warning"
                   matTooltip="The Task is Partial Completed"
         > error_outline </mat-icon>
-        <mat-icon *ngSwitchCase="statuses.Failed" 
+        <mat-icon *ngSwitchCase="statuses.Failed"
                   class="text-danger"
                   matTooltip="The Task is Failed"
         > highlight_off </mat-icon>
-        <mat-icon *ngSwitchCase="statuses.NotStarted" 
+        <mat-icon *ngSwitchCase="statuses.NotStarted"
                   class="text-info"
                   matTooltip="The Task is Not Started"
         > not_started </mat-icon>
@@ -28,7 +28,7 @@
           Submitted by: {{item.submittedBy}}
         </small>
         <small class="ml-auto">
-          {{item.score}} / 100
+          {{ getScoreOrDefault(item) }} / 100
         </small>
       </span>
     </a>

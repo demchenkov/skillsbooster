@@ -2,6 +2,7 @@
 {
     public enum SubmissionStatus
     {
+        NotChecked,
         Failed,
         PartialCompleted,
         Completed

@@ -2,15 +2,15 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div *ngIf="exercise$ | async as exercise" class="container-fluid flex-column h-100">
+<div [hidden]="loading$ | async" class="container-fluid flex-column h-100">
   <div class="row h-100">
-    <div class="col-6" [hidden]="loading$ | async">
+    <div class="col-6" >
       <div class="d-block">
-        <markdown [data]="exercise.markdownBody" style="overflow-y: auto;"></markdown>
+        <markdown [data]="(exercise$ | async)?.markdownBody" style="overflow-y: auto;"></markdown>
       </div>
     </div>
     <div class="col-6">
-      <div class="row"  [hidden]="loading$ | async">
+      <div class="row">
         <div class="col-8">
           <mat-form-field appearance="fill">
             <mat-label>Language</mat-label>

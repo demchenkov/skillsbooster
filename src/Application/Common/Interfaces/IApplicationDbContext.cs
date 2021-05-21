@@ -12,7 +12,7 @@ namespace SkillsBooster.Application.Common.Interfaces
         DbSet<Challenge> Challenges { get; set; }
         DbSet<Duel> Duels { get; set; }
         DbSet<Submission> Submissions { get; set; }
-
+        DbSet<User> AppUsers { get; set; }
         DbSet<Exercise> Exercises { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
