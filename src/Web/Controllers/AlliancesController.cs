@@ -57,5 +57,10 @@ namespace SkillsBooster.Web.Controllers
             return await Mediator.Send(new GetAllianceChallengesQuery{ Id = id });
         }
 
+        [HttpGet(Routes.Alliances.GetAllianceChallengeRequests)]
+        public async Task<IEnumerable<AllianceChallengeRequestDto>> GetAllianceChallengeRequests([FromRoute] int id)
+        {
+            return await Mediator.Send(new GetAllianceChallengeRequestsQuery { Id = id });
+        }
     }
 }

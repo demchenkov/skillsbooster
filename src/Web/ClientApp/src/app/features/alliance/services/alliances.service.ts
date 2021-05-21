@@ -63,4 +63,16 @@ export class AlliancesService {
       )
       .subscribe(data => this.allianceChallengesSubj$.next(data));
   }
+
+  getAllianceChallengeRequests(id: number) {
+    this.loadingSubj$.next(true);
+    const observable = this.apiService.getAllianceChallengeRequests(id)
+      .pipe(
+        finalize(() => this.loadingSubj$.next(false)),
+        share()
+      );
+
+    observable.subscribe();
+    return observable;
+  }
 }

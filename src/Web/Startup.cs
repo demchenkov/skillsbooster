@@ -35,7 +35,7 @@ namespace SkillsBooster.Web
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
 

@@ -28,12 +28,12 @@ export class AllianceDetailsPageComponent implements OnInit {
     this.pageId$ = this.route.paramMap.pipe(
       takeUntil(this.onDestroy$),
       map(x => {
-      const id = Number.parseInt(x.get('id'), 10);
-      if (Number.isNaN(id)) {
-        // todo redirect to not found page
-      }
-      return id;
-    }));
+        const id = Number.parseInt(x.get('id'), 10);
+        if (Number.isNaN(id)) {
+          // todo redirect to not found page
+        }
+        return id;
+      }));
 
 
 

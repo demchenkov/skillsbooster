@@ -23,7 +23,8 @@ namespace SkillsBooster.Infrastructure.Persistence
         public DbSet<User> AppUsers { get; set; }
         public DbSet<Duel> Duels { get; set; }
         public DbSet<Submission> Submissions { get; set; }
-
+        public DbSet<UserRequest> UserRequests { get; set; }
+        public DbSet<ChallengeRequest> ChallengeRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

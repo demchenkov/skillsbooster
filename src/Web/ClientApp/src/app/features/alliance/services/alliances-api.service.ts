@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedList, Sort } from 'src/app/core';
 import { HttpParamsUtils } from 'src/app/core/http-utils';
-import { Filter } from 'src/app/core/models/filter.model';
-import { Alliance, AllianceChallenge, Alliances } from 'src/app/domain/entities';
+import { Alliance, AllianceChallenge, Alliances, ChallengeRequest } from 'src/app/domain/entities';
 
-@Injectable()
+@Injectable({providedIn: 'any'})
 export class AlliancesApiService {
   static readonly URL = '/api/alliances';
 
@@ -47,6 +46,12 @@ export class AlliancesApiService {
   getAllianceChallenges(id: number) {
     return this.http.get<any[]>(`${AlliancesApiService.URL}/${id}/challenges`).pipe(
       map(challenges => challenges.map(x => AllianceChallenge.fromObject(x)))
+    );
+  }
+
+  getAllianceChallengeRequests(id: number) {
+    return this.http.get<any[]>(`${AlliancesApiService.URL}/${id}/challenge-requests`).pipe(
+      map(requests => requests.map(x => ChallengeRequest.fromObject(x)))
     );
   }
 }

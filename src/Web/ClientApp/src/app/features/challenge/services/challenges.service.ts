@@ -29,4 +29,9 @@ export class ChallengesService {
     return observable;
   }
 
+  respondChallenge(challengeId: number, accepted: boolean): Observable<void> {
+    const observable = this.apiService.respondChallenge(challengeId, accepted).pipe(share());
+    observable.subscribe();
+    return observable;
+  }
 }

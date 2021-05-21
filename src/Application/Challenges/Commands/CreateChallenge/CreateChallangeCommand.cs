@@ -8,6 +8,7 @@ using MediatR;
 using SkillsBooster.Application.Challenges.Dtos;
 using SkillsBooster.Application.Common.Interfaces;
 using SkillsBooster.Domain.Entities;
+using SkillsBooster.Domain.Enums;
 
 namespace SkillsBooster.Application.Challenges.Commands.CreateChallenge
 {
@@ -15,8 +16,11 @@ namespace SkillsBooster.Application.Challenges.Commands.CreateChallenge
     {
         public string Title { get; set; }
 
-        public IEnumerable<int> TaskIds { get; set; }
-        public IEnumerable<int> AllianceIds { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime FinishDate { get; set; }
+
+        public IEnumerable<int> Exercises { get; set; }
+        public IEnumerable<int> Alliances { get; set; }
     }
 
     public class CreateChallengeCommandHandler : IRequestHandler<CreateChallengeCommand, ChallengeDto>
@@ -34,21 +38,32 @@ namespace SkillsBooster.Application.Challenges.Commands.CreateChallenge
 
         public async Task<ChallengeDto> Handle(CreateChallengeCommand request, CancellationToken cancellationToken)
         {
+            var userAlliance = await _currentUserService.GetCurrentUserAlliance();
             var entity = new Challenge
             {
                 Title = request.Title,
+                StartDate = request.StartDate,
+                FinishDate = request.FinishDate,
+                Status = ChallengeStatus.Scheduled,
+                Competitors = { userAlliance }
             };
-            foreach (var taskId in request.TaskIds)
+            foreach (var taskId in request.Exercises)
             {
-                entity.Exercises.Add(new Exercise {Id = taskId});
-            }
-
-            foreach (var allianceId in request.AllianceIds)
-            {
-                entity.Competitors.Add(new Alliance { Id = allianceId });
+                var exercise = await _context.Exercises.FindAsync(new object[] { taskId }, cancellationToken);
+                if (exercise != null)
+                    entity.Exercises.Add(exercise);
             }
 
             await _context.Challenges.AddAsync(entity, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+
+
+            foreach (var allianceId in request.Alliances)
+            {
+                var challengeRequest = new ChallengeRequest {AllianceId = allianceId, ChallengeId = entity.Id};
+                await _context.ChallengeRequests.AddAsync(challengeRequest, cancellationToken);
+            }
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return _mapper.Map<ChallengeDto>(entity);

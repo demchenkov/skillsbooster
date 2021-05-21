@@ -18,8 +18,8 @@ namespace SkillsBooster.Application.Challenges.Commands.CreateChallenge
                 .NotEmpty().WithMessage("Title is required.")
                 .MaximumLength(200).WithMessage("Title must not exceed 200 characters.");
 
-            RuleFor(v => v.AllianceIds)
-                .Must(x => x != null && x.Count() > 2);
+            RuleFor(v => v.Alliances)
+                .Must(x => x != null && x.Count() > 1);
         }
         
         private Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)

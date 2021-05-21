@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Challenge } from 'src/app/domain/entities';
 
-@Injectable()
+@Injectable({providedIn: 'any'})
 export class ChallengesApiService {
   static readonly URL = '/api/challenges';
 
@@ -20,5 +20,9 @@ export class ChallengesApiService {
     return this.http.post(ChallengesApiService.URL, challenge).pipe(
       map(x => Challenge.fromObject(x))
     );
+  }
+
+  respondChallenge(challengeId: number, accepted: boolean): Observable<void> {
+    return this.http.put<void>(`${ChallengesApiService.URL}/${challengeId}`, {challengeId, accepted});
   }
 }

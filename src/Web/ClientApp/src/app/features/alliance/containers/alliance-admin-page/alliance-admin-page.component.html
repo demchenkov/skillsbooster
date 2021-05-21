@@ -14,8 +14,9 @@
     <div class="col-5 p-3 border">
       <h4 class="pb-3 text-center border-bottom">Challenge requests</h4>
       <div class="row px-3">
-        <sb-acceptance-list [entities]="challenges"
-                            [loading]="true"
+        <sb-acceptance-list [entities]="challengeRequests$ | async"
+                            [titleGetter]="challengeRequestNameGetter"
+                            [loading]="challengeRequestsLoading$ | async"
                             (btnClicked)="challengesListClicked($event)"
         ></sb-acceptance-list>
       </div>

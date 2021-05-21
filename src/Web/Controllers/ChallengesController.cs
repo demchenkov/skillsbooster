@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using SkillsBooster.Application.Common.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using SkillsBooster.Application.Challenges.Commands.CreateChallenge;
-using SkillsBooster.Application.Challenges.Commands.DeleteChallenge;
-using SkillsBooster.Application.Challenges.Commands.UpdateChallenge;
+using SkillsBooster.Application.Challenges.Commands.RespondChallengeRequest;
 using SkillsBooster.Application.Challenges.Dtos;
 using SkillsBooster.Application.Challenges.Queries;
 using SkillsBooster.Web.Contracts;
+using System.Threading.Tasks;
 
 namespace SkillsBooster.Web.Controllers
 {
@@ -25,6 +23,16 @@ namespace SkillsBooster.Web.Controllers
         public async Task<ChallengeDto> Create([FromBody] CreateChallengeCommand command)
         {
             return await Mediator.Send(command);
+        }
+
+        [HttpPut(Routes.Challenges.Respond)]
+        public async Task<IActionResult> Respond([FromRoute] int id, [FromBody] RespondChallengeRequestCommand command)
+        {
+            if (command.ChallengeId != id)
+                return BadRequest();
+
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }
