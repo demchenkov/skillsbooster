@@ -21,6 +21,10 @@ namespace SkillsBooster.Infrastructure.Persistence.Configurations
             builder.HasOne(x => x.Leader)
                 .WithOne();
 
+            builder.HasOne(x => x.Ranking)
+                .WithOne()
+                .HasForeignKey<AllianceRanking>(x => x.Id);
+
             builder.HasMany(x => x.Members)
                 .WithOne();
         }

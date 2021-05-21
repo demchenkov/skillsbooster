@@ -48,6 +48,7 @@ namespace SkillsBooster.Application.Alliances.Queries
             
             return query
                 .Include(x => x.Leader)
+                .Include(x => x.Ranking)
                 .ProjectTo<AllianceDto>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);
         }

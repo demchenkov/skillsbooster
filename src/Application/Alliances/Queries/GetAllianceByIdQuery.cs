@@ -29,7 +29,9 @@ namespace SkillsBooster.Application.Alliances.Queries
         {
             var alliance = await _context.Alliances
                 .Include(x => x.Leader)
+                .Include(x => x.Ranking)
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+
             return _mapper.Map<AllianceDto>(alliance);
         }
     }

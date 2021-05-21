@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { filter, map, take, takeUntil } from 'rxjs/operators';
+import { filter, finalize, map, take, takeUntil } from 'rxjs/operators';
 import { NgOnDestroy } from 'src/app/core';
 import { AcceptanceListButtonClicked } from 'src/app/core/modules/acceptance-list/acceptance-list.component';
-import { Challenge, ChallengeRequest } from 'src/app/domain/entities';
+import { Challenge, ChallengeRequest, JoinRequest } from 'src/app/domain/entities';
 import { ChallengesService } from 'src/app/features/challenge/services/challenges.service';
 import { CreateChallengeModalComponent } from '../../components/create-challenge-modal/create-challenge-modal.component';
 import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
@@ -19,13 +19,15 @@ import { AlliancesService } from '../../services/alliances.service';
   providers: [AlliancesService, NgOnDestroy, ChallengesService]
 })
 export class AllianceAdminPageComponent implements OnInit {
-  users = [{name: 'User 1'}, {name: 'User 2'}, {name: 'User 3'}, {name: 'User 4'}, {name: 'User 5'}];
-
   challengeRequests$ = new BehaviorSubject<ChallengeRequest[]>([]);
-  challengeRequestsLoading$ = this.service.loading$;
+  challengeRequestsLoading$ = new BehaviorSubject<boolean>(true);
+
+  joinRequests$ = new BehaviorSubject<JoinRequest[]>([]);
+  joinRequestsLoading$ = new BehaviorSubject<boolean>(true);
+
 
   challengeRequestNameGetter = (req: ChallengeRequest) => req.challengeTitle;
-
+  joinRequestNameGetter = (req: JoinRequest) => req.userFullName;
 
   constructor(private dialog: MatDialog,
               private service: AlliancesService,
@@ -42,21 +44,23 @@ export class AllianceAdminPageComponent implements OnInit {
           // todo redirect to not found page
         }
         return id;
-      })).subscribe(id => this.loadChallengeRequests(id));
+      })).subscribe(id => this.loadRequests(id));
     ;
   }
 
-  loadChallengeRequests(id: number) {
+  loadRequests(id: number) {
+    this.challengeRequestsLoading$.next(true);
+    this.joinRequestsLoading$.next(true);
+
     this.service.getAllianceChallengeRequests(id)
-      .subscribe(requests => this.challengeRequests$.next(requests))
-  }
+      .pipe(
+        finalize(() => this.challengeRequestsLoading$.next(false)))
+      .subscribe(requests => this.challengeRequests$.next(requests));
 
-  getUsername(row: any) {
-    return row.name;
-  }
-
-  getChallengeName(row: any) {
-    return row.name;
+    this.service.getAllianceJoinRequests(id)
+      .pipe(
+        finalize(() => this.joinRequestsLoading$.next(false)))
+      .subscribe(requests => this.joinRequests$.next(requests));
   }
 
   challengesListClicked(event: AcceptanceListButtonClicked<any>) {
@@ -81,20 +85,23 @@ export class AllianceAdminPageComponent implements OnInit {
   }
 
 
-
-  private acceptUser(user: any) {
-    this.users = this.users.filter(x => x.name !== user.name);
+  private acceptUser(request: JoinRequest) {
+    const oldRequests = [...this.joinRequests$.value];
+    this.service.respondJoinRequest(request.allianceId, request.userId, true);
+    this.joinRequests$.next(oldRequests.filter(x => x.userId != request.userId));
   }
 
-  private declineUser(user: any) {
-    this.users = this.users.filter(x => x.name !== user.name);
+  private declineUser(request: JoinRequest) {
+    const oldRequests = [...this.joinRequests$.value];
+    this.service.respondJoinRequest(request.allianceId, request.userId, false);
+    this.joinRequests$.next(oldRequests.filter(x => x.userId != request.userId));
   }
 
   createChallenge() {
     const dialogRef = this.dialog.open<CreateChallengeModalComponent, any, Partial<Challenge>>(CreateChallengeModalComponent,  { disableClose: true });
 
     dialogRef.afterClosed()
-    .pipe(take(1), filter(x => x != null))
+    .pipe(take(1), filter(x => !!x))
     .subscribe(result => {
       this.challengeService.createChallenge(result);
     });

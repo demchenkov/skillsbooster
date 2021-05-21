@@ -1,13 +1,14 @@
 <sb-modal (confirm)="onConfirm()" [title]="actionName + ' Alliance'">
   <form [formGroup]="form">
     <mat-form-field class="w-100">
-      <mat-label>Alliance name</mat-label>
-      <input matInput placeholder="Name" formControlName="title">
+      <mat-label>Title</mat-label>
+      <input autocomplete="off" matInput placeholder="Title" formControlName="title">
     </mat-form-field>
 
     <mat-form-field class="w-100">
-      <mat-label>Alliance Description</mat-label>
-      <textarea matInput 
+      <mat-label>Description</mat-label>
+      <textarea matInput
+                autocomplete="off"
                 cdkTextareaAutosize
                 cdkAutosizeMinRows="3"
                 cdkAutosizeMaxRows="5"
@@ -17,9 +18,9 @@
     <div *ngIf="filePath | async as fp">
       <img [src]="fp" [alt]="form.value.name" width="150" height="150" >
     </div>
-  
+
     <button type="button" mat-raised-button class="my-2" color="primary" (click)="fileInput.click()">Choose File</button>
     <input hidden #fileInput  type="file" accept="image/*" (change)="imagePreview($event)" />
-    
+
   </form>
 </sb-modal>

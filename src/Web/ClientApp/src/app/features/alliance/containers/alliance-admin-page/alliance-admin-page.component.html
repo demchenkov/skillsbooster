@@ -6,7 +6,9 @@
     <div class="col-5 p-3 border">
       <h4 class="pb-3 text-center border-bottom">Users requests</h4>
       <div class="row px-3">
-        <sb-acceptance-list [entities]="users"
+        <sb-acceptance-list [entities]="joinRequests$ | async"
+                            [titleGetter]="joinRequestNameGetter"
+                            [loading]="joinRequestsLoading$ | async"
                             (btnClicked)="usersListClicked($event)"
         ></sb-acceptance-list>
       </div>

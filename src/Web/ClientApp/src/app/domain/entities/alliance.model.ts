@@ -14,8 +14,8 @@ export class Alliance {
     entity.title = data.title;
     entity.description = data.description;
     entity.leader = data.leader;
-    entity.rating = data.rating;
-    entity.creationDate = new Date();
+    entity.rating = data.rank;
+    entity.creationDate = new Date(data.creationDate);
     entity.photoUrl = '';
 
     return entity;

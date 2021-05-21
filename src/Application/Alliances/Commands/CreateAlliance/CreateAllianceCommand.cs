@@ -30,12 +30,14 @@ namespace SkillsBooster.Application.Alliances.Commands.CreateAlliance
 
         public async Task<AllianceDto> Handle(CreateAllianceCommand request, CancellationToken cancellationToken)
         {
+            var user = await _currentUserService.GetCurrentUser();
             var entity = new Alliance
             {
                 Title = request.Title,
                 Description = request.Description,
                 LeaderId = _currentUserService.UserId,
                 CreationDate = DateTime.Now,
+                Members = { user }
             };
 
             await _context.Alliances.AddAsync(entity, cancellationToken);

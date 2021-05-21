@@ -269,6 +269,129 @@
         }
       }
     },
+    "/api/alliances/{id}/join-requests": {
+      "get": {
+        "tags": [
+          "Alliances"
+        ],
+        "operationId": "Alliances_GetAllianceJoinRequests",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AllianceJoinRequestDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/alliances/{id}/join": {
+      "post": {
+        "tags": [
+          "Alliances"
+        ],
+        "operationId": "Alliances_RequestToJoin",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestJoinCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Alliances"
+        ],
+        "operationId": "Alliances_RespondToJoinRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RespondJoinRequestCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/challenges/{id}": {
       "get": {
         "tags": [
@@ -630,6 +753,9 @@
           "leader": {
             "type": "string",
             "nullable": true
+          },
+          "rank": {
+            "type": "integer"
           }
         }
       },
@@ -733,6 +859,47 @@
           "challengeTitle": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "AllianceJoinRequestDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "allianceId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userFullName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "RequestJoinCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "allianceId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RespondJoinRequestCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accepted": {
+            "type": "boolean"
           }
         }
       },

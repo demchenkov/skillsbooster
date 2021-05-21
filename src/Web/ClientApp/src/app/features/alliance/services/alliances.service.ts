@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize, share } from 'rxjs/operators';
+import { finalize, share, take } from 'rxjs/operators';
 import { PaginatedList, Sort } from 'src/app/core';
 import { Alliance, AllianceChallenge } from 'src/app/domain/entities';
 import { AlliancesApiService } from './alliances-api.service';
@@ -69,9 +69,35 @@ export class AlliancesService {
     const observable = this.apiService.getAllianceChallengeRequests(id)
       .pipe(
         finalize(() => this.loadingSubj$.next(false)),
-        share()
+        share(),
+        take(1)
       );
 
+    observable.subscribe();
+    return observable;
+  }
+
+  getAllianceJoinRequests(id: number) {
+    this.loadingSubj$.next(true);
+    const observable = this.apiService.getAllianceJoinRequests(id)
+      .pipe(
+        finalize(() => this.loadingSubj$.next(false)),
+        share(),
+        take(1)
+      );
+
+    observable.subscribe();
+    return observable;
+  }
+
+  createJoinRequest(allianceId: number): Observable<void> {
+    const observable = this.apiService.createJoinRequest(allianceId).pipe(share());
+    observable.subscribe();
+    return observable;
+  }
+
+  respondJoinRequest(allianceId: number, userId: number, accepted: boolean): Observable<void> {
+    const observable = this.apiService.respondJoinRequest(allianceId, userId, accepted).pipe(share());
     observable.subscribe();
     return observable;
   }

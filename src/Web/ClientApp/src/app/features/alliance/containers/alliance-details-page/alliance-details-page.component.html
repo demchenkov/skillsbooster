@@ -1,7 +1,13 @@
 <div class="container-lg mt-5">
   <div class="row">
     <div class="col-3 d-block text-center">
-      <img class="d-block mx-auto mb-4" src="../../../../../assets/logo.png" alt="" width="72" height="72">
+      <div class="image-box m-auto mb-4">
+        <img class="image" src="../../../../../assets/logo.png">
+        <div *ngIf="isAllianceManager$ | async" class="overlay" (click)="changePhotoClicked()" >
+          <div class="text"><mat-icon>photo_camera</mat-icon></div>
+        </div>
+      </div>
+
       <button *ngIf="!(isAllianceParticipant$ | async); else participant" class="btn btn-primary w-75 m-3">Apply</button>
       <ng-template #participant>
         <button class="btn btn-secondary w-75 m-3">Leave</button>

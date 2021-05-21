@@ -40,4 +40,7 @@ export class AllianceDetailsPageComponent implements OnInit {
     this.pageId$.pipe(takeUntil(this.onDestroy$)).subscribe(id => this.service.getAllianceById(id));
   }
 
+  changePhotoClicked() {
+
+  }
 }

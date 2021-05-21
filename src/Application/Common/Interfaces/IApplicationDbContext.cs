@@ -18,6 +18,9 @@ namespace SkillsBooster.Application.Common.Interfaces
         DbSet<UserRequest> UserRequests { get; set; }
         DbSet<ChallengeRequest> ChallengeRequests { get; set; }
 
+        DbSet<UserRanking> UserRankings { get; set; }
+        DbSet<AllianceRanking> AllianceRankings { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

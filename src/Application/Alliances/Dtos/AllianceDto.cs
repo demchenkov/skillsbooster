@@ -14,12 +14,14 @@ namespace SkillsBooster.Application.Alliances.Dtos
         public string PhotoUrl { get; set; }
 
         public string Leader { get; set; }
+        public uint Rank { get; set; }
 
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Alliance, AllianceDto>()
-                .ForMember(d => d.Leader, opt => opt.MapFrom(s => s.Leader.FullName));
+                .ForMember(d => d.Leader, opt => opt.MapFrom(s => s.Leader.FullName))
+                .ForMember(d => d.Rank, opt => opt.MapFrom(s => s.Ranking.Rank));
         }
     }
 }

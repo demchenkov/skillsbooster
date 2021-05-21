@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedList, Sort } from 'src/app/core';
 import { HttpParamsUtils } from 'src/app/core/http-utils';
-import { Alliance, AllianceChallenge, Alliances, ChallengeRequest } from 'src/app/domain/entities';
+import { Alliance, AllianceChallenge, Alliances, ChallengeRequest, JoinRequest } from 'src/app/domain/entities';
 
 @Injectable({providedIn: 'any'})
 export class AlliancesApiService {
+
   static readonly URL = '/api/alliances';
 
   constructor(private http: HttpClient) { }
@@ -16,7 +17,7 @@ export class AlliancesApiService {
     const params = HttpParamsUtils.getParams(sort);
 
     return this.http.get(AlliancesApiService.URL, { params }).pipe(
-      map(x => PaginatedList.fromObject<Alliance>(x))
+      map(x => PaginatedList.fromObject<Alliance>(x, Alliance.fromObject))
     );
   }
 
@@ -53,5 +54,19 @@ export class AlliancesApiService {
     return this.http.get<any[]>(`${AlliancesApiService.URL}/${id}/challenge-requests`).pipe(
       map(requests => requests.map(x => ChallengeRequest.fromObject(x)))
     );
+  }
+
+  getAllianceJoinRequests(id: number) {
+    return this.http.get<any[]>(`${AlliancesApiService.URL}/${id}/join-requests`).pipe(
+      map(requests => requests.map(x => JoinRequest.fromObject(x)))
+    );
+  }
+
+  createJoinRequest(allianceId: number) {
+    return this.http.post<void>(`${AlliancesApiService.URL}/${allianceId}/join`, {allianceId});
+  }
+
+  respondJoinRequest(allianceId: number, userId: number, accepted: boolean) {
+    return this.http.put<void>(`${AlliancesApiService.URL}/${allianceId}/join`, {accepted, userId});
   }
 }

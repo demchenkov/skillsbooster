@@ -15,4 +15,14 @@ namespace SkillsBooster.Infrastructure.Persistence.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
+
+    public class UserConfiguration : IEntityTypeConfiguration<User>
+    {
+        public void Configure(EntityTypeBuilder<User> builder)
+        {
+            builder.HasOne(x => x.Ranking)
+                .WithOne()
+                .HasForeignKey<UserRanking>(x => x.Id);
+        }
+    }
 }

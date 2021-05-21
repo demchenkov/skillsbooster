@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using SkillsBooster.Application.Common.Models;
 using SkillsBooster.Application.Alliances.Commands.CreateAlliance;
 using SkillsBooster.Application.Alliances.Commands.DeleteAlliance;
+using SkillsBooster.Application.Alliances.Commands.RequestJoin;
+using SkillsBooster.Application.Alliances.Commands.RespondJoinRequest;
 using SkillsBooster.Application.Alliances.Commands.UpdateAlliance;
 using SkillsBooster.Application.Alliances.Dtos;
 using SkillsBooster.Application.Alliances.Queries;
@@ -29,7 +31,6 @@ namespace SkillsBooster.Web.Controllers
         [HttpPost(Routes.Alliances.Create)]
         public async Task<AllianceDto> Create([FromBody] CreateAllianceCommand command)
         {
-            var user = User;
             return await Mediator.Send(command);
         }
         
@@ -61,6 +62,31 @@ namespace SkillsBooster.Web.Controllers
         public async Task<IEnumerable<AllianceChallengeRequestDto>> GetAllianceChallengeRequests([FromRoute] int id)
         {
             return await Mediator.Send(new GetAllianceChallengeRequestsQuery { Id = id });
+        }
+
+
+
+        [HttpGet(Routes.Alliances.GetAllianceJoinRequests)]
+        public async Task<IEnumerable<AllianceJoinRequestDto>> GetAllianceJoinRequests([FromRoute] int id)
+        {
+            return await Mediator.Send(new GetAllianceJoinRequestsQuery { Id = id });
+        }
+
+        [HttpPost(Routes.Alliances.RequestToJoin)]
+        public async Task<IActionResult> RequestToJoin([FromRoute] int id, [FromBody] RequestJoinCommand command)
+        {
+            if (command.AllianceId != id)
+                return BadRequest();
+
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpPut(Routes.Alliances.RespondToJoinRequest)]
+        public async Task<IActionResult> RespondToJoinRequest([FromRoute] int id, [FromBody] RespondJoinRequestCommand command)
+        {
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }
