@@ -55,6 +55,19 @@ export class AlliancesService {
     return observable;
   }
 
+  applyAlliance(id: number): Observable<void> {
+    const observable = this.apiService.applyAlliance(id).pipe(share());
+    observable.subscribe();
+    return observable;
+  }
+
+  leaveAlliance(id: number): Observable<void> {
+    const observable = this.apiService.leaveAlliance(id).pipe(share());
+    observable.subscribe();
+    return observable;
+  }
+
+
   getAllianceChallenges(id: number) {
     this.loadingSubj$.next(true);
     this.apiService.getAllianceChallenges(id)
@@ -86,12 +99,6 @@ export class AlliancesService {
         take(1)
       );
 
-    observable.subscribe();
-    return observable;
-  }
-
-  createJoinRequest(allianceId: number): Observable<void> {
-    const observable = this.apiService.createJoinRequest(allianceId).pipe(share());
     observable.subscribe();
     return observable;
   }

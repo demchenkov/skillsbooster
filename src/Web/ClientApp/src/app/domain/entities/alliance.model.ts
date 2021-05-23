@@ -1,3 +1,5 @@
+import { AllianceUserType } from "../enums";
+
 export class Alliance {
   id: number;
   title: string;
@@ -6,6 +8,8 @@ export class Alliance {
   rating: number;
   creationDate: Date;
   photoUrl: string;
+
+  userType?: AllianceUserType;
 
   public static fromObject(data: any): Alliance {
     const entity = new Alliance();
@@ -16,7 +20,8 @@ export class Alliance {
     entity.leader = data.leader;
     entity.rating = data.rank;
     entity.creationDate = new Date(data.creationDate);
-    entity.photoUrl = '';
+    entity.photoUrl = data.photoUrl;
+    entity.userType = data.userType;
 
     return entity;
   }

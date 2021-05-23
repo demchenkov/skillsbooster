@@ -56,8 +56,11 @@
             Profile
           </button>
           <mat-menu #toolbarUserMenu="matMenu">
-            <button mat-menu-item (click)="onLogoutClick()">
+            <button mat-menu-item >
               {{username$ | async}}
+            </button>
+            <button mat-menu-item (click)="onLogoutClick()">
+              Log out
             </button>
           </mat-menu>
 

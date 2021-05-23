@@ -1,25 +1,28 @@
-<div class="container-lg mt-5">
-  <div class="row">
+
+
+<div class="container-lg mt-5" *ngIf="!(loading$ | async); else loading">
+  <div class="row" *ngIf="allianceDetails$ | async as alliance">
     <div class="col-3 d-block text-center">
       <div class="image-box m-auto mb-4">
         <img class="image" src="../../../../../assets/logo.png">
-        <div *ngIf="isAllianceManager$ | async" class="overlay" (click)="changePhotoClicked()" >
+        <div *ngIf="alliance.userType === userTypes.Manager" class="overlay" (click)="changePhotoClicked()" >
           <div class="text"><mat-icon>photo_camera</mat-icon></div>
         </div>
       </div>
 
-      <button *ngIf="!(isAllianceParticipant$ | async); else participant" class="btn btn-primary w-75 m-3">Apply</button>
-      <ng-template #participant>
-        <button class="btn btn-secondary w-75 m-3">Leave</button>
-        <a [routerLink]="['challenges']" class="btn btn-primary w-75 m-3">Challenges</a>
-      </ng-template>
+      <ng-container [ngSwitch]="alliance.userType">
+        <button *ngSwitchCase="userTypes.VisitorWithoutAlliance" class="btn btn-primary w-75 m-3" (click)="applyAlliance(alliance.id)" >Apply</button>
+        <button *ngSwitchCase="userTypes.Member" class="btn btn-secondary w-75 m-3" (click)="leaveAlliance(alliance.id)">Leave</button>
+        <button *ngSwitchCase="userTypes.Manager" class="btn btn-danger w-75 m-3" (click)="deleteAlliance(alliance.id)">Delete</button>
+      </ng-container>
 
-
-      <a *ngIf="isAllianceManager$ | async" [routerLink]="['admin']" class="btn btn-primary w-75 m-3">Manage</a>
+      <a [routerLink]="['challenges']" class="btn btn-primary w-75 m-3">Challenges</a>
+      <a *ngIf="alliance.userType === userTypes.Manager" [routerLink]="['admin']" class="btn btn-primary w-75 m-3">Manage</a>
     </div>
+
     <div *ngIf="allianceDetails$ | async as alliance" class="col-9">
       <div class="d-flex align-items-center pb-2 mb-2 border-bottom">
-        <button *ngIf="isAllianceManager$ | async" mat-mini-fab color="primary">
+        <button *ngIf="alliance.userType === userTypes.Manager" mat-mini-fab color="primary" (click)="editAlliance(alliance)">
           <mat-icon>edit</mat-icon>
         </button>
         <h3 class="m-0 ml-3">{{alliance.title}}</h3>
@@ -55,3 +58,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="loading-shade">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

@@ -10,7 +10,16 @@ import { LogoutActions, ApplicationPaths, ReturnUrlType } from '../api-authoriza
 // user clicks on the logout button on the LoginMenu component.
 @Component({
   selector: 'app-logout',
-  templateUrl: './logout.component.html'
+  templateUrl: './logout.component.html',
+  styles: [`
+    :host {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      display: block;
+      z-index: 10;
+    }
+  `]
 })
 export class LogoutComponent implements OnInit {
   public message = new BehaviorSubject<string>(null);
@@ -24,12 +33,13 @@ export class LogoutComponent implements OnInit {
     const action = this.activatedRoute.snapshot.url[1];
     switch (action.path) {
       case LogoutActions.Logout:
-        if (!!window.history.state.local) {
-          await this.logout(this.getReturnUrl());
-        } else {
-          // This prevents regular links to <app>/authentication/logout from triggering a logout
-          this.message.next('The logout was not initiated from within the page.');
-        }
+        await this.logout(this.getReturnUrl())
+        // if (!!window.history.state.local) {
+        //   await this.logout(this.getReturnUrl());
+        // } else {
+        //   // This prevents regular links to <app>/authentication/logout from triggering a logout
+        //   this.message.next('The logout was not initiated from within the page.');
+        // }
 
         break;
       case LogoutActions.LogoutCallback:
@@ -41,6 +51,8 @@ export class LogoutComponent implements OnInit {
       default:
         throw new Error(`Invalid action '${action}'`);
     }
+
+    await this.router.navigate(['/about']);
   }
 
   private async logout(returnUrl: string): Promise<void> {
@@ -48,6 +60,7 @@ export class LogoutComponent implements OnInit {
     const isAuthenticated = await this.authorizeService.isAuthenticated().pipe(
       take(1)
     ).toPromise();
+
     if (isAuthenticated) {
       const result = await this.authorizeService.signOut(state);
       switch (result.status) {

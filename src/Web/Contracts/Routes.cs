@@ -21,8 +21,10 @@
             public const string Update = BaseUrl + "/alliances/{id}";
             public const string Delete = BaseUrl + "/alliances/{id}";
 
-            public const string RequestToJoin = BaseUrl + "/alliances/{id}/join";
-            public const string RespondToJoinRequest = BaseUrl + "/alliances/{id}/join";
+            public const string RequestToJoin = BaseUrl + "/alliances/{id}/members";
+            public const string RespondToJoinRequest = BaseUrl + "/alliances/{id}/members";
+            public const string LeaveFromAlliance = BaseUrl + "/alliances/{id}/members";
+
             public const string GetAllianceChallenges = BaseUrl + "/alliances/{id}/challenges";
             public const string GetAllianceJoinRequests = BaseUrl + "/alliances/{id}/join-requests";
             public const string GetAllianceChallengeRequests = BaseUrl + "/alliances/{id}/challenge-requests";

@@ -7,6 +7,8 @@ import {
 import {map} from "rxjs/operators";
 import {AuthorizeService} from "../core/api-authorization/authorize.service";
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { Router } from '@angular/router';
+import { ApplicationPaths } from '../core/api-authorization/api-authorization.constants';
 
 @Component({
   selector: 'sb-root',
@@ -40,7 +42,8 @@ export class AppComponent implements OnInit {
   constructor(
     private storageService: LocalStorageService,
     private authorizeService: AuthorizeService,
-    private overlayContainer: OverlayContainer
+    private overlayContainer: OverlayContainer,
+    private router: Router
   ) {
     this.isAuthenticated$ = this.authorizeService.isAuthenticated();
     this.username$ = this.authorizeService.getUser().pipe(map(u => u && u.name));
@@ -57,7 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   onLogoutClick() {
-    // this.store.dispatch(authLogout());
+    this.router.navigate([ApplicationPaths.LogOut])
   }
 
   onLanguageSelect({ value: language }) {

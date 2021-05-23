@@ -44,6 +44,14 @@ export class AlliancesApiService {
     return this.http.delete<void>(`${AlliancesApiService.URL}/${id}`);
   }
 
+  applyAlliance(id: number): Observable<void> {
+    return this.http.post<void>(`${AlliancesApiService.URL}/${id}/members`, {});
+  }
+
+  leaveAlliance(id: number): Observable<void> {
+    return this.http.delete<void>(`${AlliancesApiService.URL}/${id}/members`, {});
+  }
+
   getAllianceChallenges(id: number) {
     return this.http.get<any[]>(`${AlliancesApiService.URL}/${id}/challenges`).pipe(
       map(challenges => challenges.map(x => AllianceChallenge.fromObject(x)))
@@ -62,11 +70,7 @@ export class AlliancesApiService {
     );
   }
 
-  createJoinRequest(allianceId: number) {
-    return this.http.post<void>(`${AlliancesApiService.URL}/${allianceId}/join`, {allianceId});
-  }
-
   respondJoinRequest(allianceId: number, userId: number, accepted: boolean) {
-    return this.http.put<void>(`${AlliancesApiService.URL}/${allianceId}/join`, {accepted, userId});
+    return this.http.put<void>(`${AlliancesApiService.URL}/${allianceId}/members`, {accepted, userId});
   }
 }

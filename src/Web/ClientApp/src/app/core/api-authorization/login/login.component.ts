@@ -10,7 +10,16 @@ import { LoginActions, QueryParameterNames, ApplicationPaths, ReturnUrlType } fr
 // let the component perform the login and return back to the return url.
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styles: [`
+    :host {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      display: block;
+      z-index: 10;
+    }
+  `]
 })
 export class LoginComponent implements OnInit {
   public message = new BehaviorSubject<string>(null);

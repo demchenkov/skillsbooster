@@ -117,7 +117,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AllianceDto"
+                  "$ref": "#/components/schemas/AllianceDetailsDto"
                 }
               }
             }
@@ -304,7 +304,7 @@
         }
       }
     },
-    "/api/alliances/{id}/join": {
+    "/api/alliances/{id}/members": {
       "post": {
         "tags": [
           "Alliances"
@@ -322,18 +322,6 @@
             "x-position": 1
           }
         ],
-        "requestBody": {
-          "x-name": "command",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestJoinCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 2
-        },
         "responses": {
           "200": {
             "description": "",
@@ -359,10 +347,9 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             },
-            "x-position": 1
+            "x-position": 2
           }
         ],
         "requestBody": {
@@ -375,8 +362,39 @@
             }
           },
           "required": true,
-          "x-position": 2
+          "x-position": 1
         },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Alliances"
+        ],
+        "operationId": "Alliances_LeaveFromAlliance",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -773,6 +791,58 @@
           "desc"
         ]
       },
+      "AllianceDetailsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "creationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "leader": {
+            "type": "string",
+            "nullable": true
+          },
+          "rank": {
+            "type": "integer"
+          },
+          "userType": {
+            "$ref": "#/components/schemas/AllianceUserType"
+          }
+        }
+      },
+      "AllianceUserType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "VisitorWithoutAlliance",
+          "VisitorWithAlliance",
+          "Member",
+          "Manager"
+        ],
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
       "CreateAllianceCommand": {
         "type": "object",
         "additionalProperties": false,
@@ -877,16 +947,6 @@
           "userFullName": {
             "type": "string",
             "nullable": true
-          }
-        }
-      },
-      "RequestJoinCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "allianceId": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SkillsBooster.Application.Common.Models;
 using SkillsBooster.Application.Alliances.Commands.CreateAlliance;
 using SkillsBooster.Application.Alliances.Commands.DeleteAlliance;
+using SkillsBooster.Application.Alliances.Commands.LeaveAlliance;
 using SkillsBooster.Application.Alliances.Commands.RequestJoin;
 using SkillsBooster.Application.Alliances.Commands.RespondJoinRequest;
 using SkillsBooster.Application.Alliances.Commands.UpdateAlliance;
@@ -22,7 +23,7 @@ namespace SkillsBooster.Web.Controllers
         }
         
         [HttpGet(Routes.Alliances.GetById)]
-        public async Task<AllianceDto> GetById([FromRoute] int id)
+        public async Task<AllianceDetailsDto> GetById([FromRoute] int id)
         {
             return await Mediator.Send(new GetAllianceByIdQuery { Id = id });
         }
@@ -73,19 +74,23 @@ namespace SkillsBooster.Web.Controllers
         }
 
         [HttpPost(Routes.Alliances.RequestToJoin)]
-        public async Task<IActionResult> RequestToJoin([FromRoute] int id, [FromBody] RequestJoinCommand command)
+        public async Task<IActionResult> RequestToJoin([FromRoute] int id)
         {
-            if (command.AllianceId != id)
-                return BadRequest();
-
-            await Mediator.Send(command);
+            await Mediator.Send(new RequestJoinCommand() { AllianceId = id });
             return NoContent();
         }
 
         [HttpPut(Routes.Alliances.RespondToJoinRequest)]
-        public async Task<IActionResult> RespondToJoinRequest([FromRoute] int id, [FromBody] RespondJoinRequestCommand command)
+        public async Task<IActionResult> RespondToJoinRequest([FromBody] RespondJoinRequestCommand command)
         {
             await Mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete(Routes.Alliances.LeaveFromAlliance)]
+        public async Task<IActionResult> LeaveFromAlliance([FromRoute] int id)
+        {
+            await Mediator.Send(new LeaveAllianceCommand {AllianceId = id});
             return NoContent();
         }
     }
