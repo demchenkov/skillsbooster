@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { NgOnDestroy } from 'src/app/core';
 import { Alliance, Alliances } from 'src/app/domain/entities';
 import { AllianceUserType } from 'src/app/domain/enums';
+import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
 import { AlliancesService } from '../../services/alliances.service';
 
 @Component({
@@ -20,7 +22,11 @@ export class AllianceDetailsPageComponent implements OnInit {
   allianceDetails$: Observable<Alliance> = this.service.alliance$;
   userTypes = AllianceUserType;
 
-  constructor(private route: ActivatedRoute, private service: AlliancesService, private onDestroy$: NgOnDestroy) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private service: AlliancesService,
+              private onDestroy$: NgOnDestroy,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -29,10 +35,12 @@ export class AllianceDetailsPageComponent implements OnInit {
       map(x => {
         const id = Number.parseInt(x.get('id'), 10);
         if (Number.isNaN(id)) {
-          // todo redirect to not found page
+          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
         }
         return id;
-      }));
+      }),
+      filter(x => !Number.isNaN(x))
+    );
 
     this.pageId$.pipe(takeUntil(this.onDestroy$)).subscribe(id => this.service.getAllianceById(id));
   }
@@ -42,10 +50,11 @@ export class AllianceDetailsPageComponent implements OnInit {
   }
 
   editAlliance(alliance: Alliance) {
-    // TODO get value from modal window
+    const dialogRef = this.dialog.open(EditAllianceModalComponent, {data: alliance});
 
-    const entity = Alliance.fromObject(alliance);
-    this.service.updateAlliance(alliance.id, entity);
+    dialogRef.afterClosed()
+      .pipe(take(1), filter(Boolean), switchMap(x => this.service.updateAlliance(alliance.id, x)))
+      .subscribe(() => this.service.getAllianceById(alliance.id));
   }
 
   applyAlliance(allianceId: number) {

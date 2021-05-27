@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { filter, finalize, map, take, takeUntil } from 'rxjs/operators';
 import { NgOnDestroy } from 'src/app/core';
@@ -33,6 +33,7 @@ export class AllianceAdminPageComponent implements OnInit {
               private service: AlliancesService,
               private onDestroy$: NgOnDestroy,
               private route: ActivatedRoute,
+              private router: Router,
               private challengeService: ChallengesService) { }
 
   ngOnInit(): void {
@@ -41,11 +42,12 @@ export class AllianceAdminPageComponent implements OnInit {
       map(x => {
         const id = Number.parseInt(x.get('id'), 10);
         if (Number.isNaN(id)) {
-          // todo redirect to not found page
+          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
         }
         return id;
-      })).subscribe(id => this.loadRequests(id));
-    ;
+      }),
+      filter(x => !Number.isNaN(x))
+    ).subscribe(id => this.loadRequests(id));
   }
 
   loadRequests(id: number) {

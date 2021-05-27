@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { NgOnDestroy } from 'src/app/core';
@@ -21,18 +21,20 @@ export class ChallengeDetailsPageComponent implements OnInit {
   tasks$ = this.challenge$.pipe(filter(x => x != null), map(x => x.exercises));
   ranking$ = this.challenge$.pipe(filter(x => x != null), map(x => x.competitors))
 
-  constructor(private route: ActivatedRoute, private service: ChallengesService, private onDestroy$: NgOnDestroy) { }
+  constructor(private route: ActivatedRoute, private router: Router, private service: ChallengesService, private onDestroy$: NgOnDestroy) { }
 
   ngOnInit(): void {
     this.pageId$ = this.route.paramMap.pipe(
       takeUntil(this.onDestroy$),
       map(x => {
-      const id = Number.parseInt(x.get('id'), 10);
-      if (Number.isNaN(id)) {
-        // todo redirect to not found page
-      }
-      return id;
-    }));
+        const id = Number.parseInt(x.get('id'), 10);
+        if (Number.isNaN(id)) {
+          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
+        }
+        return id;
+      }),
+      filter(x => !Number.isNaN(x))
+    );
 
     this.pageId$.pipe(takeUntil(this.onDestroy$)).subscribe(id => this.service.getChallengeById(id));
   }

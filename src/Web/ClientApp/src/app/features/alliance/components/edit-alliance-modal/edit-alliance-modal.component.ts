@@ -23,9 +23,8 @@ export class EditAllianceModalComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      title: ['', [Validators.required],],
-      img: [null],
-      description: ['',],
+      title: [this.data?.title ?? '', [Validators.required]],
+      description: [this.data?.description ?? '',],
     });
   }
 
@@ -35,21 +34,21 @@ export class EditAllianceModalComponent implements OnInit {
     }
   }
 
-  imagePreview(e) {
-    const file = (e.target as HTMLInputElement).files[0];
+  // imagePreview(e) {
+  //   const file = (e.target as HTMLInputElement).files[0];
 
-    this.form.patchValue({
-      img: file
-    });
+  //   this.form.patchValue({
+  //     img: file
+  //   });
 
-    this.form.get('img').updateValueAndValidity()
+  //   this.form.get('img').updateValueAndValidity()
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.filePath.next(reader.result as string);
-    }
-    reader.readAsDataURL(file)
-  }
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.filePath.next(reader.result as string);
+  //   }
+  //   reader.readAsDataURL(file)
+  // }
 
   get actionName() {
     return this.data ? 'Edit' : 'Create'

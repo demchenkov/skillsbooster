@@ -5,11 +5,11 @@ import {ApiAuthorizationModule} from "./core/api-authorization/api-authorization
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'about',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
-    path: 'about',
+    path: 'home',
     loadChildren: () =>
       import('./features/about/about.module').then((m) => m.AboutModule)
   },
@@ -43,10 +43,15 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/leaderboard/leaderboard.module').then((m) => m.LeaderboardModule)
   },
+  {
+    path: 'error',
+    loadChildren: () =>
+      import('./features/error/error.module').then(m => m.ErrorModule)
+  },
 
   {
     path: '**',
-    redirectTo: 'about'
+    redirectTo: 'error/404'
   }
 ];
 

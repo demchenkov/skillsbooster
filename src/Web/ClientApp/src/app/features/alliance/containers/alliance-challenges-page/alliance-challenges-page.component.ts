@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { NgOnDestroy } from 'src/app/core';
@@ -18,7 +18,7 @@ export class AllianceChallengesPageComponent implements OnInit {
   isLoadingResults$ = this.service.loading$;
   items$ = this.service.allianceChallenges$;
 
-  constructor(private route: ActivatedRoute, private service: AlliancesService, private onDestroy$: NgOnDestroy) { }
+  constructor(private route: ActivatedRoute, private router: Router, private service: AlliancesService, private onDestroy$: NgOnDestroy) { }
 
   ngOnInit(): void {
     this.pageId$ = this.route.paramMap.pipe(
@@ -26,7 +26,7 @@ export class AllianceChallengesPageComponent implements OnInit {
       map(x => {
         const id = Number.parseInt(x.get('id'), 10);
         if (Number.isNaN(id)) {
-          // todo redirect to not found page
+          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
         }
         return id;
       })
