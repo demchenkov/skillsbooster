@@ -22,23 +22,24 @@
             Open
           </button>
 
-          <span routerLink="" class="branding spacer center d-inline d-sm-none">
+          <span routerLink="" class="branding center d-inline d-sm-none">
             <img [src]="logo" [alt]="logo"/>
           </span>
-          <span routerLink="" class="branding spacer center d-none d-sm-inline d-md-none">
+          <span routerLink="" class="branding center d-none d-sm-inline d-md-none">
             <img [src]="logo" [alt]="logo"/>
             Skills Booster
           </span>
-          <span routerLink="" class="branding spacer d-none d-md-inline">
+          <span routerLink="" class="branding d-none d-md-inline">
             <img [src]="logo"[alt]="logo" />
             Skills Booster
           </span>
 
-          <span class="d-none d-md-inline">
-            <button mat-button class="nav-button" *ngFor="let item of navigation" [routerLink]="[item.link]"
+          <span class="ml-3 d-none spacer d-md-inline">
+            <a mat-button class="nav-item mr-1" *ngFor="let item of navigation" [routerLink]="[item.link]"
               routerLinkActive="active">
-              {{item.label }}
-            </button>
+              <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+              {{ item.label }}
+            </a>
           </span>
 
           <span *ngIf="!(isAuthenticated$ | async)" class="d-none d-md-inline">
@@ -50,16 +51,36 @@
             </button>
           </span>
 
-          <button *ngIf="isAuthenticated$ | async"
-                  mat-icon-button
-                  [matMenuTriggerFor]="toolbarUserMenu">
+          <button *ngIf="isAuthenticated$ | async" [matMenuTriggerFor]="toolbarUserMenu" mat-button>
+            <mat-icon>account_circle</mat-icon>
             Profile
+            <mat-icon role="img">arrow_drop_down</mat-icon>
           </button>
+
           <mat-menu #toolbarUserMenu="matMenu">
-            <button mat-menu-item >
-              {{username$ | async}}
+            <button mat-menu-item [routerLink]="['users/me']">
+              <div class="d-flex flex-row align-items-center">
+                <div class="rounded-circle avatar">
+                  <img src="https://i.imgur.com/0LKZQYM.jpg"/>
+                </div>
+                <div class="ms-2 c-details">
+                    <span class="font-weight-bold">Vlad Demchenko</span>
+                    <small class="font-weight-lighter">{{username$ | async}}</small>
+                </div>
+              </div>
             </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item>
+              <mat-icon>group</mat-icon>
+              My Alliance
+            </button>
+            <button mat-menu-item>
+              <mat-icon>connect_without_contact</mat-icon>
+              My Duels
+            </button>
+            <mat-divider></mat-divider>
             <button mat-menu-item (click)="onLogoutClick()">
+              <mat-icon color="warn">exit_to_app</mat-icon>
               Log out
             </button>
           </mat-menu>

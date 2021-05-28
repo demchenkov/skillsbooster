@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { PageIdGetter } from 'src/app/core';
 import { SupportedLangNames, SupportedLangs } from 'src/app/core/modules/editor/editor.constants';
 
 
@@ -9,7 +10,8 @@ import { SupportedLangNames, SupportedLangs } from 'src/app/core/modules/editor/
   selector: 'sb-challenge-task-page',
   templateUrl: './challenge-task-page.component.html',
   styleUrls: ['./challenge-task-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [PageIdGetter]
 })
 export class ChallengeTaskPageComponent implements OnInit {
   pageId$: Observable<number>;
@@ -23,19 +25,13 @@ export class ChallengeTaskPageComponent implements OnInit {
   code = '';
   editorLoading$ = new BehaviorSubject<boolean>(true);
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private idGetter: PageIdGetter) { }
 
   ngOnInit() {
-    this.pageId$ = this.route.paramMap.pipe(map(x => {
-      const id = Number.parseInt(x.get('id'), 10);
-      if (Number.isNaN(id)) {
-        // todo redirect to not found page
-      }
-      return id;
-    }));
+    this.pageId$ = this.idGetter.getPageId('number') as Observable<number>;
 
     this.loading$ = of(false);
-      
+
     this.exercise$ = of({});
 
     // this.pageId$.subscribe(id => this.service.getExerciseById(id));

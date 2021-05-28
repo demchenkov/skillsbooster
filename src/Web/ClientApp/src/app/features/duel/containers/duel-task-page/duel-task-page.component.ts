@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 
-import { NgOnDestroy } from 'src/app/core';
+import { NgOnDestroy, PageIdGetter } from 'src/app/core';
 import { SupportedLangNames, SupportedLangs } from 'src/app/core/modules/editor/editor.constants';
 
 
@@ -12,7 +12,7 @@ import { SupportedLangNames, SupportedLangs } from 'src/app/core/modules/editor/
   templateUrl: './duel-task-page.component.html',
   styleUrls: ['./duel-task-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [NgOnDestroy]
+  providers: [PageIdGetter]
 })
 export class DuelTaskPageComponent implements OnInit {
   pageId$: Observable<number>;
@@ -26,20 +26,10 @@ export class DuelTaskPageComponent implements OnInit {
   code = '';
   editorLoading$ = new BehaviorSubject<boolean>(true);
 
-  constructor(private route: ActivatedRoute, private router: Router, private onDestroy$: NgOnDestroy) { }
+  constructor(private idGetter: PageIdGetter) { }
 
   ngOnInit() {
-    this.pageId$ = this.route.paramMap.pipe(
-      takeUntil(this.onDestroy$),
-      map(x => {
-        const id = Number.parseInt(x.get('id'), 10);
-        if (Number.isNaN(id)) {
-          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
-        }
-        return id;
-      }),
-      filter(x => !Number.isNaN(x))
-    );
+    this.pageId$ = this.idGetter.getPageId('number') as Observable<number>;
 
     this.loading$ = of(false);
 

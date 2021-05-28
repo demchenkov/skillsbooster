@@ -33,3 +33,15 @@ router-outlet ~ * {
   top: calc(50% - 50px);
   left: calc(50% - 50px);
 }
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  line-height: normal;
+  margin-right: 16px;
+
+  img {
+    width: 100%;
+  }
+}

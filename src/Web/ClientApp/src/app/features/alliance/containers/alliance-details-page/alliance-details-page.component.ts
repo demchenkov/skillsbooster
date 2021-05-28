@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { NgOnDestroy } from 'src/app/core';
+import { NgOnDestroy, PageIdGetter } from 'src/app/core';
 import { Alliance, Alliances } from 'src/app/domain/entities';
 import { AllianceUserType } from 'src/app/domain/enums';
 import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
@@ -14,7 +14,7 @@ import { AlliancesService } from '../../services/alliances.service';
   templateUrl: './alliance-details-page.component.html',
   styleUrls: ['./alliance-details-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [AlliancesService, NgOnDestroy]
+  providers: [AlliancesService, NgOnDestroy, PageIdGetter]
 })
 export class AllianceDetailsPageComponent implements OnInit {
   pageId$: Observable<number>;
@@ -22,25 +22,14 @@ export class AllianceDetailsPageComponent implements OnInit {
   allianceDetails$: Observable<Alliance> = this.service.alliance$;
   userTypes = AllianceUserType;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
+  constructor(private idGetter: PageIdGetter,
               private service: AlliancesService,
               private onDestroy$: NgOnDestroy,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
 
-    this.pageId$ = this.route.paramMap.pipe(
-      takeUntil(this.onDestroy$),
-      map(x => {
-        const id = Number.parseInt(x.get('id'), 10);
-        if (Number.isNaN(id)) {
-          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
-        }
-        return id;
-      }),
-      filter(x => !Number.isNaN(x))
-    );
+    this.pageId$ = this.idGetter.getPageId('number') as Observable<number>;
 
     this.pageId$.pipe(takeUntil(this.onDestroy$)).subscribe(id => this.service.getAllianceById(id));
   }

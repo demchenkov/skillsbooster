@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
-import { NgOnDestroy } from 'src/app/core';
+import { PageIdGetter } from 'src/app/core';
 import { SupportedLangNames, SupportedLangs } from 'src/app/core/modules/editor/editor.constants';
 import { Exercise } from '../../entities';
 import { ExercisesService } from '../../services';
@@ -10,9 +10,9 @@ import { ExercisesService } from '../../services';
 @Component({
   selector: 'sb-exercise-details-page',
   templateUrl: './exercise-details-page.component.html',
-  providers: [ExercisesService, NgOnDestroy],
+  providers: [ExercisesService, PageIdGetter],
 })
-export class ExerciseDetailsPageComponent implements OnInit{
+export class ExerciseDetailsPageComponent implements OnInit {
   pageId$: Observable<number>;
   exercise$: Observable<Exercise>;
   loading$: Observable<boolean>;
@@ -24,20 +24,10 @@ export class ExerciseDetailsPageComponent implements OnInit{
   code = '';
   editorLoading$ = new BehaviorSubject<boolean>(true);
 
-  constructor(private route: ActivatedRoute, private onDestroy$: NgOnDestroy, private router: Router, public service: ExercisesService) { }
+  constructor(private idGetter: PageIdGetter, public service: ExercisesService) { }
 
   ngOnInit() {
-    this.pageId$ = this.route.paramMap.pipe(
-      takeUntil(this.onDestroy$),
-      map(x => {
-        const id = Number.parseInt(x.get('id'), 10);
-        if (Number.isNaN(id)) {
-          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
-        }
-        return id;
-      }),
-      filter(x => !Number.isNaN(x))
-    );
+    this.pageId$ = this.idGetter.getPageId('number') as Observable<number>;
 
     this.loading$ = combineLatest([this.service.loading$, this.editorLoading$])
       .pipe(map(([a, b]) => a || b));

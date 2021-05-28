@@ -3,12 +3,15 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {
   routeAnimations,
   LocalStorageService,
+  TitleService,
 } from '../core/core.module';
-import {map} from "rxjs/operators";
+import {filter, map} from "rxjs/operators";
 import {AuthorizeService} from "../core/api-authorization/authorize.service";
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Router } from '@angular/router';
+import { ActivationEnd, Router } from '@angular/router';
 import { ApplicationPaths } from '../core/api-authorization/api-authorization.constants';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'sb-root',
@@ -21,11 +24,10 @@ export class AppComponent implements OnInit {
   logo = '../../assets/logo.svg';
 
   navigation = [
-    { link: 'problems', label: 'Problems'},
-    { link: 'alliances', label: 'Alliances'},
-    { link: 'duels/my', label: 'Duels' },
-    { link: 'users/my', label: 'Users' },
-    { link: 'leaderboard', label: 'Ranking' },
+    { link: 'problems', label: 'Problems', icon: 'splitscreen' },
+    { link: 'alliances', label: 'Alliances', icon: 'groups', },
+    { link: 'duels/my', label: 'Duels', icon: 'social_distance',},
+    { link: 'leaderboard', label: 'Ranking', icon: 'poll' },
   ];
 
   navigationSideMenu = [
@@ -41,15 +43,27 @@ export class AppComponent implements OnInit {
 
   constructor(
     private storageService: LocalStorageService,
+    private titleService: TitleService,
     private authorizeService: AuthorizeService,
     private overlayContainer: OverlayContainer,
-    private router: Router
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
+    private router: Router,
   ) {
     this.isAuthenticated$ = this.authorizeService.isAuthenticated();
     this.username$ = this.authorizeService.getUser().pipe(map(u => u && u.name));
+
+    this.matIconRegistry.addSvgIcon(
+      "duel",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/duel.svg")
+    );
   }
 
   ngOnInit(): void {
+    this.router.events.pipe(
+      filter((event) => event instanceof ActivationEnd)
+    ).subscribe(() => this.titleService.setTitle(this.router.routerState.snapshot.root))
+
     this.theme$.subscribe(x => {
       this.overlayContainer.getContainerElement().classList.add(x);
     });
@@ -60,7 +74,7 @@ export class AppComponent implements OnInit {
   }
 
   onLogoutClick() {
-    this.router.navigate([ApplicationPaths.LogOut])
+    this.router.navigate([ApplicationPaths.LogOut], { skipLocationChange: true })
   }
 
   onLanguageSelect({ value: language }) {

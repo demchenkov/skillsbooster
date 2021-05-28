@@ -25,6 +25,8 @@ export class AllianceListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  defaultAlliancePhoto = '../../../../../assets/img/alliance.png'
+
 
   constructor() { }
 
@@ -32,16 +34,13 @@ export class AllianceListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // If the user changes the sort order, reset back to the first page.
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-    merge(this.sort.sortChange, this.paginator.page)
+    this.paginator.page
       .pipe(startWith({}))
       .subscribe(() => {
         const sort = Sort.fromObject({
-          fieldName: this.sort.active || null,
-          order: this.sort.direction,
-          pageNumber: this.paginator.pageIndex + 1
+          fieldName: 'title',
+          order: 'asc',
+          pageNumber: this.paginator?.pageIndex + 1
         });
 
         this.dataRequested.emit(sort);

@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
-import { NgOnDestroy } from 'src/app/core';
+import { NgOnDestroy, PageIdGetter } from 'src/app/core';
 import { Exercise, DifficultyDictionary } from '../../entities';
 import { ExercisesService } from '../../services';
 
@@ -19,20 +19,10 @@ export class ExerciseEditorPageComponent implements OnInit {
 
   difficulties: KeyValue<number, string>[] = DifficultyDictionary;
 
-  constructor(private route: ActivatedRoute, private onDestroy$: NgOnDestroy, private service: ExercisesService, private router: Router) { }
+  constructor(private idGetter: PageIdGetter, private service: ExercisesService, private router: Router) { }
 
   ngOnInit(): void {
-    this.pageId$ = this.route.paramMap.pipe(
-      takeUntil(this.onDestroy$),
-      map(x => {
-        const id = Number.parseInt(x.get('id'), 10);
-        if (Number.isNaN(id)) {
-          this.router.navigate(['/', 'error', '404'], { skipLocationChange: true })
-        }
-        return id;
-      }),
-      filter(x => !Number.isNaN(x))
-    );
+    this.pageId$ = this.idGetter.getPageId('number') as Observable<number>;
 
     this.loading$ = this.service.loading$;
     this.exercise$ = this.service.exercise$;

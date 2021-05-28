@@ -24,6 +24,9 @@ mat-sidenav-container {
       overflow: hidden;
       padding-top: 4px;
       text-overflow: ellipsis;
+      border-right: 1px solid gray;
+      padding-right: 30px;
+      font-weight: bold;
 
       &.center {
         text-align: center;
@@ -171,4 +174,10 @@ mat-sidenav {
   .mat-nav-list {
     padding-top: 0;
   }
+}
+
+.c-details {
+  line-height: normal !important;
+  display: flex;
+  flex-direction: column;
 }

@@ -27,6 +27,7 @@ import { LocalStorageService } from './local-storage/local-storage.service';
 import { HttpErrorInterceptor } from './http-interceptors/http-error.interceptor';
 import { NotificationService } from './notifications/notification.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 export {
   TitleService,
@@ -55,6 +56,7 @@ export {
     MatTooltipModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatDividerModule,
   ],
   declarations: [],
   providers: [
@@ -75,6 +77,7 @@ export {
     MatTooltipModule,
     MatSnackBarModule,
     MatButtonModule,
+    MatDividerModule,
   ]
 })
 export class CoreModule {

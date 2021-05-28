@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { InfinitySelectModule, UiModalModule } from 'src/app/core/modules';
+import { EmptyDataModule, InfinitySelectModule, UiModalModule } from 'src/app/core/modules';
 import { AlliancesApiService } from './services/alliances-api.service';
 import { AlliancesService } from './services/alliances.service';
 import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
@@ -28,14 +28,15 @@ import { MatCardModule } from '@angular/material/card';
 import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/acceptance-list.module';
 import { CreateChallengeModalComponent } from './components/create-challenge-modal/create-challenge-modal.component';
 import { AllianceListComponent } from './components/alliance-list/alliance-list.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 
 @NgModule({
   declarations: [
     AllianceListPageComponent,
-    AllianceDetailsPageComponent, 
-    AllianceAdminPageComponent, 
+    AllianceDetailsPageComponent,
+    AllianceAdminPageComponent,
     EditAllianceModalComponent,
     AllianceChallengesPageComponent,
     CreateChallengeModalComponent,
@@ -62,9 +63,11 @@ import { AllianceListComponent } from './components/alliance-list/alliance-list.
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
+    FlexLayoutModule,
     AcceptanceListModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    EmptyDataModule
   ],
   providers: [AlliancesApiService, ExercisesApiService]
 })

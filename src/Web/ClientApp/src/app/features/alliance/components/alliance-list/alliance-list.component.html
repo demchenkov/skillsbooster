@@ -2,50 +2,27 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="container mat-elevation-z8" [hidden]="isLoadingResults">
-
-  <div class="table-container">
-    <mat-table [dataSource]="data.items" matSort style="height: calc(100% - 59px);">
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button (click)="createAlliance.emit()">
-            <mat-icon aria-label="Create">add</mat-icon>
-          </button>
-        </mat-header-cell>
-
-        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
-      </ng-container>
-
-      <!-- Title Column -->
-      <ng-container matColumnDef="title">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header><mat-icon class="mr-2">topic</mat-icon>Title</mat-header-cell>
-        <mat-cell  *matCellDef="let row">
-
-          {{row.title}}
-        </mat-cell>
-      </ng-container>
-
-      <!-- Leader Column -->
-      <ng-container matColumnDef="leader">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header><mat-icon class="mr-2">person</mat-icon>Leader</mat-header-cell>
-        <mat-cell  *matCellDef="let row">
-          {{row.leader}}
-        </mat-cell>
-      </ng-container>
-
-      <!-- Rating Column -->
-      <ng-container matColumnDef="rating">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header><mat-icon class="mr-2">trending_up</mat-icon>Rank</mat-header-cell>
-        <mat-cell  *matCellDef="let row">
-          {{row.rating}}
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="row.id"></mat-row>
-    </mat-table>
-
-    <mat-paginator [length]="data.totalCount" [pageSize]="10"></mat-paginator>
+<div class="container mat-elevation-z8 py-3"  [hidden]="isLoadingResults">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let alliance of data.items" [routerLink]="[alliance.id]">
+      <mat-card class="mat-elevation-z4 h-100" >
+        <mat-card-header>
+          <img mat-card-avatar [src]="alliance.photoUrl || defaultAlliancePhoto" />
+          <mat-card-title>{{alliance.title}}</mat-card-title>
+          <mat-card-subtitle class="d-flex flex-column">
+            <span>Leader: {{alliance.leader}}</span>
+            <span>Rank: {{alliance.rating}}</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </div>
   </div>
+
+  <mat-paginator class="mt-3" [length]="data.totalCount" [pageSize]="10"></mat-paginator>
+
+  <button mat-fab class="add_btn" (click)="createAlliance.emit()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
+
+

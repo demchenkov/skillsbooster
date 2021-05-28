@@ -5,11 +5,11 @@ import { UserPageComponent } from './containers/user-page/user-page.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'my',
+    redirectTo: 'me',
     pathMatch: 'full'
   },
   {
-    path: 'my',
+    path: 'me',
     component: UserPageComponent,
     data: { title: 'Duels' }
   },

@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRippleModule } from '@angular/material/core';
+import { EmptyDataModule } from '../empty-data/empty-data.module';
 
 
 
@@ -18,7 +19,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatButtonModule,
     MatIconModule,
     MatRippleModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    EmptyDataModule
   ],
   exports: [AcceptanceListComponent]
 })
