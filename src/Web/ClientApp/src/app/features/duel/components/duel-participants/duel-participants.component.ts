@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { User } from 'src/app/domain/entities';
 
 interface Row {
-  alliance: {id: number, title: string},
-  totalScore: number;
-  scoreDict: {[key: number]: number}
+  user: User
+  exerciseScore: Record<number, number>
+  totalScore: number
 }
 
 
@@ -14,128 +16,20 @@ interface Row {
   styleUrls: ['./duel-participants.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DuelParticipantsComponent implements OnInit, OnChanges {
-  @Input()
-  taskList:{id: number; title: string}[] = [
-    {id: 1, title: 'Task 1'},
-    {id: 2, title: 'Task 2'},
-    {id: 3, title: 'Task 3'},
-    {id: 4, title: 'Task 4'},
-    {id: 5, title: 'Task 5'},
-    {id: 6, title: 'Task 6'},
-    {id: 7, title: 'Task 7'},
-    {id: 8, title: 'Task 8'},
-  ]
-
-
-  @Input() 
-  ranking: Row[] = [
-    {
-      alliance: {
-        id: 1,
-        title: 'Alliance 1'
-      },
-      totalScore: 1100,
-      scoreDict: {
-        [1]: 200,
-        [2]: 200,
-        [3]: 200,
-        [4]: 200,
-        [5]: 200,
-        [6]: 200,
-      },
-    },
-    {
-      alliance: {
-        id: 1,
-        title: 'Alliance 2'
-      },
-      totalScore: 1200,
-      scoreDict: {
-        [1]: 200,
-        [2]: 200,
-        [3]: 200,
-        [4]: 200,
-        [5]: 200,
-        [6]: 200,
-      },
-    },
-    {
-      alliance: {
-        id: 1,
-        title: 'Alliance 3'
-      },
-      totalScore: 1000,
-      scoreDict: {
-        [1]: 200,
-        [2]: 200,
-        [3]: 200,
-        [4]: 200,
-        [5]: 200,
-        [6]: 200,
-      },
-    },
-    {
-      alliance: {
-        id: 1,
-        title: 'Alliance 3'
-      },
-      totalScore: 1000,
-      scoreDict: {
-        [1]: 200,
-        [2]: 200,
-        [3]: 200,
-        [4]: 200,
-        [5]: 200,
-        [6]: 200,
-      },
-    },
-    {
-      alliance: {
-        id: 1,
-        title: 'Alliance 3'
-      },
-      totalScore: 1000,
-      scoreDict: {
-        [1]: 200,
-        [2]: 200,
-        [3]: 200,
-        [4]: 200,
-        [5]: 200,
-        [6]: 200,
-      },
-    },
-    {
-      alliance: {
-        id: 1,
-        title: 'Alliance 3'
-      },
-      totalScore: 1000,
-      scoreDict: {
-        [1]: 200,
-        [2]: 200,
-        [3]: 200,
-        [4]: 200,
-        [5]: 200,
-        [6]: 200,
-      },
-    },
-  ]
+export class DuelParticipantsComponent {
+  alwaysVisibleColumns = ['title', 'total'];
 
   ranking$ = new BehaviorSubject<Row[]>([]);
+  taskColumns$ = new BehaviorSubject<{id: number; title: string}[]>([]);
+  displayedColumns$ = this.taskColumns$.pipe(map(x => [...this.alwaysVisibleColumns, ...x.map(i => i.title)]));
 
-  displayedColumns = ['title', 'total'];
-  
-  constructor() { }
-
-  ngOnInit(): void {
-    this.displayedColumns.push(...this.taskList.map(x => x.title));
-    this.ranking$.next([...this.ranking].sort((a, b) => b.totalScore - a.totalScore))
+  @Input() set taskList(taskList: {id: number; title: string}[]) {
+    const values = taskList ?? [];
+    this.taskColumns$.next([...values]);
   }
+  @Input() set ranking(value: Row[]) {
+    const values = value ?? [];
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.ranking && !changes.ranking.isFirstChange()) {
-      this.ranking$.next([...this.ranking].sort((a, b) => b.totalScore - a.totalScore))
-    }
+    this.ranking$.next([...values].sort((a, b) => b.totalScore - a.totalScore))
   }
 }

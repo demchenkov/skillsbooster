@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Observable, timer } from 'rxjs';
 import { map, startWith, takeWhile } from 'rxjs/operators';
 
@@ -17,9 +17,9 @@ interface Data {
 })
 export class DuelDetailsComponent implements OnInit {
 
-  startDate = new Date('2021-04-19T06:00:00Z');
-  finishDate =  new Date('2021-04-21T20:05:00Z');
-  title = 'Challenge title';
+  @Input() startDate: Date;
+  @Input() finishDate: Date;
+  @Input() title: string;
 
   timeLeft$: Observable<string>;
   durationString: string;

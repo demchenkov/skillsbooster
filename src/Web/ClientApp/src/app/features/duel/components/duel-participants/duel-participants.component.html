@@ -2,9 +2,9 @@
   <mat-table [dataSource]="ranking$ | async" style="height: calc(100% - 59px);">
     <!-- Title Column -->
     <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef><span class="mx-2">Alliance</span></mat-header-cell>
+      <mat-header-cell *matHeaderCellDef><span class="mx-2">Users</span></mat-header-cell>
       <mat-cell *matCellDef="let row; let i = index">
-        <span class="mx-1">{{row.alliance.title}}</span>
+        <span class="mx-1">{{row.user.fullName}}</span>
         <ng-container *ngIf="i < 3" [ngSwitch]="i">
           <mat-icon class="gold" *ngSwitchCase="0">emoji_events</mat-icon>
           <mat-icon class="silver" *ngSwitchCase="1">emoji_events</mat-icon>
@@ -26,7 +26,7 @@
       <mat-cell  *matCellDef="let row">{{row.scoreDict[task.id] || '—'}}</mat-cell>
     </ng-container>
 
-    <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-header-row  *matHeaderRowDef="displayedColumns$ | async"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns$ | async;"></mat-row>
   </mat-table>
 </div>

@@ -21,7 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ExercisesApiService } from '../exercise/services';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
-import { DuelTasksComponent } from './components/challenge-tasks/duel-tasks.component';
+import { DuelTasksComponent } from './components/duel-tasks/duel-tasks.component';
 import { DuelDetailsComponent } from './components/duel-details/duel-details.component';
 import { DuelParticipantsComponent } from './components/duel-participants/duel-participants.component';
 import { DuelDetailsPageComponent } from './containers/duel-details-page/duel-details-page.component';

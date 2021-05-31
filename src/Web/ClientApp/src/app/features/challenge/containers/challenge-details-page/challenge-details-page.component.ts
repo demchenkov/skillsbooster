@@ -3,8 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map, takeUntil } from 'rxjs/operators';
 import { NgOnDestroy, PageIdGetter } from 'src/app/core';
-import { Challenge } from 'src/app/domain/entities';
-import { ExerciseStatus } from 'src/app/domain/enums';
 import { ChallengesService } from '../../services/challenges.service';
 
 @Component({

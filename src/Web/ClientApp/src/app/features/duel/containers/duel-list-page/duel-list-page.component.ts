@@ -3,36 +3,32 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AcceptanceListButtonClicked } from 'src/app/core/modules/acceptance-list/acceptance-list.component';
+import { Duel } from 'src/app/domain/entities';
+import { DuelsService } from '../../services/duels.service';
 import { CreateDuelModalComponent } from '../create-duel-modal/create-duel-modal.component';
 
 
-interface Duel {
-  id: number;
-  title: string;
+interface DuelRequest {
+  allianceId: number;
+  duelId: number;
+  duelTitle: string;
 }
 
 @Component({
   selector: 'sb-duel-list-page',
   templateUrl: './duel-list-page.component.html',
   styleUrls: ['./duel-list-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [DuelsService]
 })
 export class DuelListPageComponent implements OnInit {
-  duelsMock: Duel[] = [
-    {id: 1, title: 'Challenge 1'},
-    {id: 2, title: 'Challenge 2'},
-    {id: 3, title: 'Challenge 3'},
-    {id: 4, title: 'Challenge 4'},
-    {id: 5, title: 'Challenge 5'}
-  ];
+  duelRequests$ = new BehaviorSubject<DuelRequest[]>([]);
+  duelRequestsLoading$ = new BehaviorSubject<boolean>(true);
 
-  duels$: Observable<Duel[]> = new BehaviorSubject<Duel[]>(this.duelsMock);
+  duels$: Observable<Duel[]> = new BehaviorSubject<Duel[]>([]);
   duelsLoading$ = new BehaviorSubject<boolean>(false);
 
-  requests$: Observable<Duel[]> = new BehaviorSubject<Duel[]>(this.duelsMock);
-  requestsLoading$ = new BehaviorSubject<boolean>(false);
-
-  constructor(private router: Router, private dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(private router: Router, private dialog: MatDialog, private route: ActivatedRoute, private duelService: DuelsService) { }
 
   ngOnInit(): void {
   }
@@ -45,16 +41,20 @@ export class DuelListPageComponent implements OnInit {
     });
   }
 
-  actionBtnClick(e: AcceptanceListButtonClicked<Duel>) {
-    if (e.button === 'accept') {
+  duelsListClicked(event: AcceptanceListButtonClicked<Duel>) {
+    this[`${event.button}Duel`](event.row);
+  }
 
-      return;
-    }
+  private acceptDuel(request: DuelRequest) {
+    const oldRequests = [...this.duelRequests$.value];
+    this.duelService.respondDuel(request.duelId, true);
+    this.duelRequests$.next(oldRequests.filter(x => x.duelId != request.duelId));
+  }
 
-    if (e.button === 'decline') {
-
-      return;
-    }
+  private declineDuel(request: DuelRequest) {
+    const oldRequests = [...this.duelRequests$.value];
+    this.duelService.respondDuel(request.duelId, false);
+    this.duelRequests$.next(oldRequests.filter(x => x.duelId != request.duelId));
   }
 
   redirectToDuel(data: Duel) {

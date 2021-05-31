@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -56,6 +57,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatButtonToggleModule,
     MatButtonModule,
     MatAutocompleteModule,
+    MatTabsModule,
     EditorModule,
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE

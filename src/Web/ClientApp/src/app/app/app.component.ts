@@ -10,8 +10,6 @@ import {AuthorizeService} from "../core/api-authorization/authorize.service";
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { ActivationEnd, Router } from '@angular/router';
 import { ApplicationPaths } from '../core/api-authorization/api-authorization.constants';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'sb-root',
@@ -46,17 +44,10 @@ export class AppComponent implements OnInit {
     private titleService: TitleService,
     private authorizeService: AuthorizeService,
     private overlayContainer: OverlayContainer,
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer,
     private router: Router,
   ) {
     this.isAuthenticated$ = this.authorizeService.isAuthenticated();
     this.username$ = this.authorizeService.getUser().pipe(map(u => u && u.name));
-
-    this.matIconRegistry.addSvgIcon(
-      "duel",
-      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/duel.svg")
-    );
   }
 
   ngOnInit(): void {
@@ -74,7 +65,7 @@ export class AppComponent implements OnInit {
   }
 
   onLogoutClick() {
-    this.router.navigate([ApplicationPaths.LogOut], { skipLocationChange: true })
+    this.router.navigate([`/${ApplicationPaths.LogOut}`], { skipLocationChange: true })
   }
 
   onLanguageSelect({ value: language }) {
