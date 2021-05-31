@@ -1,8 +1,9 @@
-$sb-nature-primary: mat-palette($mat-brown, 700, 300, 900);
-$sb-nature-accent: mat-palette($mat-deep-purple, 300);
-$sb-nature-warn: mat-palette($mat-red, 600);
+@use '~@angular/material' as mat;
+$sb-nature-primary: mat.define-palette(mat.$brown-palette, 700, 300, 900);
+$sb-nature-accent: mat.define-palette(mat.$deep-purple-palette, 300);
+$sb-nature-warn: mat.define-palette(mat.$red-palette, 600);
 
-$sb-nature-theme: mat-light-theme(
+$sb-nature-theme: mat.define-light-theme(
   $sb-nature-primary,
   $sb-nature-accent,
   $sb-nature-warn

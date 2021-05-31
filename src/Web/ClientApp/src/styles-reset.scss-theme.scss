@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '~@angular/material/theming';
 
 @mixin sb-styles-reset-theme($theme) {
@@ -6,27 +7,27 @@
   $foreground: map-get($theme, foreground);
 
   a {
-    color: mat-color($foreground, text);
+    color: mat.get-color-from-palette($foreground, text);
 
     // &:hover {
-    //   color: mat-color($accent);
+    //   color: mat.get-color-from-palette($accent);
     // }
   }
 
   blockquote {
-    border-left: 3px solid mat-color($primary, lighter);
+    border-left: 3px solid mat.get-color-from-palette($primary, lighter);
   }
 
   hr {
-    border-top: 1px solid mat-color($primary, lighter);
+    border-top: 1px solid mat.get-color-from-palette($primary, lighter);
   }
 
   p {
     a {
-      color: mat-color($accent);
+      color: mat.get-color-from-palette($accent);
 
       &:hover {
-        color: mat-color($accent, darker);
+        color: mat.get-color-from-palette($accent, darker);
       }
     }
   }

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import 'styles-variables';
 @import 'scrollbar';
 
@@ -6,7 +7,7 @@
 
 @import '~@angular/material/theming';
 
-@include mat-core();
+@include mat.core();
 
 @import './themes/default-theme';
 @import './themes/light-theme';
@@ -23,21 +24,21 @@
 }
 
 .default-theme {
-  @include angular-material-theme($sb-theme);
+  @include mat.all-component-themes($sb-theme);
   @include custom-components-theme($sb-theme);
 }
 
 .light-theme {
-  @include angular-material-theme($sb-light-theme);
+  @include mat.all-component-themes($sb-light-theme);
   @include custom-components-theme($sb-light-theme);
 }
 
 .black-theme {
-  @include angular-material-theme($sb-black-theme);
+  @include mat.all-component-themes($sb-black-theme);
   @include custom-components-theme($sb-black-theme);
 }
 
 .nature-theme {
-  @include angular-material-theme($sb-nature-theme);
+  @include mat.all-component-themes($sb-nature-theme);
   @include custom-components-theme($sb-nature-theme);
 }

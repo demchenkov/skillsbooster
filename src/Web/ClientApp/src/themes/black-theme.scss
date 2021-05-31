@@ -1,9 +1,10 @@
-$sb-black-primary: mat-palette($mat-grey, 700, 300, 900, A100);
-$sb-black-accent: mat-palette($mat-cyan, 500);
-$sb-black-warn: mat-palette($mat-red, 500);
+@use '~@angular/material' as mat;
+$sb-black-primary: mat.define-palette(mat.$grey-palette, 700, 300, 900, A100);
+$sb-black-accent: mat.define-palette(mat.$cyan-palette, 500);
+$sb-black-warn: mat.define-palette(mat.$red-palette, 500);
 
 
-$sb-black-theme: mat-dark-theme(
+$sb-black-theme: mat.define-dark-theme(
   $sb-black-primary,
   $sb-black-accent,
   $sb-black-warn
