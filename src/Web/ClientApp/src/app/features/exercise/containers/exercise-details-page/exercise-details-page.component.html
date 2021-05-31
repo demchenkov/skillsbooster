@@ -1,40 +1,42 @@
-<div class="loading-shade" *ngIf="loading$ | async">
-  <mat-spinner></mat-spinner>
-</div>
-
-<div [style.display]="(loading$ | async) ? 'none !important' : null"  class="container-fluid d-flex flex-grow-1 h-100">
+<div  class="container-fluid d-flex flex-grow-1 h-100">
   <div class="row flex-grow-1" style="max-height: calc(100vh - 108px);">
     <div class="col-6 h-100" style="overflow-y: auto;">
-      <mat-tab-group>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon class="mr-1">leaderboard</mat-icon>
-            Personal
-          </ng-template>
-          <markdown [data]="(exercise$ | async)?.markdownBody"></markdown>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon class="mr-1">leaderboard</mat-icon>
-            Solutions
-          </ng-template>
-          <span>AAAAAAAAAAAAAAAAAAAAAA</span>
-        </mat-tab>
-      </mat-tab-group>
 
+      <div *ngIf="loading$ | async; else data" class="h-100 flex-grow-1 align-items-center justify-content-center d-flex">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <ng-template #data>
+        <mat-tab-group>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="mr-1">leaderboard</mat-icon>
+              Personal
+            </ng-template>
+            <markdown [data]="(exercise$ | async)?.markdownBody"></markdown>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="mr-1">leaderboard</mat-icon>
+              Solutions
+            </ng-template>
+            <span>AAAAAAAAAAAAAAAAAAAAAA</span>
+          </mat-tab>
+        </mat-tab-group>
+      </ng-template>
     </div>
     <div class="col-6 h-100 d-flex flex-grow-1 flex-column" style="overflow-y: none;">
       <div class="row">
         <div class="col-8">
           <mat-form-field appearance="fill">
             <mat-label>Language</mat-label>
-            <mat-select [(value)]="language">
+            <mat-select [(value)]="language" [disabled]="loading$ | async">
               <mat-option [value]="lang.id" *ngFor="let lang of languages">{{ lang.name }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="col-4 d-flex align-items-center">
-          <button mat-raised-button color="accent" class="btn btn-info mr-3">Submit</button>
+          <button [disabled]="loading$ | async" mat-raised-button color="accent" class="btn btn-info mr-3">Submit</button>
         </div>
       </div>
       <div class="row flex-grow-1">

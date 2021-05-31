@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { ExercisesService } from '../../services';
 export class ExerciseDetailsPageComponent implements OnInit {
   pageId$: Observable<number>;
   exercise$: Observable<Exercise>;
-  loading$: Observable<boolean>;
+  loading$ = new BehaviorSubject<boolean>(true);
 
 
   language = SupportedLangs.js;
@@ -29,8 +29,11 @@ export class ExerciseDetailsPageComponent implements OnInit {
   ngOnInit() {
     this.pageId$ = this.idGetter.getPageId('number') as Observable<number>;
 
-    this.loading$ = combineLatest([this.service.loading$, this.editorLoading$])
-      .pipe(map(([a, b]) => a || b));
+    combineLatest([this.service.loading$, this.editorLoading$])
+      .pipe(map(([a, b]) => a || b))
+      .subscribe(x => this.loading$.next(x));
+
+    setTimeout(() => this.loading$.next(false), 2000)
 
     this.exercise$ = this.service.exercise$;
 
@@ -38,6 +41,6 @@ export class ExerciseDetailsPageComponent implements OnInit {
   }
 
   onEditorInit() {
-    this.editorLoading$.next(false)
+    this.editorLoading$.next(false);
   }
 }
