@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild, ElementRef } from '@angular/core';
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from '../../../core/core.module';
 
@@ -12,7 +12,19 @@ export class AboutComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
   releaseButler = '';
 
+  @ViewChild('blockAnimation') wrapper: ElementRef;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    setInterval(() => {
+      this.wrapper.nativeElement.classList.remove('start');
+      setTimeout(() => {
+          this.wrapper.nativeElement.classList.add('start');
+      }, 50)
+    }, 30000);
+  }
 }

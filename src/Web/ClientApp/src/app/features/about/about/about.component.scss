@@ -1,194 +1,90 @@
-@import '../../../../styles-variables';
-
-h1 {
-  text-align: center;
-  font-size: 3em;
-  text-transform: uppercase;
+.right-column {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
-h2 {
-  font-size: 1.5em;
-  text-transform: uppercase;
-}
+$codeLines: 26;
 
-.background {
-  padding: 80px 0 0 0;
-  position: relative;
-
-  .actions {
-    text-align: center;
-    margin: 50px;
-    z-index: 1;
-
-    span {
-      display: inline-block;
-      font-weight: bold;
-      padding: 20px 10px 30px 10px;
-    }
-
-    a {
-      margin: 0 5px 10px 0;
-
-      &.actions-main {
-        text-transform: uppercase;
-        padding: 3px 24px;
-      }
-    }
+@keyframes writeLine {
+  0% {
+    clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
   }
-
-  .get-started {
-    max-width: 700px;
-    margin: 50px auto;
-    letter-spacing: 0.01px;
-    overflow-wrap: break-word;
-    z-index: 1;
-    overflow: hidden;
-
-    code {
-      font-size: 0.9em;
-      display: inline-block;
-      word-wrap: break-word;
-      white-space: normal;
-      margin: 0 0 10px 0;
-    }
-  }
-
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    // background: url('../../../../assets/intro.jpg') no-repeat center top;
-    background-size: cover;
-    opacity: 0.7;
-    content: '';
-    z-index: 0;
-  }
-
-  .gradient {
-    &::before {
-      position: absolute;
-      top: 51%;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      content: '';
-      z-index: 0;
-    }
-  }
-
-  .container {
-    position: relative;
+  100% {
+    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
   }
 }
 
-.follow-releases {
-  max-width: 700px;
-  margin: 0 auto 60px auto;
-
-  p {
-    line-height: 40px;
-
-    a {
-      border-bottom: 3px solid;
-    }
+@keyframes keydown {
+  0% {
+    fill-opacity: 0.1;
   }
-
-  img {
-    display: block;
-    max-width: 80%;
-    margin: 20px auto 0 auto;
-    border-radius: 5px;
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-      0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  15% {
+    fill-opacity: .3;
+  }
+  30% {
+    fill-opacity: 0.1;
   }
 }
 
-.contributors {
-  max-width: 700px;
-  margin: 0 auto 60px auto;
-
-  p {
-    a {
-      border-bottom: 3px solid;
-    }
+@keyframes appOpen {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
   }
-
-  .contributors-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    a {
-      margin: 8px;
-      width: 100px;
-      display: inline-block;
-      text-align: center;
-
-      span {
-        display: inline-block;
-        padding: 10px 0 0 0;
-        line-height: 16px;
-      }
-
-      img {
-        border-radius: 50%;
-        width: 100px;
-        border: 5px solid;
-        box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
-          0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-      }
-    }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@media (max-width: map-get($grid-breakpoints, md)) {
-  .background {
-    .actions {
-      margin: 50px 0;
-    }
-    .get-started {
-      width: auto;
-    }
-  }
-  .follow-releases {
-    width: auto;
-
-    img {
-      max-width: 100%;
+.mac-wrapper {
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+  svg {
+    height: auto;
+    #CodeEditorWindow {
+      display: none;
     }
   }
-}
-
-@media (max-width: map-get($grid-breakpoints, sm)) {
-  .background {
-    padding: 40px 0 0 0;
-
-    h1 {
-      line-height: 1em;
+  &.start {
+    #CodeEditorWindow {
+      display: block !important;
+      animation: .5s ease-out 0s 1 normal forwards appOpen,
+        .5s ease-out #{$codeLines + 1}s 1 reverse forwards appOpen;
+      transform-origin: center center;
+    }
+    [id^="codeline"] {
+      clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+      animation: writeLine 1s linear forwards;
     }
 
-    .actions {
-      margin: 40px 0 0 0;
-
-      span {
-        padding: 10px 0 20px 0;
-      }
-
-      a {
-        width: 100%;
+    @for $i from 1 through $codeLines {
+      #codeline#{$i} {
+        animation-delay: #{$i}s;
       }
     }
 
-    .get-started {
-      width: auto;
-      margin: 40px auto 40px auto;
+    @for $j from 1 to 19 {
+      #keyboard#{random(49)} {
+        animation-name: keydown;
+        animation-duration: 1s;
+        animation-delay: #{1000 + random(1000)}ms;
+        animation-iteration-count: $codeLines;
+      }
     }
-  }
 
-  .follow-releases {
-    margin: 0 auto 40px auto;
+    #keyboard-return {
+      animation-name: keydown;
+      animation-duration: 1s;
+      animation-delay: 2s;
+      animation-iteration-count: $codeLines;
+    }
   }
 }

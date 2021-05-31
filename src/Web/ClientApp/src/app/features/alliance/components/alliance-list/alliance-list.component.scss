@@ -2,6 +2,10 @@ mat-card {
   cursor: pointer;
 }
 
+mat-card:hover {
+  background-color: #ffffff21;
+}
+
 .add_btn {
   position: fixed;
   right: 75px;

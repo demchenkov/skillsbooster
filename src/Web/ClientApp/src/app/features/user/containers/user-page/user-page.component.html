@@ -1,136 +1,110 @@
-<div class="container">
-  <div class="row my-2">
-    <div class="col-md-4">
-      <div class="card card-user">
-        <div class="image">
-          <img src="assets/img/damir-bosnjak.jpg" alt="...">
-        </div>
+<div class="container py-3">
+  <div class="row gutters-sm">
+    <div class="col-md-4 mb-3">
+      <div class="card">
         <div class="card-body">
-          <div class="author text-center">
-            <a href="#">
-              <img class="avatar border-gray" src="assets/img/damir-bosnjak.jpg" alt="...">
-              <h6 class="title">Chet Faker</h6>
-            </a>
-            <p class="description m-0">
-              @chetfaker
-            </p>
-          </div>
-        </div>
-        <div class="card-footer">
-          <hr>
-          <div class="button-container">
-            <div class="row">
-              <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                <h6 class="text-center">
-                  12
-                  <br>
-                  <small>Rank</small>
-                </h6>
-              </div>
-              <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                <h6 class="text-center">
-                  22.05.2021
-                  <br>
-                  <small>Joined</small>
-                </h6>
-              </div>
-              <div class="col-lg-3 mr-auto">
-                <h6 class="text-center">
-                  662
-                  <br>
-                  <small>Solved problems</small>
-                </h6>
-              </div>
+          <div class="d-flex flex-column align-items-center text-center">
+            <img [src]="user.photoUrl" class="rounded-circle" width="150">
+            <div class="mt-3">
+              <h4>{{user.fullName}}</h4>
+              <p class="text-secondary mb-1">{{user.position}}</p>
+              <p class="text-muted font-size-sm">{{user.address}}</p>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-md-8">
-      <div class="card card-user">
-        <div class="card-header">
-          <h6 class="card-title m-0">Edit Profile</h6>
-        </div>
+      <div class="card mb-3">
         <div class="card-body">
-          <form>
-            <div class="row">
-              <div class="col-md-5 pr-1">
-                <div class="form-group">
-                  <label>Company (disabled)</label>
-                  <input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">
-                </div>
-              </div>
-              <div class="col-md-3 px-1">
-                <div class="form-group">
-                  <label>Username</label>
-                  <input type="text" class="form-control" placeholder="Username" value="michael23">
-                </div>
-              </div>
-              <div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" placeholder="Email">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Full Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{user.fullName}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{user.email}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Address</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{user.address}}
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Alliance</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{user.allianceName}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gutters-sm">
+        <div class="col-sm-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h6 class="d-flex align-items-center mb-3">
+                <mat-icon class="text-info mr-2">assignment</mat-icon>
+                Tasks
+              </h6>
+
+              <p class="mb-3" matTooltipPosition="before" [matTooltip]="getTotalTooltip(user)">
+                <small>Total</small>
+                <mat-progress-bar color="accent" mode="determinate" style="height: 5px" [value]="getTotalPercentage(user)" ></mat-progress-bar>
+              </p>
+
+              <p class="mb-3" *ngFor="let difficulty of difficulties" matTooltipPosition="before" [matTooltip]="getDifficultyTooltip(difficulty, user)">
+                <small>{{difficulty}}</small>
+                <mat-progress-bar color="accent"
+                                  mode="determinate"
+                                  style="height: 5px"
+                                  [value]="getDifficultyPercentage(difficulty, user)"
+                ></mat-progress-bar>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+              <h6 class="d-flex align-items-center mb-3">
+                <mat-icon class="text-info mr-2">assignment</mat-icon>
+                Duels
+              </h6>
+              <div class="d-flex align-items-center justify-content-center flex-grow-1">
+                <div class="chart">
+                  <canvas baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    chartType="pie"
+                    [options]="pieChartOptions"
+                    [legend]="true">
+                  </canvas>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 pr-1">
-                <div class="form-group">
-                  <label>First Name</label>
-                  <input type="text" class="form-control" placeholder="Company" value="Chet">
-                </div>
-              </div>
-              <div class="col-md-6 pl-1">
-                <div class="form-group">
-                  <label>Last Name</label>
-                  <input type="text" class="form-control" placeholder="Last Name" value="Faker">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Address</label>
-                  <input type="text" class="form-control" placeholder="Home Address" value="Melbourne, Australia">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 pr-1">
-                <div class="form-group">
-                  <label>City</label>
-                  <input type="text" class="form-control" placeholder="City" value="Melbourne">
-                </div>
-              </div>
-              <div class="col-md-4 px-1">
-                <div class="form-group">
-                  <label>Country</label>
-                  <input type="text" class="form-control" placeholder="Country" value="Australia">
-                </div>
-              </div>
-              <div class="col-md-4 pl-1">
-                <div class="form-group">
-                  <label>Postal Code</label>
-                  <input type="number" class="form-control" placeholder="ZIP Code">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>About Me</label>
-                  <textarea class="form-control textarea">Oh so, your weak rhyme You doubt I'll bother, reading into it</textarea>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="update ml-auto mr-auto">
-                <button type="submit" class="btn btn-primary btn-round">Update Profile</button>
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>  
+  </div>
+  <button mat-fab class="add_btn" (click)="editUser()">
+    <mat-icon>edit</mat-icon>
+  </button>
 </div>

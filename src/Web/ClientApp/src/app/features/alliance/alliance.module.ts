@@ -29,6 +29,8 @@ import { AcceptanceListModule } from 'src/app/core/modules/acceptance-list/accep
 import { CreateChallengeModalComponent } from './components/create-challenge-modal/create-challenge-modal.component';
 import { AllianceListComponent } from './components/alliance-list/alliance-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { ChangePhotoModalComponent } from './components/change-photo-modal/change-photo-modal.component';
 
 
 
@@ -40,7 +42,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     EditAllianceModalComponent,
     AllianceChallengesPageComponent,
     CreateChallengeModalComponent,
-    AllianceListComponent
+    AllianceListComponent,
+    ChangePhotoModalComponent
   ],
   imports: [
     CommonModule,
@@ -67,7 +70,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AcceptanceListModule,
     MatCardModule,
     MatTabsModule,
-    EmptyDataModule
+    EmptyDataModule,
+    ImageCropperModule
   ],
   providers: [AlliancesApiService, ExercisesApiService]
 })

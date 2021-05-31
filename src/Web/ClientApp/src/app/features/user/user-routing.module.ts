@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'me',
     component: UserPageComponent,
-    data: { title: 'Duels' }
+    data: { title: 'Me' }
   },
 ];
 

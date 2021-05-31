@@ -6,6 +6,7 @@ import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { NgOnDestroy, PageIdGetter } from 'src/app/core';
 import { Alliance, Alliances } from 'src/app/domain/entities';
 import { AllianceUserType } from 'src/app/domain/enums';
+import { ChangePhotoModalComponent } from '../../components/change-photo-modal/change-photo-modal.component';
 import { EditAllianceModalComponent } from '../../components/edit-alliance-modal/edit-alliance-modal.component';
 import { AlliancesService } from '../../services/alliances.service';
 
@@ -34,8 +35,12 @@ export class AllianceDetailsPageComponent implements OnInit {
     this.pageId$.pipe(takeUntil(this.onDestroy$)).subscribe(id => this.service.getAllianceById(id));
   }
 
-  changePhotoClicked() {
+  changePhotoClicked(imageChangeEvent: any) {
+    const dialogRef = this.dialog.open(ChangePhotoModalComponent, {data: imageChangeEvent});
 
+    dialogRef.afterClosed()
+      // .pipe(take(1), filter(Boolean), switchMap(x => this.service.updateAlliance(alliance.id, x)))
+      // .subscribe(() => this.service.getAllianceById(alliance.id));
   }
 
   editAlliance(alliance: Alliance) {

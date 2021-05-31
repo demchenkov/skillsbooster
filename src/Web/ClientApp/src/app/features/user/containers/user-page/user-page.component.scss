@@ -1,34 +1,18 @@
-.card-user .image {
-  height: 130px;
+.text-secondary {
+  color: #d6d6d6 !important;
 }
 
-.card .image {
-  overflow: hidden;
-  height: 200px;
-  position: relative;
-  height: 130px;
+.add_btn {
+  position: fixed;
+  right: 75px;
+  bottom: 75px;
 }
 
-img {
-  max-width: 100%;
-  border-radius: 3px;
-}
+.chart {
+  display: flex;
+  height: 100%;
 
-.card .avatar {
-  width: 30px;
-  height: 30px;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-bottom: 15px;
+  &canvas{
+    flex: 1;
+  }
 }
-
-.card-user .avatar {
-  width: 124px;
-  height: 124px;
-  border: 1px solid #3c3939;
-  position: relative;
-}
-
-.author {
-  margin-top: -77px;
-} 

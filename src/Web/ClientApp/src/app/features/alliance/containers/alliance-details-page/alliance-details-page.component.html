@@ -5,7 +5,8 @@
     <div class="col-3 d-block text-center">
       <div class="image-box m-auto mb-4">
         <img class="image" src="../../../../../assets/logo.png">
-        <div *ngIf="alliance.userType === userTypes.Manager" class="overlay" (click)="changePhotoClicked()" >
+        <div *ngIf="alliance.userType === userTypes.Manager" class="overlay" (click)="fileInput.click()" >
+          <input hidden #fileInput  type="file" accept="image/*" (change)="changePhotoClicked($event)" /> -->
           <div class="text"><mat-icon>photo_camera</mat-icon></div>
         </div>
       </div>

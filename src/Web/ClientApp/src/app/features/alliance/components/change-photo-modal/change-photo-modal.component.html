@@ -1,0 +1,10 @@
+<sb-modal (confirm)="onConfirm()" title="Change Alliance Photo">
+  <image-cropper  [imageChangedEvent]="imageChangedEvent"
+                  [roundCropper]="true"
+                  format="png"
+                  (imageCropped)="imageCropped($event)"
+                  (imageLoaded)="imageLoaded()"
+                  (cropperReady)="cropperReady($event)"
+                  (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+</sb-modal>
