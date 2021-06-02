@@ -44,8 +44,8 @@ export class UserPageComponent implements OnInit {
     },
   };
 
-  public pieChartLabels: Label[] = [' Lost', ' Won'];
-  public pieChartData: number[] = [5, 10];
+  public pieChartLabels: Label[] = [' Lost', ' Won', ' Active'];
+  public pieChartData: number[] = [5, 10, 3];
 
 
   difficulties: string[] = Object.values(Difficulty).filter(x => typeof x === 'string') as string[];
