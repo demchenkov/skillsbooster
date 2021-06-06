@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SubmissionDetailsComponent } from './containers/submission-details-page/submission-details-page.component';
 
 const routes: Routes = [
   {
     path: ':id',
-    pathMatch: 'full'
+    component: SubmissionDetailsComponent,
+    data: { title: 'Submission' }
   }
 ];
 
@@ -13,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SolutionRoutingModule { }
+export class SubmissionRoutingModule { }

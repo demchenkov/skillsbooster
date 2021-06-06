@@ -7,46 +7,33 @@
       </div>
 
       <ng-template #data>
-        <mat-tab-group>
+        <mat-tab-group class="h-100">
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon class="mr-1">leaderboard</mat-icon>
-              Personal
+              The Task
             </ng-template>
-            <markdown [data]="(exercise$ | async)?.markdownBody"></markdown>
+            <markdown [data]="(exercise$ | async)?.markdownBody" class="d-block p-2"></markdown>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon class="mr-1">leaderboard</mat-icon>
-              Solutions
+              Submissions
             </ng-template>
-            <span>AAAAAAAAAAAAAAAAAAAAAA</span>
+
+            <sb-submission-list [submissions]="submissions$ | async"
+            ></sb-submission-list>
+
           </mat-tab>
         </mat-tab-group>
       </ng-template>
     </div>
-    <div class="col-6 h-100 d-flex flex-grow-1 flex-column" style="overflow-y: none;">
-      <div class="row">
-        <div class="col-8">
-          <mat-form-field appearance="fill">
-            <mat-label>Language</mat-label>
-            <mat-select [(value)]="language" [disabled]="loading$ | async">
-              <mat-option [value]="lang.id" *ngFor="let lang of languages">{{ lang.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-4 d-flex align-items-center">
-          <button [disabled]="loading$ | async" mat-raised-button color="accent" class="btn btn-info mr-3">Submit</button>
-        </div>
-      </div>
-      <div class="row flex-grow-1">
-        <div class="col-12">
-          <sb-editor  [language]="language"
-                      [(code)]="code"
-                      (editorInit)="onEditorInit()"
-          ></sb-editor>
-        </div>
-      </div>
-    </div>
+    <sb-details-right-column  class="col-6 h-100 d-flex flex-grow-1 flex-column"
+                              [languages]="languages"
+                              [language]="language"
+                              [loading]="loading$ | async"
+                              [exercise]="exercise$ | async"
+                              (submit)="onSubmit($event)"
+    ></sb-details-right-column>
   </div>
 </div>

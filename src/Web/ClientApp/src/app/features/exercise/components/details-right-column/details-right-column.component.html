@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-8">
+    <mat-form-field appearance="fill">
+      <mat-label>Language</mat-label>
+      <mat-select [value]="language" (valueChange)="language = $event" [disabled]="loading">
+        <mat-option [value]="lang.id" *ngFor="let lang of languages">{{ lang.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-4 d-flex align-items-center">
+    <button [disabled]="loading"
+            mat-raised-button color="accent"
+            class="mr-3"
+            (click)="onSubmit(exercise.id, code, language)"
+    >Submit</button>
+  </div>
+</div>
+<div class="row flex-grow-1">
+  <div class="col-12">
+    <sb-editor  [language]="language"
+                [(code)]="code"
+                (editorInit)="editorInit.emit()"
+    ></sb-editor>
+  </div>
+</div>

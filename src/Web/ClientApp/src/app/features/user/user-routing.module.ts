@@ -9,7 +9,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'me',
+    path: ':id',
     component: UserPageComponent,
     data: { title: 'Me' }
   },

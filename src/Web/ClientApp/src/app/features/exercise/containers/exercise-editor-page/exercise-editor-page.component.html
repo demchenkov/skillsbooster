@@ -14,15 +14,6 @@
     <div class="row">
       <div class="col text-center">
         <mat-form-field appearance="fill" class="w-75">
-          <mat-label>Max Score</mat-label>
-          <input matInput type="number" placeholder="Title" [(ngModel)]="exercise.maxScore" required>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col text-center">
-        <mat-form-field appearance="fill" class="w-75">
           <mat-label>Difficulty</mat-label>
           <mat-select [(value)]="exercise.difficulty">
             <mat-option [value]="option.key" *ngFor="let option of difficulties">{{ option.value }}</mat-option>
@@ -31,10 +22,8 @@
       </div>
     </div>
   </div>
-
-  <sb-exercise-details [(code)]="exercise.markdownBody" class="container-fluid"> </sb-exercise-details>
   <div class="container">
-    
+
     <div class="row">
       <div class="col text-center">
         <mat-slide-toggle class="mx-3" disabled checked>

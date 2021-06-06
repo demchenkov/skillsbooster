@@ -13,6 +13,8 @@ export class EditorComponent implements OnChanges {
   @Output() codeChange = new EventEmitter<string>();
   @Output() editorInit = new EventEmitter<void>();
 
+  editorInitiated = false;
+
   editorOptions$ = new BehaviorSubject<any>({ theme: 'vs-dark' });
 
   onCodeChange(code: string) {
@@ -20,6 +22,7 @@ export class EditorComponent implements OnChanges {
   }
 
   onInit() {
+    this.editorInitiated = true;
     this.editorInit.emit();
   }
 

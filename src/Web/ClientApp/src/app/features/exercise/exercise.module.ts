@@ -10,7 +10,6 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { ExercisesApiService, ExercisesService } from './services';
 import { HttpClientModule } from '@angular/common/http';
-import { ExerciseDetailsComponent } from './components/exercise-details/exercise-details.component';
 import { ExerciseDetailsPageComponent } from './containers/exercise-details-page/exercise-details-page.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -25,6 +24,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTabsModule } from '@angular/material/tabs';
+import { SubmissionListComponent } from './components/submission-list/submission-list.component';
+import { DetailsRightColumnComponent } from './components/details-right-column/details-right-column.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -35,8 +37,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     ExerciseListPageComponent,
     ExerciseDetailsPageComponent,
     ExerciseListComponent,
-    ExerciseDetailsComponent,
     ExerciseEditorPageComponent,
+    SubmissionListComponent,
+    DetailsRightColumnComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +62,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatAutocompleteModule,
     MatTabsModule,
     EditorModule,
+    MatTooltipModule,
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE
     })

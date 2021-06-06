@@ -26,7 +26,7 @@ const routes: Routes = [
     component: DuelTaskPageComponent,
     data: { title: 'Duel Task' }
   },
-  
+
 ];
 
 @NgModule({

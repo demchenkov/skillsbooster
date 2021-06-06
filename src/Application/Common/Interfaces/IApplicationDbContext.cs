@@ -21,6 +21,8 @@ namespace SkillsBooster.Application.Common.Interfaces
         DbSet<UserRanking> UserRankings { get; set; }
         DbSet<AllianceRanking> AllianceRankings { get; set; }
 
+        DbSet<BestSubmission> BestSubmissions { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

@@ -709,6 +709,157 @@
           }
         }
       }
+    },
+    "/api/submissions/my": {
+      "get": {
+        "tags": [
+          "Submissions"
+        ],
+        "operationId": "Submissions_GetMySubmissions",
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/submissions/{id}": {
+      "get": {
+        "tags": [
+          "Submissions"
+        ],
+        "operationId": "Submissions_GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/submissions": {
+      "post": {
+        "tags": [
+          "Submissions"
+        ],
+        "operationId": "Submissions_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSubmissionCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_GetMe",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1224,6 +1375,179 @@
             "format": "int32"
           }
         }
+      },
+      "SubmissionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "score": {
+            "type": "number",
+            "format": "double"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "exerciseId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "exerciseTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "submitterId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submitterName": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateSubmissionCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "type": "string",
+            "nullable": true
+          },
+          "exerciseId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "duelId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "challengeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "UserDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "position": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "rank": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "allianceTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "solvedTasks": {
+            "type": "object",
+            "nullable": true,
+            "x-dictionaryKey": {
+              "$ref": "#/components/schemas/Difficulty"
+            },
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SolvedTaskDto"
+            }
+          },
+          "duelStats": {
+            "type": "object",
+            "nullable": true,
+            "x-dictionaryKey": {
+              "$ref": "#/components/schemas/DuelResult"
+            },
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "Difficulty": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Easy",
+          "Normal",
+          "Hard",
+          "Extreme"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "SolvedTaskDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solved": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DuelResult": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Won",
+          "Lost",
+          "Active"
+        ],
+        "enum": [
+          1,
+          2,
+          3
+        ]
       }
     },
     "securitySchemes": {

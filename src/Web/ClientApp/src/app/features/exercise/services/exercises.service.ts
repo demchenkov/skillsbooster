@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, share } from 'rxjs/operators';
 import { PaginatedList, Sort } from 'src/app/core';
 import { Exercise } from '../entities';
 import { ExercisesApiService } from './exercises-api.service';

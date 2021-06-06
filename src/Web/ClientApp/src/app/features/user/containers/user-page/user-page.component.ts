@@ -2,33 +2,23 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Label } from 'ng2-charts';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Difficulty } from 'src/app/domain/enums';
+import { BehaviorSubject } from 'rxjs';
+import { UsersService } from '../../services/user.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from 'src/app/domain/entities';
 
 
-// https://www.bootdey.com/snippets/view/profile-with-data-and-skills#css
 @Component({
   selector: 'sb-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [UsersService]
 })
 export class UserPageComponent implements OnInit {
-
-  user = {
-    id: 1,
-    fullName: 'Demchenko Vlad',
-    email: 'vdemchenko99@gmail.com',
-    position: 'Full Stack Developer',
-    photoUrl: 'https://bootdey.com/img/Content/avatar/avatar7.png',
-    address: 'Kyiv, Ukaine',
-    allianceName: 'Top Alliance',
-
-    solvedTasksCount: {
-      [Difficulty.Easy]: {total: 40, solved: 10},
-      [Difficulty.Normal]: {total: 25, solved: 0},
-      [Difficulty.Hard]: {total: 31, solved: 12},
-      [Difficulty.Extreme]: {total: 10, solved: 9},
-    }
-  }
+  difficulties: string[] = Object.values(Difficulty).filter(x => typeof x === 'string') as string[];
+  loading$ = this.service.loading$;
+  user$ = this.service.user$;
 
   pieChartOptions: ChartOptions = {
     responsive: true,
@@ -44,26 +34,28 @@ export class UserPageComponent implements OnInit {
     },
   };
 
-  public pieChartLabels: Label[] = [' Lost', ' Won', ' Active'];
-  public pieChartData: number[] = [5, 10, 3];
-
-
-  difficulties: string[] = Object.values(Difficulty).filter(x => typeof x === 'string') as string[];
-
-  constructor() { }
+  constructor(private service: UsersService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id === 'me') {
+      this.service.getMe();
+    } else {
+      this.service.getUserById(parseInt(id));
+    }
+
+    this.user$.subscribe(x => console.log(x))
   }
 
-  getDifficultyPercentage(name: string, user) {
-    const difficulty = Difficulty[name];
-    const a = user.solvedTasksCount[difficulty];
+  getDifficultyPercentage(name: string, user: User) {
+    const a = user.solvedTasks[name];
 
     return Math.round(a.solved * 100 / a.total);
   }
 
-  getTotalPercentage(user) {
-    const a = Object.values<any>(user.solvedTasksCount).reduce((acc, cur) => {
+  getTotalPercentage(user: User) {
+    const a = Object.values<any>(user.solvedTasks).reduce((acc, cur) => {
       acc.solved += cur.solved;
       acc.total += cur.total;
       return acc;
@@ -72,8 +64,8 @@ export class UserPageComponent implements OnInit {
     return Math.round(a.solved * 100 / a.total);
   }
 
-  getTotalTooltip(user) {
-    const a = Object.values<any>(user.solvedTasksCount).reduce((acc, cur) => {
+  getTotalTooltip(user: User) {
+    const a = Object.values<any>(user.solvedTasks).reduce((acc, cur) => {
       acc.solved += cur.solved;
       acc.total += cur.total;
       return acc;
@@ -82,12 +74,21 @@ export class UserPageComponent implements OnInit {
     return `Total: ${a.solved} / ${a.total}`;
   }
 
-  getDifficultyTooltip(name: string, user) {
-    const difficulty = Difficulty[name];
-    const a = user.solvedTasksCount[difficulty];
+  getDifficultyTooltip(name: string, user: User) {
+    const a = user.solvedTasks[name];
 
     return `Solved: ${a.solved} / ${a.total}`;
   }
+
+  getStatLabels(user: User) {
+    return Object.entries(user.duelStats)
+      .map(([x]) => ` ${x}`)
+  }
+
+  getStatValues(user: User) {
+    return Object.values(user.duelStats)
+  }
+
 
   editUser() {
 

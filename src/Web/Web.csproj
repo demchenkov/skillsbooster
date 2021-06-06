@@ -46,7 +46,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="wwwroot\Identity\css\site.css" />
+      <None Include="wwwroot\Identity\css\login.css" />
     </ItemGroup>
 
     <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">

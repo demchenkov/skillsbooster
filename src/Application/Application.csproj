@@ -23,8 +23,6 @@
       <Folder Include="Alliances\Commands\RequestJoin\" />
       <Folder Include="Alliances\Commands\RespondJoinRequest\" />
       <Folder Include="Users\Commands\" />
-      <Folder Include="Users\Dtos\" />
-      <Folder Include="Users\Queries\" />
     </ItemGroup>
 
 </Project>

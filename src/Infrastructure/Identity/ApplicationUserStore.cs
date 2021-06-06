@@ -26,7 +26,12 @@ namespace SkillsBooster.Infrastructure.Identity
                     return result;
                 var appUser = new User
                 {
-                    IdentityUserId = user.Id
+                    IdentityUserId = user.Id,
+                    FirstName = user.Email,
+                    Email = user.Email,
+                    Position = "Developer",
+                    Address = "Ukraine",
+                    PhotoUrl = "https://bootdey.com/img/Content/avatar/avatar1.png",
                 };
                 await _context.AppUsers.AddAsync(appUser, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);

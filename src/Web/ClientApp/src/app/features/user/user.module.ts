@@ -7,6 +7,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { ChartsModule } from 'ng2-charts';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -19,7 +20,8 @@ import { ChartsModule } from 'ng2-charts';
     MatProgressBarModule,
     MatTooltipModule,
     MatButtonModule,
-    ChartsModule
+    ChartsModule,
+    MatProgressSpinnerModule
   ]
 })
 export class UserModule { }

@@ -44,6 +44,11 @@ const routes: Routes = [
       import('./features/leaderboard/leaderboard.module').then((m) => m.LeaderboardModule)
   },
   {
+    path: 'submissions',
+    loadChildren: () =>
+      import('./features/submission/submission.module').then(m => m.SubmissionModule)
+  },
+  {
     path: 'error',
     loadChildren: () =>
       import('./features/error/error.module').then(m => m.ErrorModule)

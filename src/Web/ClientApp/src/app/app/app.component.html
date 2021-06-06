@@ -58,14 +58,14 @@
           </button>
 
           <mat-menu #toolbarUserMenu="matMenu">
-            <button mat-menu-item [routerLink]="['users/me']">
+            <button mat-menu-item [routerLink]="['users/me']" *ngIf="user$ | async as user">
               <div class="d-flex flex-row align-items-center">
                 <div class="rounded-circle avatar">
-                  <img src="https://i.imgur.com/0LKZQYM.jpg"/>
+                  <img [src]="user.photoUrl"/>
                 </div>
                 <div class="ms-2 c-details">
-                    <span class="font-weight-bold">Vlad Demchenko</span>
-                    <small class="font-weight-lighter">{{username$ | async}}</small>
+                    <span class="font-weight-bold">{{user.fullName}}</span>
+                    <small class="font-weight-lighter">{{user.email}}</small>
                 </div>
               </div>
             </button>
@@ -85,13 +85,6 @@
             </button>
           </mat-menu>
 
-          <span *ngIf="language$ | async as language">
-            <mat-select [ngModel]="language" (selectionChange)="onLanguageSelect($event)">
-              <mat-option *ngFor="let l of []" [value]="l">
-                {{ l.toUpperCase() }}
-              </mat-option>
-            </mat-select>
-          </span>
         </mat-toolbar>
       </div>
 

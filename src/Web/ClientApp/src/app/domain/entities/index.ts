@@ -5,3 +5,4 @@ export * from './challenge-request.model';
 export * from './join-request.model';
 export * from './user.model';
 export * from './duel.model';
+export * from './submission.model';

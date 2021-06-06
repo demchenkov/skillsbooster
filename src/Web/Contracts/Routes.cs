@@ -39,5 +39,20 @@
             //public const string Update = BaseUrl + "/alliances/{id}";
             //public const string Delete = BaseUrl + "/alliances/{id}";
         }
+
+        public static class Submissions
+        {
+            public const string GetMySubmissions = BaseUrl + "/submissions/my";
+            public const string GetById = BaseUrl + "/submissions/{id}";
+            public const string Create = BaseUrl + "/submissions";
+        }
+
+        public static class Users
+        {
+            public const string GetAll = BaseUrl + "/users";
+            public const string GetMe = BaseUrl + "/users/me";
+            public const string GetById = BaseUrl + "/users/{id}";
+            public const string Update = BaseUrl + "/users/{id}";
+        }
     }
 }
