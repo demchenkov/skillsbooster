@@ -1,5 +1,5 @@
 <div class="table-container">
-  <mat-table [dataSource]="ranking$ | async" style="height: calc(100% - 59px);">
+  <mat-table [dataSource]="ranking$ | async">
     <!-- Title Column -->
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef><span class="mx-2">Users</span></mat-header-cell>
@@ -10,7 +10,6 @@
           <mat-icon class="silver" *ngSwitchCase="1">emoji_events</mat-icon>
           <mat-icon class="bronze" *ngSwitchCase="2">emoji_events</mat-icon>
         </ng-container>
-
       </mat-cell>
     </ng-container>
 
@@ -21,9 +20,9 @@
     </ng-container>
 
 
-    <ng-container *ngFor="let task of taskList" [matColumnDef]="task.title">
+    <ng-container *ngFor="let task of taskColumns$ | async" [matColumnDef]="task.title">
       <mat-header-cell [matTooltip]="task.title"  *matHeaderCellDef>{{task.title | titlecase}}</mat-header-cell>
-      <mat-cell  *matCellDef="let row">{{row.scoreDict[task.id] || '—'}}</mat-cell>
+      <mat-cell  *matCellDef="let row">{{row.exerciseScore[task.id] == null ? '—' : row.exerciseScore[task.id] }}</mat-cell>
     </ng-container>
 
     <mat-header-row  *matHeaderRowDef="displayedColumns$ | async"></mat-header-row>

@@ -4,7 +4,7 @@
   <div class="row" *ngIf="allianceDetails$ | async as alliance">
     <div class="col-3 d-block text-center">
       <div class="image-box m-auto mb-4">
-        <img class="image" src="../../../../../assets/logo.png">
+        <img class="image" [src]="alliance.photoUrl">
         <div *ngIf="alliance.userType === userTypes.Manager" class="overlay" (click)="fileInput.click()" >
           <input hidden #fileInput  type="file" accept="image/*" (change)="changePhotoClicked($event)" /> -->
           <div class="text"><mat-icon>photo_camera</mat-icon></div>

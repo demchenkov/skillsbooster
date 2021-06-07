@@ -517,6 +517,148 @@
         }
       }
     },
+    "/api/duels/my": {
+      "get": {
+        "tags": [
+          "Duels"
+        ],
+        "operationId": "Duels_My",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "active",
+              "nullable": true
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DuelDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/duels/{id}": {
+      "get": {
+        "tags": [
+          "Duels"
+        ],
+        "operationId": "Duels_GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuelDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Duels"
+        ],
+        "operationId": "Duels_Respond",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RespondDuelRequestCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/duels": {
+      "post": {
+        "tags": [
+          "Duels"
+        ],
+        "operationId": "Duels_Create",
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDuelCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuelDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/exercises": {
       "get": {
         "tags": [
@@ -725,6 +867,26 @@
               "format": "int32"
             },
             "x-position": 1
+          },
+          {
+            "name": "duelId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 2
+          },
+          {
+            "name": "challengeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            },
+            "x-position": 3
           }
         ],
         "responses": {
@@ -802,6 +964,63 @@
                 "schema": {
                   "type": "integer",
                   "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_GetAll",
+        "parameters": [
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "FieldName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 3
+          },
+          {
+            "name": "Order",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/OrderingDirection"
+            },
+            "x-position": 4
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfUserDto"
                 }
               }
             }
@@ -1267,6 +1486,264 @@
           }
         }
       },
+      "DuelDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/DuelStatus"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "competitors": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DuelUserDto"
+            }
+          },
+          "exercises": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DuelExerciseDto"
+            }
+          }
+        }
+      },
+      "DuelStatus": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Created",
+          "Accepted",
+          "Declined",
+          "Active",
+          "Finished"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "DuelUserDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/UserDto"
+              }
+            ]
+          },
+          "exerciseScore": {
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          "totalScore": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "UserDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "position": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "photoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "rank": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "allianceTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "solvedTasks": {
+            "type": "object",
+            "nullable": true,
+            "x-dictionaryKey": {
+              "$ref": "#/components/schemas/Difficulty"
+            },
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SolvedTaskDto"
+            }
+          },
+          "duelStats": {
+            "type": "object",
+            "nullable": true,
+            "x-dictionaryKey": {
+              "$ref": "#/components/schemas/DuelResult"
+            },
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "Difficulty": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Easy",
+          "Normal",
+          "Hard",
+          "Extreme"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "SolvedTaskDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "total": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solved": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DuelResult": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Won",
+          "Lost",
+          "Active"
+        ],
+        "enum": [
+          1,
+          2,
+          3
+        ]
+      },
+      "DuelExerciseDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "score": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "CreateDuelCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "exercises": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "opponentId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RespondDuelRequestCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "duelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accepted": {
+            "type": "boolean"
+          }
+        }
+      },
       "PaginatedListOfExerciseDto": {
         "type": "object",
         "additionalProperties": false,
@@ -1321,6 +1798,10 @@
           "difficulty": {
             "type": "integer",
             "format": "int32"
+          },
+          "topic": {
+            "type": "string",
+            "nullable": true
           },
           "authorId": {
             "type": "integer",
@@ -1438,116 +1919,36 @@
           }
         }
       },
-      "UserDto": {
+      "PaginatedListOfUserDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "fullName": {
-            "type": "string",
-            "nullable": true
-          },
-          "position": {
-            "type": "string",
-            "nullable": true
-          },
-          "address": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "photoUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "rank": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "allianceTitle": {
-            "type": "string",
-            "nullable": true
-          },
-          "solvedTasks": {
-            "type": "object",
+          "items": {
+            "type": "array",
             "nullable": true,
-            "x-dictionaryKey": {
-              "$ref": "#/components/schemas/Difficulty"
-            },
-            "additionalProperties": {
-              "$ref": "#/components/schemas/SolvedTaskDto"
+            "items": {
+              "$ref": "#/components/schemas/UserDto"
             }
           },
-          "duelStats": {
-            "type": "object",
-            "nullable": true,
-            "x-dictionaryKey": {
-              "$ref": "#/components/schemas/DuelResult"
-            },
-            "additionalProperties": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        }
-      },
-      "Difficulty": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "Easy",
-          "Normal",
-          "Hard",
-          "Extreme"
-        ],
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ]
-      },
-      "SolvedTaskDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "total": {
+          "pageIndex": {
             "type": "integer",
             "format": "int32"
           },
-          "solved": {
+          "totalPages": {
             "type": "integer",
             "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
           }
         }
-      },
-      "DuelResult": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "Won",
-          "Lost",
-          "Active"
-        ],
-        "enum": [
-          1,
-          2,
-          3
-        ]
       }
     },
     "securitySchemes": {

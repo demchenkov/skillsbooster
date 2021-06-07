@@ -40,6 +40,14 @@
             //public const string Delete = BaseUrl + "/alliances/{id}";
         }
 
+        public static class Duels
+        {
+            public const string GetById = BaseUrl + "/duels/{id}";
+            public const string Create = BaseUrl + "/duels";
+            public const string GetMyDuels = BaseUrl + "/duels/my";
+            public const string Respond = BaseUrl + "/duels/{id}";
+        }
+
         public static class Submissions
         {
             public const string GetMySubmissions = BaseUrl + "/submissions/my";

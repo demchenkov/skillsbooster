@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   navigation = [
     { link: 'problems', label: 'Problems', icon: 'splitscreen' },
     { link: 'alliances', label: 'Alliances', icon: 'groups', },
-    { link: 'duels/my', label: 'Duels', icon: 'social_distance',},
+    { link: 'duels', label: 'Duels', icon: 'social_distance',},
     { link: 'leaderboard', label: 'Ranking', icon: 'poll' },
   ];
 

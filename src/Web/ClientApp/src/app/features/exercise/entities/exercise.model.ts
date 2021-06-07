@@ -6,6 +6,7 @@ export class Exercise {
   public markdownBody: string;
   public maxScore: number;
   public difficulty: Difficulty;
+  public topic: string;
 
   // Author: User
   // AuthorId: number;
@@ -18,6 +19,7 @@ export class Exercise {
     exercise.markdownBody = data.markdownBody;
     exercise.maxScore = data.maxScore;
     exercise.difficulty = data.difficulty;
+    exercise.topic = data.topic;
 
     return exercise;
   }

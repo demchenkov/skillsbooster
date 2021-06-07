@@ -14,6 +14,8 @@ namespace SkillsBooster.Application.Submissions.Queries
     public class GetMySubmissionsQuery: IRequest<IEnumerable<SubmissionDto>>
     {
         public int ExerciseId { get; set; }
+        public int? DuelId { get; set; }
+        public int? ChallengeId { get; set; }
     }
 
     public class GetMySubmissionsQueryQueryHandler : IRequestHandler<GetMySubmissionsQuery, IEnumerable<SubmissionDto>>
@@ -35,7 +37,10 @@ namespace SkillsBooster.Application.Submissions.Queries
             var entities = await _context.Submissions
                 .Include(x => x.Exercise)
                 .Include(x => x.Submitter)
-                .Where(x => x.ExerciseId == request.ExerciseId && x.SubmitterId == _currentUserService.UserId)
+                .Where(x => x.ExerciseId == request.ExerciseId && 
+                            x.SubmitterId == _currentUserService.UserId &&
+                            x.DuelId == request.DuelId && 
+                            x.ChallengeId == request.ChallengeId)
                 .ProjectToListAsync<SubmissionDto>(_mapper.ConfigurationProvider);
 
             return entities;

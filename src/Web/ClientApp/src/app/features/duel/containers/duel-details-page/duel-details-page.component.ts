@@ -15,7 +15,6 @@ export class DuelDetailsPageComponent implements OnInit {
   pageId$: Observable<number>;
   duel$ = this.service.duel$.pipe(filter(x => x != null));
   loading$ = this.service.loading$;
-  // loading$ = new BehaviorSubject<boolean>(true);
   tasks$ = this.duel$.pipe(filter(x => x != null), map(x => x.exercises));
   ranking$ = this.duel$.pipe(filter(x => x != null), map(x => x.competitors))
 

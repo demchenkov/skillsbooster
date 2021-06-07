@@ -27,7 +27,7 @@ namespace SkillsBooster.Application.Users.Dtos
         public void Mapping(Profile profile)
         {
             profile.CreateMap<User, UserDto>()
-                .ForMember(d => d.Rank, opt => opt.MapFrom(s => s.Ranking.Rank))
+                .ForMember(d => d.Rank, opt => opt.MapFrom(s => (int)s.Ranking.Rank))
                 .ForMember(d => d.SolvedTasks, opt => opt.Ignore())
                 .ForMember(d => d.AllianceTitle, opt => opt.Ignore())
                 .ForMember(d => d.DuelStats, opt => opt.Ignore());

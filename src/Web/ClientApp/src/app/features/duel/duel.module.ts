@@ -30,6 +30,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MarkdownModule } from 'ngx-markdown';
+import { DuelTaskRightColumnComponent } from './components/duel-task-right-column/duel-task-right-column.component';
+import { DuelTaskSubmissionListComponent } from './components/duel-task-submission-list/duel-task-submission-list.component';
 
 
 
@@ -41,7 +43,9 @@ import { MarkdownModule } from 'ngx-markdown';
     DuelDetailsComponent,
     DuelParticipantsComponent,
     DuelDetailsPageComponent,
-    DuelTaskPageComponent
+    DuelTaskPageComponent,
+    DuelTaskRightColumnComponent,
+    DuelTaskSubmissionListComponent
   ],
   imports: [
     CommonModule,

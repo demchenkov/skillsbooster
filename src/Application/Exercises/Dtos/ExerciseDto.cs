@@ -11,6 +11,7 @@ namespace SkillsBooster.Application.Exercises.Dtos
         public string MarkdownBody { get; set; }
         public int MaxScore { get; set; }
         public int Difficulty { get; set; }
+        public string Topic { get; set; }
         
         public int AuthorId { get; set; }
 

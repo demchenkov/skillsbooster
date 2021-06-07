@@ -1,35 +1,39 @@
-<mat-spinner *ngIf="loading$ | async" style="position: absolute; top: calc(50% - 50px); left: calc(50% - 50px);"></mat-spinner>
+<div  class="container-fluid d-flex flex-grow-1 h-100">
+  <div class="row flex-grow-1" style="max-height: calc(100vh - 108px);">
+    <div class="col-6 h-100" style="overflow-y: auto;">
 
-<div *ngIf="exercise$ | async as exercise" class="container-fluid flex-column h-100">
-  <div class="row h-100">
-    <div class="col-6">
-      <div class="d-block">
-        <markdown [data]="exercise.markdownBody" style="overflow-y: auto;"></markdown>
+      <div *ngIf="loading$ | async; else data" class="h-100 flex-grow-1 align-items-center justify-content-center d-flex">
+        <mat-spinner></mat-spinner>
       </div>
+
+      <ng-template #data>
+        <mat-tab-group class="h-100">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="mr-1">leaderboard</mat-icon>
+              The Task
+            </ng-template>
+            <markdown [data]="(exercise$ | async)?.markdownBody" class="d-block p-2"></markdown>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="mr-1">leaderboard</mat-icon>
+              Submissions
+            </ng-template>
+
+            <sb-duel-task-submission-list [submissions]="submissions$ | async"
+            ></sb-duel-task-submission-list>
+
+          </mat-tab>
+        </mat-tab-group>
+      </ng-template>
     </div>
-    <div class="col-6">
-      <div class="row">
-        <div class="col-8">
-          <mat-form-field appearance="fill">
-            <mat-label>Language</mat-label>
-            <mat-select [(value)]="language">
-              <mat-option [value]="lang.id" *ngFor="let lang of languages">{{ lang.name }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-4 d-flex align-items-center">
-          <button mat-raised-button class="btn btn-info mr-3">Submit</button>
-          <button mat-raised-button [routerLink]="['edit']" color="warn">Edit</button>
-        </div>
-      </div>
-      <div class="row" style="height: calc(100% - 81px);">
-        <div class="col-12">
-          <sb-editor  [language]="language" 
-                      [(code)]="code" 
-                      (editorInit)="onEditorInit()"
-          ></sb-editor>
-        </div>
-      </div>
-    </div>
+    <sb-duel-task-right-column  class="col-6 h-100 d-flex flex-grow-1 flex-column"
+                              [languages]="languages"
+                              [language]="language"
+                              [loading]="loading$ | async"
+                              [exercise]="exercise$ | async"
+                              (submit)="onSubmit($event)"
+    ></sb-duel-task-right-column>
   </div>
 </div>

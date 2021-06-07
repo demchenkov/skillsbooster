@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, share } from 'rxjs/operators';
 import { Duel } from 'src/app/domain/entities';
 import { DuelsApiService } from './duels-api.service';
@@ -13,6 +13,22 @@ export class DuelsService {
   public duel$: Observable<Duel> = this.duelSubj$.asObservable();
 
   constructor(private apiService: DuelsApiService) {}
+
+  getActiveMyDuels(): Observable<Duel[]> {
+    this.loadingSubj$.next(true);
+    const obs = this.apiService.getActiveMyDuels()
+      .pipe(share());
+    obs.subscribe();
+    return obs;
+  }
+
+  getMyRequestedDuels(): Observable<Duel[]> {
+    this.loadingSubj$.next(true);
+    const obs = this.apiService.getMyRequestedDuels()
+      .pipe(share());
+    obs.subscribe();
+    return obs;
+  }
 
   getDuelById(id: number) {
     this.loadingSubj$.next(true);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { finalize, share } from 'rxjs/operators';
+import { PaginatedList, Sort } from 'src/app/core';
 import { User } from 'src/app/domain/entities';
 import { UsersApiService } from './user-api.service';
 
@@ -8,11 +9,17 @@ import { UsersApiService } from './user-api.service';
 export class UsersService {
   loading$ = new BehaviorSubject<boolean>(false);
   user$ = new BehaviorSubject<User>(null);
+  users$ = new BehaviorSubject<PaginatedList<User>>(PaginatedList.getEmpty<User>());
 
   constructor(private apiService: UsersApiService) {}
 
-  getAllUsers() {
-    // TODO
+  getAllUsers(sort?: Sort) {
+    this.loading$.next(true);
+    this.apiService.loadFilteredUsers(sort)
+      .pipe(
+        finalize(() => this.loading$.next(false))
+      )
+      .subscribe(data => this.users$.next(data));
   }
 
   getMe() {

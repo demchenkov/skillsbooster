@@ -25,12 +25,12 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="mx-2">
-            <mat-label>Theme</mat-label>
+            <mat-label>Topic</mat-label>
             <input type="text"
                    autocomplete="off"
-                   placeholder="Theme"
+                   placeholder="Topic"
                    matInput
-                   formControlName="theme">
+                   formControlName="topic">
           </mat-form-field>
 
           <button mat-raised-button color="primary" (click)="onFilter()">
@@ -64,12 +64,12 @@
         </mat-cell>
       </ng-container>
 
-      <!-- Theme Column -->
-      <ng-container matColumnDef="theme">
+      <!-- Topic Column -->
+      <ng-container matColumnDef="topic">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Theme
+          Topic
         </mat-header-cell>
-        <mat-cell *matCellDef="let row">{{row.theme}}</mat-cell>
+        <mat-cell *matCellDef="let row">{{row.topic}}</mat-cell>
       </ng-container>
 
       <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>

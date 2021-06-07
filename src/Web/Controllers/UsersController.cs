@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SkillsBooster.Application.Alliances.Queries;
 using SkillsBooster.Application.Common.Interfaces;
-using SkillsBooster.Application.Submissions.Commands;
+using SkillsBooster.Application.Common.Models;
 using SkillsBooster.Application.Users.Dtos;
 using SkillsBooster.Application.Users.Queries;
 using SkillsBooster.Web.Contracts;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SkillsBooster.Web.Controllers
@@ -20,11 +17,12 @@ namespace SkillsBooster.Web.Controllers
             _currentUserService = currentUserService;
         }
 
-        //[HttpGet(Routes.Users.GetAll)]
-        //public async Task<IEnumerable<UserDto>> GetAll([FromQuery] GetAlliancesWithPaginationQuery query)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [HttpGet(Routes.Users.GetAll)]
+        public async Task<PaginatedList<UserDto>> GetAll([FromQuery] GetUsersWithPaginationQuery query)
+        {
+            return await Mediator.Send(query);
+        }
+
 
 
         [HttpGet(Routes.Users.GetMe)]

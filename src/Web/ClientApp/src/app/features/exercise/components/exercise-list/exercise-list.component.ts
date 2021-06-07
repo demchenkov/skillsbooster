@@ -24,7 +24,7 @@ import { Difficulty, Exercise } from '../../entities';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExerciseListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'title', 'difficulty', 'theme'];
+  displayedColumns: string[] = ['id', 'title', 'difficulty', 'topic'];
   formGroup: FormGroup;
   private filterRequest$ = new Subject<Filter>()
 
@@ -43,18 +43,18 @@ export class ExerciseListComponent implements OnInit, AfterViewInit {
     [Difficulty.Extreme]: 'badge-danger',
   }
 
-  
+
 
   difficulties = Object.values(Difficulty).filter(x => Number.isInteger(x)) as Difficulty[];
 
   constructor(private fb: FormBuilder) {
-    
+
   }
 
   ngOnInit() {
     this.formGroup = this.fb.group({
       title: [],
-      theme: [],
+      topic: [],
       difficulty: [],
     });
   }

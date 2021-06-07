@@ -10,8 +10,11 @@ export class SubmissionsApiService {
 
   constructor(private http: HttpClient) { }
 
-  getMySubmissions(exerciseId: number) {
-    const params = new HttpParams().append('exerciseId', exerciseId)
+  getMySubmissions(exerciseId: number, duelId: number, challengeId: number) {
+    const params = new HttpParams()
+      .append('exerciseId', exerciseId)
+      .append('duelId', duelId)
+      .append('challengeId', challengeId)
     return this.http.get<any[]>(`${SubmissionsApiService.URL}/my`, { params }).pipe(
       map(items => items.map(x => Submission.fromObject(x)))
     );

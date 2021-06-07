@@ -11,9 +11,14 @@ namespace SkillsBooster.Web.Controllers
     public class SubmissionsController : BaseApiController
     {
         [HttpGet(Routes.Submissions.GetMySubmissions)]
-        public async Task<IEnumerable<SubmissionDto>> GetMySubmissions([FromQuery] int exerciseId)
+        public async Task<IEnumerable<SubmissionDto>> GetMySubmissions([FromQuery] int exerciseId, int? duelId = null, int? challengeId = null)
         {
-            return await Mediator.Send(new GetMySubmissionsQuery() { ExerciseId = exerciseId });
+            return await Mediator.Send(new GetMySubmissionsQuery
+            {
+                ExerciseId = exerciseId,
+                DuelId = duelId,
+                ChallengeId = challengeId
+            });
         }
 
         [HttpGet(Routes.Submissions.GetById)]

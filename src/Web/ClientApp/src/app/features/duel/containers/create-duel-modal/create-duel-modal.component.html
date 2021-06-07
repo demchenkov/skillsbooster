@@ -10,8 +10,9 @@
       [multiple]="false"
       [selectPlaceholder]="'List of Users'"
       [loading]="userSearching$ | async"
-      [selectCtrl]="$any(form.get('users'))"
+      [selectCtrl]="$any(form.get('opponentId'))"
       [filteredData$]="userPaginatedList$"
+      [textGetter]="userNameGetter"
       (nextPageRequested)="onUserNextPageRequested($event)"
     ></sb-infinity-select>
 

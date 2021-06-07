@@ -8,8 +8,8 @@ export class SubmissionsService {
 
   constructor(private apiService: SubmissionsApiService) {}
 
-  getMySubmissions(exerciseId: number) {
-    return this.apiService.getMySubmissions(exerciseId);
+  getMySubmissions(exerciseId: number, duelId: number = null, challengeId: number = null) {
+    return this.apiService.getMySubmissions(exerciseId, duelId, challengeId);
   }
 
   getSubmissionById(id: number) {

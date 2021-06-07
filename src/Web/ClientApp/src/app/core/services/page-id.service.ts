@@ -10,11 +10,11 @@ export class PageIdGetter implements OnDestroy {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
 
-  getPageId(type: 'number' | 'string' = 'number') : Observable<string | number>
+  getPageId(type: 'number' | 'string' = 'number', template: string = 'id') : Observable<string | number>
   {
     const id$ = this.route.paramMap.pipe(
       takeUntil(this.onDestroy$),
-      map(x => x.get('id'))
+      map(x => x.get(template))
     );
 
     if (type === 'string') {
