@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 using SkillsBooster.Application.Common.Extensions;
 using SkillsBooster.Application.Common.Interfaces;
@@ -19,7 +20,8 @@ namespace SkillsBooster.Application.Users.Queries
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        
+
+        public string Search { get; set; }
         public string FieldName { get; set; }
         
         [JsonConverter(typeof(StringEnumConverter))]
@@ -43,6 +45,12 @@ namespace SkillsBooster.Application.Users.Queries
             if (!string.IsNullOrWhiteSpace(request.FieldName))
             {
                 query = query.OrderByWithDirection(request.FieldName.FirstCharToUpper(), request.Order);
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.Search))
+            {
+                query = query.Where(x => EF.Functions.Like(x.LastName, $"%{request.Search}%") ||
+                                 EF.Functions.Like(x.FirstName, $"%{request.Search}%"));
             }
             
             return query

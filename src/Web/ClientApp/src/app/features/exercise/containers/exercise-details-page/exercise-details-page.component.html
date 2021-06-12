@@ -13,6 +13,7 @@
               <mat-icon class="mr-1">leaderboard</mat-icon>
               The Task
             </ng-template>
+            <h2 class="m-3">{{(exercise$ | async)?.title}}</h2>
             <markdown [data]="(exercise$ | async)?.markdownBody" class="d-block p-2"></markdown>
           </mat-tab>
           <mat-tab>

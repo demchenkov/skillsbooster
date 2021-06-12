@@ -22,7 +22,8 @@ namespace SkillsBooster.Application.Alliances.Queries
         public int PageSize { get; set; } = 10;
         
         public string FieldName { get; set; }
-        
+        public string Search { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public OrderingDirection Order { get; set; }
     }
@@ -45,7 +46,12 @@ namespace SkillsBooster.Application.Alliances.Queries
             {
                 query = query.OrderByWithDirection(request.FieldName.FirstCharToUpper(), request.Order);
             }
-            
+
+            if (!string.IsNullOrWhiteSpace(request.Search))
+            {
+                query = query.Where(x => EF.Functions.Like(x.Title, $"%{request.Search}%"));
+            }
+
             return query
                 .Include(x => x.Leader)
                 .Include(x => x.Ranking)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkillsBooster.Infrastructure.Persistence;
 
 namespace SkillsBooster.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210609154323_AddFieldToSubmission")]
+    partial class AddFieldToSubmission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -557,40 +559,6 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
                     b.ToTable("Submissions");
                 });
 
-            modelBuilder.Entity("SkillsBooster.Domain.Entities.Test", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClassName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ExerciseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ExpectedResult")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Method")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ParamsJson")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ResultType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.ToTable("Tests");
-                });
-
             modelBuilder.Entity("SkillsBooster.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -928,17 +896,6 @@ namespace SkillsBooster.Infrastructure.Persistence.Migrations
                     b.Navigation("Exercise");
 
                     b.Navigation("Submitter");
-                });
-
-            modelBuilder.Entity("SkillsBooster.Domain.Entities.Test", b =>
-                {
-                    b.HasOne("SkillsBooster.Domain.Entities.Exercise", "Exercise")
-                        .WithMany()
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Exercise");
                 });
 
             modelBuilder.Entity("SkillsBooster.Domain.Entities.User", b =>

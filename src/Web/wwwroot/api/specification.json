@@ -41,12 +41,21 @@
             "x-position": 3
           },
           {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
             "name": "Order",
             "in": "query",
             "schema": {
               "$ref": "#/components/schemas/OrderingDirection"
             },
-            "x-position": 4
+            "x-position": 5
           }
         ],
         "responses": {
@@ -694,12 +703,43 @@
             "x-position": 3
           },
           {
+            "name": "Search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
+            "name": "Difficulty",
+            "in": "query",
+            "schema": {
+              "nullable": true,
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/Difficulty"
+                }
+              ]
+            },
+            "x-position": 5
+          },
+          {
+            "name": "Topic",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 6
+          },
+          {
             "name": "Order",
             "in": "query",
             "schema": {
               "$ref": "#/components/schemas/OrderingDirection"
             },
-            "x-position": 4
+            "x-position": 7
           }
         ],
         "responses": {
@@ -997,7 +1037,7 @@
             "x-position": 2
           },
           {
-            "name": "FieldName",
+            "name": "Search",
             "in": "query",
             "schema": {
               "type": "string",
@@ -1006,12 +1046,21 @@
             "x-position": 3
           },
           {
+            "name": "FieldName",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 4
+          },
+          {
             "name": "Order",
             "in": "query",
             "schema": {
               "$ref": "#/components/schemas/OrderingDirection"
             },
-            "x-position": 4
+            "x-position": 5
           }
         ],
         "responses": {
@@ -1915,6 +1964,10 @@
           "challengeId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "language": {
+            "type": "string",
             "nullable": true
           }
         }

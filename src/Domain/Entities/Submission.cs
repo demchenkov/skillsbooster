@@ -10,6 +10,7 @@ namespace SkillsBooster.Domain.Entities
         public SubmissionStatus Status { get; set; }
         public double Score { get; set; }
         public DateTime SubmittedAt { get; set; }
+        public string Language { get; set; }
 
         public int ExerciseId { get; set; }
         public Exercise Exercise { get; set; }

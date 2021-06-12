@@ -13,6 +13,7 @@ using SkillsBooster.Application;
 using SkillsBooster.Application.Common.Interfaces;
 using SkillsBooster.Infrastructure;
 using SkillsBooster.Infrastructure.Persistence;
+using SkillsBooster.Web.BackgroundServices;
 using SkillsBooster.Web.Filters;
 using SkillsBooster.Web.Services;
 
@@ -32,6 +33,7 @@ namespace SkillsBooster.Web
         {
             services.AddApplication();
             services.AddInfrastructure(Configuration);
+            services.AddHostedService<SubmissionCheckService>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

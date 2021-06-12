@@ -19,6 +19,7 @@ export class SubmissionDetailsComponent implements OnInit {
   duration = this.getRandomArbitrary(100, 700);
   memory = this.getRandomArbitrary(5, 60);
   language = 'C#'
+  statuses = SubmissionStatus;
 
 
   constructor(private idGetter: PageIdGetter,

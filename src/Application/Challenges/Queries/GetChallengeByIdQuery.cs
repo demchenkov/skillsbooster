@@ -110,6 +110,8 @@ namespace SkillsBooster.Application.Challenges.Queries
             {
                 var alliance = await _userService.GetUserAlliance(submission.SubmitterId);
 
+                if (alliance == null) continue;
+
                 if (!alliancesSubmissions.ContainsKey(alliance.Id))
                 {
                     alliancesSubmissions[alliance.Id] = new List<Submission>();

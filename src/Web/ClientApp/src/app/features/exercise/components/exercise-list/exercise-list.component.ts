@@ -36,6 +36,14 @@ export class ExerciseListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  autocompleteList = [
+    'Longest Palindromic Substring',
+    'Add Two Numbers',
+    'Median of Two Sorted Arrays',
+    'Reverse Integer',
+    'Wildcard Matching',
+  ]
+
   private difficultyClassesDict = {
     [Difficulty.Easy]: 'badge-info',
     [Difficulty.Normal]: 'badge-success',
@@ -55,22 +63,27 @@ export class ExerciseListComponent implements OnInit, AfterViewInit {
     this.formGroup = this.fb.group({
       title: [],
       topic: [],
-      difficulty: [],
+      difficulty: [null],
     });
   }
 
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    this.filterRequest$.subscribe(() => this.paginator.pageIndex = 0)
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.sort.sortChange, this.paginator.page, this.filterRequest$)
       .pipe(startWith({}))
       .subscribe(() => {
-        const sort = Sort.fromObject({
+        const sort = Filter.fromObject({
           fieldName: this.sort.active || null,
           order: this.sort.direction,
-          pageNumber: this.paginator.pageIndex + 1
+          pageNumber: this.paginator.pageIndex + 1,
+          search: this.formGroup.get('title').value
         });
+
+        sort['difficulty'] = this.formGroup.get('difficulty').value;
+        sort['topic'] = this.formGroup.get('topic').value;
 
         this.dataRequested.emit(sort);
       });
@@ -89,6 +102,8 @@ export class ExerciseListComponent implements OnInit, AfterViewInit {
   }
 
   onFilter() {
-    //this.filterRequest$.next(Filter.fromObject())
+    // const filter = new Filter()
+
+    this.filterRequest$.next()
   }
 }

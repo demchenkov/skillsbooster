@@ -19,7 +19,7 @@ export class ExerciseDetailsPageComponent implements OnInit {
   submissions$ = new Subject<Submission[]>();
   exercise$: Observable<Exercise> = this.service.exercise$;
   loading$ = new Subject<boolean>();
-  language = SupportedLangs.js;
+  language = SupportedLangs.cs;
   languages = Object.entries(SupportedLangNames).map(([key, val]) => ({id: key, name: val}));
 
 

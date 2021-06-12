@@ -23,6 +23,8 @@ namespace SkillsBooster.Application.Common.Interfaces
 
         DbSet<BestSubmission> BestSubmissions { get; set; }
 
+        DbSet<Test> Tests { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
