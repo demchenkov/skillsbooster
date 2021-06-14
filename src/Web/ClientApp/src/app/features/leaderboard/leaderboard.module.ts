@@ -8,6 +8,9 @@ import { PersonalRankingComponent } from './components/personal-ranking/personal
 import { AllianceRankingComponent } from './components/alliance-ranking/alliance-ranking.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -20,6 +23,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatTableModule,
     MatTooltipModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ]
 })
 export class LeaderboardModule { }

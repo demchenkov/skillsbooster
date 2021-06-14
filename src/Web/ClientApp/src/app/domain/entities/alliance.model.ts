@@ -54,6 +54,27 @@ export class AllianceChallenge {
   }
 }
 
+export class AllianceLeaderBoard {
+  id: number;
+  title: string;
+  leader: string;
+  rank: number;
+  totalScore: number;
+
+
+  public static fromObject(data: any): AllianceLeaderBoard {
+    const entity = new AllianceLeaderBoard();
+
+    entity.id = data.id;
+    entity.title = data.title;
+    entity.leader = data.leader;
+    entity.rank = data.rank;
+    entity.totalScore = data.totalScore;
+
+    return entity;
+  }
+}
+
 export const Alliances = [
   Alliance.fromObject({id: 1, title: 'Title 1', leader: 'Demchenko', rating: 1}),
   Alliance.fromObject({id: 2, title: 'Title 2', leader: 'Demchenko', rating: 2}),

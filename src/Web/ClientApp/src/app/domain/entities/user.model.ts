@@ -37,3 +37,24 @@ export class User {
     return entity;
   }
 }
+
+export class UserLeaderBoard {
+  id: number;
+  username: string;
+  solutions: number;
+  rank: number;
+  totalScore: number;
+
+
+  public static fromObject(data: any): UserLeaderBoard {
+    const entity = new UserLeaderBoard();
+
+    entity.id = data.id;
+    entity.username = data.username;
+    entity.solutions = data.solutions;
+    entity.rank = data.rank;
+    entity.totalScore = data.totalScore;
+
+    return entity;
+  }
+}

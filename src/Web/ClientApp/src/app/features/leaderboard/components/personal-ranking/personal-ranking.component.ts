@@ -1,12 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-interface Row {
-  id: number;
-  rank: number;
-  username: string;
-  totalScore: number;
-}
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges, EventEmitter, Output, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { BehaviorSubject, merge } from 'rxjs';
+import { startWith } from 'rxjs/operators';
+import { PaginatedList, Sort } from 'src/app/core';
+import { UserLeaderBoard } from 'src/app/domain/entities';
 
 @Component({
   selector: 'sb-personal-ranking',
@@ -14,55 +12,32 @@ interface Row {
   styleUrls: ['./personal-ranking.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PersonalRankingComponent implements OnInit {
-  ranking$ = new BehaviorSubject<Row[]>([]);
+export class PersonalRankingComponent implements AfterViewInit {
+  @Input() loading = true;
+  @Input() ranking: PaginatedList<UserLeaderBoard>;
+  @Output() dataRequested = new EventEmitter<Sort>();
 
-  @Input()
-  set ranking(rows: Row[]) {
-    this.ranking$.next(rows);
-  }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns = ['rank', 'username', 'totalScore', 'solutions'];
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.ranking = [
-      {
-        id: 1,
-        rank: 1,
-        username: 'Vladyslav Demchenko',
-        totalScore: 199,
-        solutions: 10,
-      },
-      {
-        id: 2,
-        rank: 2,
-        username: 'Hildegard Gibbons',
-        totalScore: 198,
-        solutions: 8,
-      },
-      {
-        id: 3,
-        rank: 3,
-        username: 'Nicholas	Hawkins',
-        totalScore: 193,
-        solutions: 7,
-      },
-      {
-        id: 4,
-        rank: 4,
-        username: 'Christian	Banks',
-        totalScore: 185,
-        solutions: 6,
-      },
-      {
-        id: 5,
-        rank: 5,
-        username: 'Bernard	Park',
-        totalScore: 175,
-        solutions: 6,
-      }
-    ].sort((a, b) => a.rank - b.rank);
+  ngAfterViewInit() {
+    // If the user changes the sort order, reset back to the first page.
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(startWith({}))
+      .subscribe(() => {
+        const sort = Sort.fromObject({
+          fieldName: this.sort.active || null,
+          order: this.sort.direction,
+          pageNumber: this.paginator.pageIndex + 1,
+        });
+
+        this.dataRequested.emit(sort);
+      });
   }
 }

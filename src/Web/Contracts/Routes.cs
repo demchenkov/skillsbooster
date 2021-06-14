@@ -32,12 +32,9 @@
 
         public static class Challenges
         {
-            //public const string GetAll = BaseUrl + "/alliances";
             public const string GetById = BaseUrl + "/challenges/{id}";
             public const string Create = BaseUrl + "/challenges";
             public const string Respond = BaseUrl + "/challenges/{id}";
-            //public const string Update = BaseUrl + "/alliances/{id}";
-            //public const string Delete = BaseUrl + "/alliances/{id}";
         }
 
         public static class Duels
@@ -61,6 +58,12 @@
             public const string GetMe = BaseUrl + "/users/me";
             public const string GetById = BaseUrl + "/users/{id}";
             public const string Update = BaseUrl + "/users/{id}";
+        }
+
+        public static class LeaderBoard
+        {
+            public const string GetAllAlliances = BaseUrl + "/leaderboard/alliances";
+            public const string GetAllPersonal = BaseUrl + "/leaderboard/personal";
         }
     }
 }

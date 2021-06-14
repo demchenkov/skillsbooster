@@ -1,0 +1,33 @@
+<mat-nav-list  class="w-100 p-0">
+  <mat-list-item *ngFor="let item of submissions" class="list-row">
+    <a matLine [routerLink]="['/submissions', item.id ]" class="py-2 d-flex align-items-center">
+      <ng-container [ngSwitch]="item.status">
+        <mat-icon *ngSwitchCase="statuses.Completed"
+                  class="text-success"
+                  matTooltip="The Problem is Completed"
+        > check_circle_outline </mat-icon>
+        <mat-icon *ngSwitchCase="statuses.PartialCompleted"
+                  class="text-warning"
+                  matTooltip="The Problem is Partial Completed"
+        > error_outline </mat-icon>
+        <mat-icon *ngSwitchCase="statuses.Failed"
+                  class="text-danger"
+                  matTooltip="The Problem is Failed"
+        > highlight_off </mat-icon>
+
+        <mat-icon *ngSwitchCase="statuses.NotChecked"
+                  class="text-info"
+                  matTooltip="The Problem is not checked"
+        > not_started </mat-icon>
+      </ng-container>
+
+      <span class="pl-2">Submitted at: {{item.submittedAt | date:'medium'}}</span>
+
+      <span class="ml-auto d-flex" style="width: 35%;">
+        <small *ngIf="item.status != statuses.NotChecked">
+          {{ getScoreOrDefault(item) }} / 100
+        </small>
+      </span>
+    </a>
+  </mat-list-item>
+</mat-nav-list>

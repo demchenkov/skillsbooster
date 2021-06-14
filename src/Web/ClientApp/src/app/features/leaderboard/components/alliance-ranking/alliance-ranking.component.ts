@@ -1,13 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-
-interface Row {
-  id: number;
-  title: string;
-  rank: number;
-  leader: string;
-  amountOfWonChallenges: number;
-}
+import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { BehaviorSubject, merge } from 'rxjs';
+import { startWith } from 'rxjs/operators';
+import { PaginatedList, Sort } from 'src/app/core';
+import { AllianceLeaderBoard } from 'src/app/domain/entities';
 
 @Component({
   selector: 'sb-alliance-ranking',
@@ -15,48 +12,32 @@ interface Row {
   styleUrls: ['./alliance-ranking.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AllianceRankingComponent implements OnInit {
-  ranking$ = new BehaviorSubject<Row[]>([]);
+export class AllianceRankingComponent implements AfterViewInit {
+  @Input() loading = true;
+  @Input() ranking: PaginatedList<AllianceLeaderBoard>;
+  @Output() dataRequested = new EventEmitter<Sort>();
 
-  @Input()
-  set ranking(rows: Row[]) {
-    this.ranking$.next(rows);
-  }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['rank', 'title', 'leader', 'amountOfWonChallenges'];
+  displayedColumns = ['rank', 'title', 'leader', 'totalScore'];
 
   constructor() { }
 
-  ngOnInit(): void {
-    this.ranking = [
-      {
-        id: 1,
-        rank: 1,
-        title: 'Amaranth Legion',
-        leader: 'Vladyslav	Demchenko',
-        amountOfWonChallenges: 10 - 1
-      },
-      {
-        id: 2,
-        rank: 2,
-        title: 'Black Lotus',
-        leader: 'Hildegard Gibbons',
-        amountOfWonChallenges: 10 - 2
-      },
-      {
-        id: 3,
-        rank: 3,
-        title: 'Scarlet Agony',
-        leader: 'Nicholas	Hawkins',
-        amountOfWonChallenges: 10 - 3
-      },
-      {
-        id: 4,
-        rank: 4,
-        title: 'Emerald Fury',
-        leader: 'Christian	Banks',
-        amountOfWonChallenges: 10 - 4
-      }
-    ].sort((a, b) => a.rank - b.rank);
+  ngAfterViewInit() {
+    // If the user changes the sort order, reset back to the first page.
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(startWith({}))
+      .subscribe(() => {
+        const sort = Sort.fromObject({
+          fieldName: this.sort.active || null,
+          order: this.sort.direction,
+          pageNumber: this.paginator.pageIndex + 1,
+        });
+
+        this.dataRequested.emit(sort);
+      });
   }
 }

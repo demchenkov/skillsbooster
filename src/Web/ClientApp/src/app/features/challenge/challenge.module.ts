@@ -20,6 +20,8 @@ import { EditorModule } from 'src/app/core/modules';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { ChallengesApiService } from './services/challenges-api.service';
+import { ChallengeSubmissionListComponent } from './components/challenge-submission-list/challenge-submission-list.component';
+import { ChallengeDetailsRightColumnComponent } from './components/challenge-details-right-column/challenge-details-right-column.component';
 
 
 
@@ -30,7 +32,9 @@ import { ChallengesApiService } from './services/challenges-api.service';
     ChallengeTasksComponent,
     ChallengeParticipantsComponent,
     ChallengeDetailsComponent,
-    ChallengeTaskPageComponent
+    ChallengeTaskPageComponent,
+    ChallengeSubmissionListComponent,
+    ChallengeDetailsRightColumnComponent,
   ],
   imports: [
     CommonModule,
